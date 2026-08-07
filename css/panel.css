@@ -322,6 +322,7 @@ body.panel-open .panel { transform: none; box-shadow: -20px 0 60px rgba(0, 0, 0,
 }
 @media (max-width: 640px) {
   .panel { width: min(360px, 94vw); }
+  .preview-head { display: none; }
 }
 
 @keyframes livepulse {
