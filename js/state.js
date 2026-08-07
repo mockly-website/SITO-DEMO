@@ -52,10 +52,11 @@
     socialFeed:      { cat: 'design',   icon: '&#128247;', name: 'Feed social',              desc: 'Griglia stile Instagram con 6 immagini',                                 badge: 'Feed social integrato' },
     gallery:         { cat: 'design',   icon: '&#128444;', name: 'Galleria / lightbox',      desc: 'Griglia immagini con overlay e frecce di navigazione',                  badge: 'Galleria con lightbox' },
     animations:      { cat: 'design',   icon: '&#127919;', name: 'Animazioni custom',        desc: 'Hero animato, particelle canvas e parallax',                             badge: 'Animazioni custom' },
-    proPhoto:        { cat: 'design',   icon: '&#128248;', name: 'Fotografia professionale', desc: 'Confronto prima / dopo su scatto gastronomico',                         badge: 'Fotografia professionale' },
-    photoEdit:       { cat: 'design',   icon: '&#9998;',   name: 'Editing foto / ritocco',   desc: 'Ritocco, color grading e rimozione watermark',                          badge: 'Editing foto / ritocco' },
-    logo:            { cat: 'design',   icon: '&#9997;',   name: 'Logo / identità visiva',   desc: 'Logo placeholder in 2 varianti (chiaro / scuro)',                        badge: 'Logo & identità visiva' },
-    review:          { cat: 'review',   icon: '&#128260;', name: 'Prima / Dopo',             desc: 'Mockup confronto: sito vecchio vs versione rinnovata',                   badge: 'Prima / Dopo · rinnovamento' }
+    review:          { cat: 'review',   icon: '&#128260;', name: 'Prima / Dopo',             desc: 'Mockup confronto: sito vecchio vs versione rinnovata',                   badge: 'Prima / Dopo · rinnovamento' },
+    storia:          { cat: 'content',  icon: '&#128337;', name: 'La nostra storia',         desc: 'Timeline del locale dal 1978 a oggi',                                    badge: 'La nostra storia' },
+    degustazioni:    { cat: 'content',  icon: '&#127863;', name: 'Degustazioni & corsi',     desc: 'Card esperienze: vini, corsi di cucina e masterclass',                  badge: 'Degustazioni & corsi' },
+    giftCard:        { cat: 'content',  icon: '&#127873;', name: 'Buoni regalo',             desc: 'Sezione regali con tagli da 25/50/100 euro',                            badge: 'Buoni regalo' },
+    loyalty:         { cat: 'advanced', icon: '&#127942;', name: 'Programma fedeltà',        desc: 'Card punti con livelli e barra di avanzamento',                         badge: 'Programma fedeltà' }
   };
 
   /* --- Contenuti personalizzabili del locale (dal pannello) --- */
@@ -95,9 +96,10 @@
       socialFeed:      false,
       gallery:         false,
       animations:      false,
-      proPhoto:        false,
-      photoEdit:       false,
-      logo:            false,
+      storia:          false,
+      degustazioni:    false,
+      giftCard:        false,
+      loyalty:         false,
       googleBusiness:  false,
       copywriting:     false,
       review:          false

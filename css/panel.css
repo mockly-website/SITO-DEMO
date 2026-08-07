@@ -101,17 +101,6 @@ body.panel-open .app { padding-right: 360px; }
   box-shadow: 0 30px 80px rgba(0, 0, 0, .55), inset 0 0 0 9px #1b1e24, 0 0 0 2px #2a2e37;
   background: #000;
 }
-.phone-bar { display: none; }
-.device-frame.is-mobile .phone-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  height: 42px; padding: 0 28px; flex: none;
-  background: #000; color: #fff; font-size: 12px; font-weight: 600;
-}
-.phone-bar .pb-notch {
-  position: absolute; left: 50%; top: 9px; transform: translateX(-50%);
-  width: 96px; height: 22px; border-radius: 12px; background: #111; z-index: 3;
-}
-.phone-bar .pb-ico { letter-spacing: 2px; font-size: 10px; }
 
 .preview-iframe {
   flex: 1; width: 100%; border: 0; display: block; background: #fff;

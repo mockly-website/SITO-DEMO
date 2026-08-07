@@ -298,6 +298,7 @@
       fb: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
       pen: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',
       music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+      wine: '<path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5z"/>',
       nav: '<path d="M3 11l19-9-9 19-2-8-8-2z"/>',
       plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
       minus: '<line x1="5" y1="12" x2="19" y2="12"/>'
@@ -705,49 +706,72 @@
     );
   }
 
-  function proPhotoHTML() {
+  /* ---------- 19a. DEGUSTAZIONI & CORSI (funzione) ---------- */
+  function degustazioniHTML() {
     return (
-      '<section class="section" id="foto-pro"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.proPhoto.badge + '</span></div>' +
-      sectionHead('Fotografia professionale', 'Fotografia professionale', 'Lo stesso piatto, fotografato in modo professionale: luce, composizione e colore fanno la differenza.', true) +
-      baSlider(
-        imgTag('heroPizza', 900, 506, 'Foto amatoriale della pizza', 'img-wm', '&#127829;'),
-        imgTag('pizza2', 900, 506, 'Foto professionale della pizza', '', '&#127829;'),
-        'Prima · amatoriale', 'Dopo · professionale'
-      ) +
-      '<p class="ba-note"><b>Risultato:</b> piatti più appetitosi e un sito che trasmette subito la qualità del locale.</p>' +
-      '</div></section>'
+      '<section class="section alt" id="degustazioni"><div class="container">' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.degustazioni.badge + '</span></div>' +
+      sectionHead('Esperienze', 'Degustazioni & corsi', 'Il locale non è solo un ristorante: ogni settimana esperienze a tavola e in cucina.', true) +
+      '<div class="deg-grid">' +
+      '<div class="deg-card reveal"><span class="deg-ico">' + icon('wine') + '</span><b>Degustazione vini</b>' +
+      '<p>Cinque etichette scelte dal sommelier, accompagnate da assaggi di stagione.</p>' +
+      '<span class="deg-price">&euro;35 a persona</span><span class="deg-when">Sabato &middot; ore 18:30</span></div>' +
+      '<div class="deg-card reveal reveal-d1"><span class="deg-ico">' + icon('pen') + '</span><b>Corso di cucina</b>' +
+      '<p>Impasti, lievitazione e cottura nel forno a legna: mani in pasta per un pomeriggio.</p>' +
+      '<span class="deg-price">&euro;60 a persona</span><span class="deg-when">Domenica &middot; ore 16:00</span></div>' +
+      '<div class="deg-card reveal reveal-d2"><span class="deg-ico">' + icon('star') + '</span><b>Masterclass pizza</b>' +
+      '<p>Dal San Marzano alla mozzarella di bufala: il maestro pizzaiolo svela i segreti dell\'impasto.</p>' +
+      '<span class="deg-price">&euro;45 a persona</span><span class="deg-when">Gioved&igrave; &middot; ore 19:00</span></div>' +
+      '</div></div></section>'
     );
   }
 
-  function photoEditHTML() {
+  /* ---------- 19b. BUONI REGALO (funzione) ---------- */
+  function giftCardHTML() {
     return (
-      '<section class="section alt" id="editing"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.photoEdit.badge + '</span></div>' +
-      sectionHead('Editing & ritocco', 'Editing foto / ritocco', 'Correzione colore, pulizia e rimozione di elementi di disturbo come i watermark.', true) +
-      baSlider(
-        '<div class="ba-wm" aria-hidden="true">WATERMARK</div>' + imgTag('pasta', 900, 506, 'Prima del ritocco: foto con watermark', 'img-wm', '&#127837;'),
-        imgTag('pasta', 900, 506, 'Dopo il ritocco: foto pulita', '', '&#127837;'),
-        'Prima · watermark', 'Dopo · ritocco'
-      ) +
-      '<p class="ba-note"><b>Risultato:</b> immagini pulite, senza watermark, coerenti con la palette del sito.</p>' +
-      '</div></section>'
+      '<section class="section" id="regali"><div class="container">' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.giftCard.badge + '</span></div>' +
+      sectionHead('Idea regalo', 'Buoni regalo', 'Un pasto, una degustazione o un corso: il regalo perfetto per chi ama la buona tavola.', true) +
+      '<div class="gift-grid">' +
+      '<div class="gift-card reveal"><span class="gift-ico">' + icon('gift') + '</span><b>Buono &euro;25</b>' +
+      '<p>Per un pranzo o una cena informale a due passi dal forno.</p><span class="gift-val">&euro;25</span></div>' +
+      '<div class="gift-card hot reveal reveal-d1"><span class="gift-ico">' + icon('gift') + '</span><b>Buono &euro;50</b>' +
+      '<p>Il pi&ugrave; regalato: cena completa per due con dolce incluso.</p><span class="gift-val">&euro;50</span></div>' +
+      '<div class="gift-card reveal reveal-d2"><span class="gift-ico">' + icon('gift') + '</span><b>Buono &euro;100</b>' +
+      '<p>Degustazione vini o corso di cucina: un\'esperienza da regalare.</p><span class="gift-val">&euro;100</span></div>' +
+      '</div></div></section>'
     );
   }
 
-  /* ---------- 19. LOGO / IDENTITÀ VISIVA (funzione) ---------- */
-  function logoHTML() {
+  /* ---------- 19c. PROGRAMMA FEDELTÀ (funzione) ---------- */
+  function loyaltyHTML() {
     return (
-      '<section class="section" id="identita"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.logo.badge + '</span></div>' +
-      sectionHead('Logo & identità', 'Identità visiva', 'Due varianti dello stesso logo: una per fondi chiari, una per fondi scuri.', true) +
-      '<div class="logo-grid">' +
-      '<div class="logo-card light reveal"><div><div class="logo-mark">' +
-      '<div class="logo-square">' + logoEmblem() + '</div><div class="logo-type"><b>' + siteName() + '</b><span>Pizzeria &middot; 1978</span></div></div>' +
-      '<p class="logo-cap">Variante chiara</p></div></div>' +
-      '<div class="logo-card dark reveal reveal-d1"><div><div class="logo-mark">' +
-      '<div class="logo-square">' + logoEmblem() + '</div><div class="logo-type"><b>' + siteName() + '</b><span>Pizzeria &middot; 1978</span></div></div>' +
-      '<p class="logo-cap" style="color:inherit;opacity:.6">Variante scura</p></div></div>' +
+      '<section class="section alt" id="fedelta"><div class="container">' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.loyalty.badge + '</span></div>' +
+      sectionHead('Grazie di tornare', 'Programma fedeltà', '1 punto ogni &euro;10 spesi, premi a ogni livello e un omaggio al compleanno.', true) +
+      '<div class="loy-card reveal">' +
+      '<div class="loy-tiers">' +
+      '<span class="loy-tier"><i>' + icon('users') + '</i>Amatore</span>' +
+      '<span class="loy-tier mid"><i>' + icon('star') + '</i>Conoscitore &middot; da 100 punti</span>' +
+      '<span class="loy-tier top"><i>' + icon('calendar') + '</i>Ambasciatore &middot; da 250 punti</span>' +
+      '</div>' +
+      '<div class="loy-bar"><div class="loy-fill" style="width:42%"></div></div>' +
+      '<p class="loy-prog">8 punti su 20 per passare al livello <b>Conoscitore</b></p>' +
+      '</div></div></section>'
+    );
+  }
+
+  /* ---------- 19d. LA NOSTRA STORIA (funzione) ---------- */
+  function storiaHTML() {
+    return (
+      '<section class="section" id="storia"><div class="container">' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.storia.badge + '</span></div>' +
+      sectionHead('Dal 1978', 'La nostra storia', 'Tre generazioni, lo stesso forno a legna e la stessa ossessione per l\'impasto.', true) +
+      '<div class="storia-timeline">' +
+      '<div class="storia-item reveal"><span class="storia-year">1978</span><div><b>Il forno si accende</b><p>Nonno Mario apre la prima pizzeria in via dei Fornai: 4 tavoli e un forno a legna.</p></div></div>' +
+      '<div class="storia-item reveal reveal-d1"><span class="storia-year">1995</span><div><b>Seconda generazione</b><p>La famiglia raddoppia la sala e porta a Roma la vera pizza napoletana a lunga lievitazione.</p></div></div>' +
+      '<div class="storia-item reveal reveal-d2"><span class="storia-year">2012</span><div><b>La nuova sala</b><p>Ristrutturazione completa: sala degustazioni, cantina e serate dal vivo ogni fine settimana.</p></div></div>' +
+      '<div class="storia-item reveal reveal-d3"><span class="storia-year">Oggi</span><div><b>Ancora qui</b><p>Terza generazione ai fornelli, la ricetta del 1978 e un menu di stagione che cambia ogni mese.</p></div></div>' +
       '</div></div></section>'
     );
   }
@@ -1105,19 +1129,20 @@
 
     section += aboutHTML();
     section += statsHTML();
+    if (AppState.features.storia) section += storiaHTML();
     section += AppState.features.digitalMenu ? digitalMenuHTML() : baseMenuHTML();
+    if (AppState.features.degustazioni) section += degustazioniHTML();
     if (AppState.features.extraPage) section += eventsHTML();
     if (AppState.features.blog) section += blogHTML();
     if (AppState.features.qrCode) section += qrHTML();
     if (AppState.features.booking) section += bookingHTML();
     if (AppState.features.gallery) section += galleryHTML();
     if (AppState.features.socialFeed) section += socialHTML();
-    if (AppState.features.proPhoto) section += proPhotoHTML();
-    if (AppState.features.photoEdit) section += photoEditHTML();
-    if (AppState.features.logo) section += logoHTML();
+    if (AppState.features.giftCard) section += giftCardHTML();
     if (AppState.features.googleBusiness) section += googleBusinessHTML();
     if (AppState.features.copywriting) section += copywritingHTML();
     if (AppState.features.review) section += reviewHTML();
+    if (AppState.features.loyalty) section += loyaltyHTML();
     section += testimonialsHTML();
     section += contactHTML();
     if (AppState.features.map) section += mapHTML();
