@@ -775,7 +775,7 @@
       'var root=document.documentElement;' +
       'var feats=(root.getAttribute("data-features")||"").split(" ").filter(Boolean);' +
       'function has(f){return feats.indexOf(f)>-1;}' +
-      'var DICT=' + JSON.stringify(DICT) + ';var lang="it";' +
+      'var DICT=' + JSON.stringify(DICT) + ';var lang="' + (AppState.lang || 'it') + '";' +
       'function mark(field,bad){field.classList.toggle("invalid",bad);return bad;}' +
 
       /* --- multilingua --- */
@@ -783,7 +783,8 @@
       'var els=document.querySelectorAll("[data-i18n]");for(var i=0;i<els.length;i++){var k=els[i].getAttribute("data-i18n");if(DICT[k]&&DICT[k][l]){els[i].innerHTML=DICT[k][l];}}' +
       'var phs=document.querySelectorAll("[data-i18n-ph]");for(var j=0;j<phs.length;j++){var k2=phs[j].getAttribute("data-i18n-ph");if(DICT[k2]&&DICT[k2][l]){phs[j].setAttribute("placeholder",DICT[k2][l]);}}' +
       'var btns=document.querySelectorAll(".lang-btn");for(var b=0;b<btns.length;b++){btns[b].classList.toggle("is-active",btns[b].getAttribute("data-lang")===l);}}' +
-      'var lbtns=document.querySelectorAll(".lang-btn");for(var lbi=0;lbi<lbtns.length;lbi++){(function(btn){btn.addEventListener("click",function(){applyLang(btn.getAttribute("data-lang"));});})(lbtns[lbi]);}' +
+      'var lbtns=document.querySelectorAll(".lang-btn");for(var lbi=0;lbi<lbtns.length;lbi++){(function(btn){btn.addEventListener("click",function(){var nl=btn.getAttribute("data-lang");applyLang(nl);if(window.parent&&window.parent.postMessage){try{window.parent.postMessage({type:"fn-lang",lang:nl},"*");}catch(e){}}});})(lbtns[lbi]);}' +
+      'applyLang(lang);' +
 
       /* --- menu mobile --- */
       'var nt=document.querySelector(".nav-toggle");' +
@@ -921,7 +922,7 @@
     );
 
     return (
-      '<!doctype html><html lang="it" data-palette="' + AppState.palette + '" data-features="' + feats.join(' ') + '">' +
+      '<!doctype html><html lang="' + (AppState.lang || 'it') + '" data-palette="' + AppState.palette + '" data-features="' + feats.join(' ') + '">' +
       '<head>' + head + '</head>' + body + '</html>'
     );
   }

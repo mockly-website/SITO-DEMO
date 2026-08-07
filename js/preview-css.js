@@ -34,12 +34,12 @@ window.PREVIEW_CSS = `
 }
 [data-palette="bio"]{
   --bg:#EDE6D6; --bg-alt:#E4DAC4; --surface:#FBF9F3; --text:#33422F;
-  --muted:#6B7860; --accent:#5C7A5C; --accent-2:#7A5C3E; --border:#D8CDB4;
+  --muted:#5C6B54; --accent:#5C7A5C; --accent-2:#7A5C3E; --border:#D8CDB4;
   --on-accent:#FFFFFF;
 }
 [data-palette="minimal"]{
   --bg:#FAFAFA; --bg-alt:#F0F0F0; --surface:#FFFFFF; --text:#1A1A1A;
-  --muted:#777777; --accent:#C9A227; --accent-2:#1A1A1A; --border:#E6E6E6;
+  --muted:#6B6B6B; --accent:#C9A227; --accent-2:#1A1A1A; --border:#E6E6E6;
   --on-accent:#14161B;
 }
 html{scroll-behavior:smooth}

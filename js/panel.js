@@ -234,6 +234,7 @@
     S.layout = 'essential';
     S.palette = 'trattoria';
     S.view = 'desktop';
+    S.lang = 'it';
     Object.keys(S.features).forEach(function (k) { S.features[k] = false; });
     buildLayouts();
     buildPalettes();
@@ -249,14 +250,31 @@
   function setPanel(open) {
     document.body.classList.toggle('panel-open', open);
     toggle.hidden = open ? true : !isDesktop();
-    /* la larghezza disponibile cambia con la transizione del pannello */
+    /* la larghezza disponibile cambia con la transizione del pannello:
+       ricalcola alla fine della transizione, con fallback a tempo */
     clearTimeout(scaleTimer);
-    scaleTimer = setTimeout(applyScale, 400);
+    scaleTimer = setTimeout(applyScale, 500);
   }
+
+  /* Alla fine della transizione del pannello (padding-right) il ricalcolo
+     della scala avviene in sincrono, senza scatti */
+  document.querySelector('.app').addEventListener('transitionend', function (e) {
+    if (e.propertyName === 'padding-right' && e.target.classList.contains('app')) {
+      clearTimeout(scaleTimer);
+      applyScale();
+    }
+  });
 
   document.getElementById('panelClose').addEventListener('click', function () { setPanel(false); });
   toggle.addEventListener('click', function () { setPanel(true); });
   document.getElementById('resetBtn').addEventListener('click', reset);
+
+  /* La lingua scelta dentro l'anteprima persiste anche dopo un rebuild */
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'fn-lang' && (e.data.lang === 'it' || e.data.lang === 'en')) {
+      S.lang = e.data.lang;
+    }
+  });
 
   /* Apre la configurazione corrente in una nuova scheda, a tutto schermo */
   document.getElementById('fullscreenBtn').addEventListener('click', function () {

@@ -59,6 +59,7 @@
     layout: 'essential',          // essential | classic | modern
     palette: 'trattoria',         // trattoria | notte | mediterraneo | bio | minimal
     view: 'desktop',              // desktop | mobile
+    lang: 'it',                   // it | en (persiste tra i rebuild)
     features: {
       extraPage:       false,
       blog:            false,

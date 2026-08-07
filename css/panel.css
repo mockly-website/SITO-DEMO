@@ -69,7 +69,7 @@ body.panel-open .app { padding-right: 360px; }
   will-change: transform;
   height: calc(100vh - 130px);
 }
-.stage-wrap.is-desktop { width: 1440px; }
+.stage-wrap.is-desktop { width: 1440px; transition: width .3s var(--ease), transform .3s var(--ease); }
 .stage-wrap.is-mobile { width: auto; height: auto; }
 
 .device-frame {
