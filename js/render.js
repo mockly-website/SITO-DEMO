@@ -983,6 +983,12 @@
       'if(nt){nt.addEventListener("click",function(e){e.preventDefault();document.body.classList.toggle("nav-open");});}' +
       'document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest(".nav-links a")){document.body.classList.remove("nav-open");}});' +
 
+      /* --- ancoraggi: scroll fluido senza navigazione (niente reload dell'iframe) --- */
+      'document.addEventListener("click",function(e){' +
+      'var a=e.target.closest?e.target.closest("a[href^=\\"#\\"]"):null;if(!a)return;' +
+      'var t=document.querySelector(a.getAttribute("href"));if(!t){e.preventDefault();return;}' +
+      'e.preventDefault();t.scrollIntoView({behavior:"smooth",block:"start"});document.body.classList.remove("nav-open");});' +
+
       /* --- menu digitale: filtri + dettaglio --- */
       'var dishes=' + JSON.stringify(DISHES) + ';' +
       'var dishImgs=' + JSON.stringify(DISH_IMGS) + ';' +

@@ -63,6 +63,7 @@ window.PREVIEW_CSS = `
   --on-accent:#FFFFFF;
 }
 html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:72px}
 body{font-family:var(--font-sans);color:var(--text);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
