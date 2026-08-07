@@ -63,10 +63,24 @@
     }
   }
 
-  var scaleTimer = null;
-  function scheduleScale() {
-    clearTimeout(scaleTimer);
-    scaleTimer = setTimeout(applyScale, 100);
+  /* La scala segue le dimensioni REALI dello stage tramite ResizeObserver:
+     nessuna ipotesi sui tempi delle transizioni CSS. Un debounce via
+     requestAnimationFrame evita ricalcoli eccessivi durante il resize. */
+  var rafId = null;
+  function onStageSizeChange() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(function () {
+      rafId = null;
+      applyScale();
+    });
+  }
+  function initScaleObserver() {
+    var st = stageEl();
+    if (window.ResizeObserver && st) {
+      new ResizeObserver(onStageSizeChange).observe(st);
+    } else {
+      window.addEventListener('resize', onStageSizeChange);
+    }
   }
 
   /* ---------- RENDER ---------- */
@@ -78,7 +92,6 @@
   iframe.onload = function () {
     document.getElementById('app').classList.remove('rendering');
     applyPaletteToDoc();
-    applyScale();
   };
 
   /* Cambio palette senza ricostruire: aggiorna solo data-palette */
@@ -250,20 +263,9 @@
   function setPanel(open) {
     document.body.classList.toggle('panel-open', open);
     toggle.hidden = open ? true : !isDesktop();
-    /* la larghezza disponibile cambia con la transizione del pannello:
-       ricalcola alla fine della transizione, con fallback a tempo */
-    clearTimeout(scaleTimer);
-    scaleTimer = setTimeout(applyScale, 500);
+    /* la scala si aggiorna da sola: il ResizeObserver su .stage osserva
+       la larghezza che cambia con la transizione del pannello */
   }
-
-  /* Alla fine della transizione del pannello (padding-right) il ricalcolo
-     della scala avviene in sincrono, senza scatti */
-  document.querySelector('.app').addEventListener('transitionend', function (e) {
-    if (e.propertyName === 'padding-right' && e.target.classList.contains('app')) {
-      clearTimeout(scaleTimer);
-      applyScale();
-    }
-  });
 
   document.getElementById('panelClose').addEventListener('click', function () { setPanel(false); });
   toggle.addEventListener('click', function () { setPanel(true); });
@@ -295,11 +297,11 @@
   setPanel(isDesktop());
   updateMeta();
   renderPreview();
-  applyScale();
+  initScaleObserver();
 
   window.addEventListener('resize', function () {
     if (!document.body.classList.contains('panel-open')) toggle.hidden = !isDesktop();
-    scheduleScale();
+    /* il ResizeObserver su .stage gestisce già il ricalcolo della scala */
   });
 
   /* Deep-link via hash per preselezionare la demo, es.:
