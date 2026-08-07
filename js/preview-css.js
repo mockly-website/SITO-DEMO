@@ -8,8 +8,8 @@ window.PREVIEW_CSS = `
 /* ---------- 1. RESET & BASE ---------- */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --font-serif:Georgia,"Times New Roman",serif;
+  --font-sans:'Outfit',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --font-serif:'Fraunces',Georgia,"Times New Roman",serif;
   --radius:16px; --radius-s:10px;
   --ease:cubic-bezier(.22,.61,.36,1);
   --shadow:0 18px 50px rgba(0,0,0,.14);
@@ -202,7 +202,8 @@ input,select,textarea{font-family:inherit}
 .modal-card{background:var(--surface);color:var(--text);max-width:540px;width:100%;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);animation:pop .32s var(--ease)}
 .modal-card img{width:100%;aspect-ratio:16/9;object-fit:cover}
 .modal-body{padding:24px}
-.modal-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);color:#111;font-size:16px;z-index:5}
+.modal-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);color:#111;font-size:16px;z-index:5;display:grid;place-items:center}
+.modal-close .ico{width:18px;height:18px}
 .modal-close:hover{transform:scale(1.08)}
 .modal-title{font-size:1.4rem;margin-bottom:8px}
 .modal-desc{color:var(--muted);margin-bottom:14px}
@@ -318,6 +319,7 @@ input,select,textarea{font-family:inherit}
 .cw-pro .hl{background:color-mix(in srgb,var(--accent) 16%,transparent);border-radius:4px;padding:0 4px;cursor:help;position:relative}
 .cw-plain-tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg-alt);padding:4px 12px;border-radius:999px}
 .cw-pro-tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:4px 12px;border-radius:999px}
+.cw-pro-tag .ico{width:11px;height:11px}
 
 /* ---------- 18. IDENTITÀ VISIVA / LOGO (funzione) ---------- */
 .logo-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:860px;margin-inline:auto}

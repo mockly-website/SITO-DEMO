@@ -268,6 +268,7 @@
       star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" fill="currentColor" stroke="none"/>',
       ig: '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>',
       fb: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+      pen: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',
       music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'
     };
     return '<svg class="ico' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (I[name] || '') + '</svg>';
@@ -493,7 +494,7 @@
       '<section class="section alt" id="menu"><div class="container">' +
       sectionHead('dm_kicker', 'dm_title', 'dm_sub') +
       '<div class="dm-toolbar"><div class="dm-filters">' + chips + '</div>' +
-      '<span class="fx-tag" style="flex:none">&#9733; ' + D.FEATURES.digitalMenu.badge + '</span></div>' +
+      '<span class="fx-tag" style="flex:none">' + icon('star') + ' ' + D.FEATURES.digitalMenu.badge + '</span></div>' +
       '<div class="dm-grid">' + cards + '</div>' +
       '<p class="dm-hint">Tocca un piatto per vederne i dettagli</p>' +
       '</div></section>'
@@ -770,7 +771,7 @@
       '<div class="cw-grid">' +
       '<div class="cw-card reveal"><h3><span class="cw-plain-tag">Testo semplice</span></h3>' +
       '<p class="cw-plain">Siamo una pizzeria. Facciamo pizze buone. Siamo aperti tutti i giorni. Vi aspettiamo. Venite a trovarci presto. Il nostro numero è questo qui sotto. Ciao.</p></div>' +
-      '<div class="cw-card reveal reveal-d1"><h3><span class="cw-pro-tag">&#9999; Testo professionale</span></h3>' +
+      '<div class="cw-card reveal reveal-d1"><h3><span class="cw-pro-tag">' + icon('pen') + ' Testo professionale</span></h3>' +
       '<p class="cw-pro">Dal 1978 impastiamo ogni giorno con <b>farine macinate a pietra</b> e lievitazioni lente fino a <b>72 ore</b>. Il risultato? Una pizza <span class="hl">leggera, digeribile e dal cornicione alveolato</span>, cotta nel nostro forno a legna. Vi aspettiamo dal martedì alla domenica, dalle 19:00: prenotate il vostro tavolo in un click.' +
       '<span class="tip-box"><b>Perché funziona?</b><br>Parole concrete, benefici per il cliente e una call-to-action chiara: così i testi comunicano valore, non solo informazioni.</span></p></div>' +
       '</div></div></section>'
@@ -932,7 +933,7 @@
       '}});})(chips[ci]);}' +
       'function openDish(idx){var d=dishes[idx];if(!d)return;var m=document.getElementById("dishModal");' +
       'var tags="";for(var t=0;t<d.tags.length;t++){tags+="<span>"+d.tags[t]+"</span>";}' +
-      'm.innerHTML="<button class=\\"modal-close\\">\\u2715</button>"+"<img src=\\""+dishImgs[idx].src+"\\" alt=\\"\\">"+"<div class=\\"modal-body\\"><h3 class=\\"modal-title\\">"+d.name+"</h3><p class=\\"modal-desc\\">"+d.desc+"</p><div class=\\"dish-tags\\">"+tags+"</div></div>";' +
+      'm.innerHTML="<button class=\\"modal-close\\"><svg class=\\"ico\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1.8\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" aria-hidden=\\"true\\"><line x1=\\"18\\" y1=\\"6\\" x2=\\"6\\" y2=\\"18\\"/><line x1=\\"6\\" y1=\\"6\\" x2=\\"18\\" y2=\\"18\\"/></svg></button>"+"<img src=\\""+dishImgs[idx].src+"\\" alt=\\"\\">"+"<div class=\\"modal-body\\"><h3 class=\\"modal-title\\">"+d.name+"</h3><p class=\\"modal-desc\\">"+d.desc+"</p><div class=\\"dish-tags\\">"+tags+"</div></div>";' +
       'var mi=m.querySelector("img");if(mi){mi.onerror=function(){this.onerror=null;this.src=dishImgs[idx].fb;};}' +
       'm.className="modal open";}' +
       'var dishEls=document.querySelectorAll(".dish[data-idx]");for(var di=0;di<dishEls.length;di++){(function(el){el.addEventListener("click",function(){openDish(+el.getAttribute("data-idx"));});})(dishEls[di]);}' +
@@ -1047,6 +1048,9 @@
       '<meta charset="utf-8">' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">' +
       '<title>Forno Nero &mdash; Pizzeria &amp; Cucina Napoletana</title>' +
+      '<link rel="preconnect" href="https://fonts.googleapis.com">' +
+      '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
+      '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..900&family=Outfit:wght@400..800&display=swap" rel="stylesheet">' +
       '<style>' + window.PREVIEW_CSS + '</style>' +
       (AppState.features.seo ? seoJSONLD() : '')
     );
