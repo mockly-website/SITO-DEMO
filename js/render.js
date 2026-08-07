@@ -462,7 +462,7 @@
       '<span class="kicker" data-i18n="about_kicker">' + DICT.about_kicker.it + '</span>' +
       '<h2 class="sec-title" data-i18n="about_title">' + DICT.about_title.it + '</h2>' +
       '<p class="sec-sub" data-i18n="about_text">' + DICT.about_text.it + '</p>' + facts +
-      '</div>' + (layout === 'essential' ? '' : media) +
+      '</div>' + (layout === 'classic' ? '' : media) +
       '</div></div></section>'
     );
   }
