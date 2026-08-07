@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configuratore Live &mdash; Demo interattiva per locali</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127829;</text></svg>">
+  <link rel="stylesheet" href="css/panel.css">
+</head>
+<body>
+  <div class="app" id="app">
+
+    <!-- AREA ANTEPRIMA -->
+    <main class="preview-area">
+      <div class="preview-head">
+        <span class="live-dot"></span>
+        <span>Demo dal vivo &middot; tutto interattivo, nessun reload</span>
+        <span class="preview-meta" id="previewMeta"></span>
+      </div>
+      <div class="stage">
+        <div class="device-frame" id="deviceFrame">
+          <div class="phone-bar">
+            <span class="pb-notch"></span>
+            <span>21:30</span>
+            <span class="pb-ico">&#128246;&#128268;</span>
+          </div>
+          <iframe id="preview" class="preview-iframe" title="Anteprima sito demo"></iframe>
+        </div>
+      </div>
+    </main>
+
+    <!-- PANNELLO DI CONTROLLO -->
+    <aside class="panel" id="panel" aria-label="Pannello di controllo">
+      <div class="panel-head">
+        <div>
+          <span class="panel-badge">Live Configurator</span>
+          <h1>Configura il sito</h1>
+          <p class="panel-sub">Struttura, colori e funzioni extra: l'anteprima reagisce in tempo reale.</p>
+        </div>
+        <button class="panel-close" id="panelClose" aria-label="Chiudi pannello" title="Chiudi">&times;</button>
+      </div>
+      <div class="panel-scroll">
+
+        <div class="panel-group">
+          <label class="group-label">Anteprima</label>
+          <div class="seg" id="viewToggle">
+            <button class="seg-btn is-active" data-view="desktop">&#128187; Desktop</button>
+            <button class="seg-btn" data-view="mobile">&#128241; Mobile</button>
+          </div>
+        </div>
+
+        <div class="panel-group">
+          <label class="group-label">Struttura</label>
+          <div class="layout-cards" id="layoutCards"></div>
+        </div>
+
+        <div class="panel-group">
+          <label class="group-label">Palette colori</label>
+          <div class="swatches" id="swatches"></div>
+        </div>
+
+        <div class="panel-group">
+          <label class="group-label">Funzionalit&agrave; extra</label>
+          <div class="accordion" id="accordion"></div>
+        </div>
+
+        <button class="reset-btn" id="resetBtn" type="button">&#8635; Ripristina demo</button>
+        <p class="panel-foot">Demo interattiva per presentazione &mdash; contenuti fittizi, nessun prezzo mostrato.</p>
+      </div>
+    </aside>
+
+    <!-- PULSANTE PER RIAPRIRE IL PANNELLO -->
+    <button class="panel-toggle" id="panelToggle" aria-label="Apri pannello" title="Apri pannello">&#9881;</button>
+  </div>
+
+  <script src="js/state.js"></script>
+  <script src="js/preview-css.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/panel.js"></script>
+</body>
+</html>
