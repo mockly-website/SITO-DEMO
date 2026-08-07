@@ -15,7 +15,7 @@ window.PREVIEW_CSS = `
   --shadow:0 18px 50px rgba(0,0,0,.14);
   --shadow-sm:0 6px 20px rgba(0,0,0,.10);
 }
-/* Le 5 palette. Cambio palette = cambia solo data-palette sul <html>:
+/* Le 9 palette. Cambio palette = cambia solo data-palette sul <html>:
    le custom-property si aggiornano istantaneamente senza rebuild. */
 [data-palette="trattoria"]{
   --bg:#F4E9DA; --bg-alt:#EFDFC9; --surface:#FFFFFF; --text:#2E2A26;
@@ -41,6 +41,26 @@ window.PREVIEW_CSS = `
   --bg:#FAFAFA; --bg-alt:#F0F0F0; --surface:#FFFFFF; --text:#1A1A1A;
   --muted:#6B6B6B; --accent:#C9A227; --accent-2:#1A1A1A; --border:#E6E6E6;
   --on-accent:#14161B;
+}
+[data-palette="solare"]{
+  --bg:#FFF8E7; --bg-alt:#FCEFD3; --surface:#FFFFFF; --text:#4A3B2F;
+  --muted:#8A7A68; --accent:#E8A020; --accent-2:#C47F14; --border:#F0E3C6;
+  --on-accent:#241A08;
+}
+[data-palette="oceano"]{
+  --bg:#EEF5F4; --bg-alt:#E0ECEA; --surface:#FFFFFF; --text:#12343B;
+  --muted:#4E6E75; --accent:#0E7C7B; --accent-2:#2AA79B; --border:#CFE0DE;
+  --on-accent:#FFFFFF;
+}
+[data-palette="rosa"]{
+  --bg:#FBF1F2; --bg-alt:#F7E3E6; --surface:#FFFFFF; --text:#4A2E33;
+  --muted:#8A6A70; --accent:#C2455D; --accent-2:#A53A4F; --border:#F0D8DC;
+  --on-accent:#FFFFFF;
+}
+[data-palette="grafite"]{
+  --bg:#191C22; --bg-alt:#21252D; --surface:#262B34; --text:#EEF0F4;
+  --muted:#9AA2AF; --accent:#3D6DE0; --accent-2:#6B96F0; --border:#343A45;
+  --on-accent:#FFFFFF;
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--font-sans);color:var(--text);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -302,9 +322,7 @@ input,select,textarea{font-family:inherit}
 .gbp-rev{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;color:var(--muted);background:var(--bg-alt);padding:12px;border-radius:12px}
 .gbp-rev b{color:var(--text)}
 
-/* ---------- 16. SEO CHIP (funzione) ---------- */
-.seo-chip{position:fixed;bottom:18px;left:18px;z-index:60;display:flex;align-items:center;gap:8px;background:var(--text);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:12.5px;font-weight:700;box-shadow:var(--shadow-sm);cursor:help}
-.seo-chip .dot{width:8px;height:8px;border-radius:50%;background:#2ecc71;animation:pulse 1.6s infinite}
+/* ---------- 16. TOOLTIP (usato dal copywriting) ---------- */
 .tip{position:relative}
 .tip-box{position:absolute;bottom:calc(100% + 12px);left:0;width:250px;padding:14px 16px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:12px;font-size:12.5px;line-height:1.5;opacity:0;pointer-events:none;transform:translateY(6px);transition:.25s var(--ease);box-shadow:var(--shadow);z-index:70;font-weight:400}
 .tip:hover .tip-box{opacity:1;transform:none}
@@ -421,7 +439,7 @@ input,select,textarea{font-family:inherit}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 @keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-24px) scale(1.08)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes wa-pulse{0%{transform:scale(1);opacity:.8}70%{transform:scale(1.45);opacity:0}100%{opacity:0}}
 .fx-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 .fx-anim .hero,.fx-anim .section-head,.fx-anim section{position:relative;z-index:1}
 .fx-anim .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -463,6 +481,30 @@ input,select,textarea{font-family:inherit}
 .book-float{position:fixed;right:22px;bottom:22px;z-index:50;display:inline-flex;align-items:center;gap:9px;padding:14px 22px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:15px;box-shadow:0 14px 30px -10px var(--accent);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
 .book-float:hover{transform:translateY(-3px);box-shadow:0 18px 36px -12px var(--accent)}
 .book-float .ico{width:17px;height:17px}
+
+/* Pulsante WhatsApp flottante (a sinistra per non sovrapporsi al Prenota) */
+.wa-float{position:fixed;left:22px;bottom:22px;z-index:50;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 14px 30px -10px rgba(37,211,102,.8);transition:transform .25s var(--ease)}
+.wa-float:hover{transform:scale(1.08)}
+.wa-float .ico{width:30px;height:30px}
+.wa-float .wa-tip{position:absolute;left:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(-6px);background:var(--surface);color:var(--text);border:1px solid var(--border);box-shadow:var(--shadow);font-size:12.5px;font-weight:700;white-space:nowrap;padding:9px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s var(--ease)}
+.wa-float:hover .wa-tip{opacity:1;transform:translateY(-50%)}
+.wa-float::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(37,211,102,.55);animation:wa-pulse 2.2s ease-out infinite}
+
+/* Mappa interattiva */
+.map-card{max-width:880px;margin-inline:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.map-canvas{position:relative;height:340px;overflow:hidden;background:var(--bg-alt)}
+.map-canvas svg{width:100%;height:100%;display:block;transition:transform .35s var(--ease);transform-origin:50% 55%}
+.map-pin{position:absolute;left:50%;top:52%;transform:translate(-50%,-100%);display:grid;place-items:center;color:var(--accent);transition:transform .35s var(--ease);transform-origin:50% 100%}
+.map-pin .ico{width:46px;height:46px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.3))}
+.map-pin-label{position:absolute;top:-42px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);font-size:11.5px;font-weight:700;white-space:nowrap;padding:5px 12px;border-radius:999px;box-shadow:var(--shadow-sm)}
+.map-pin-label::after{content:"";position:absolute;left:50%;bottom:-5px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--text)}
+.map-zoom{position:absolute;right:14px;bottom:14px;z-index:3;display:flex;flex-direction:column;gap:6px}
+.map-zoom button{width:38px;height:38px;border-radius:11px;background:var(--surface);color:var(--text);border:1px solid var(--border);box-shadow:var(--shadow-sm);display:grid;place-items:center;transition:.2s}
+.map-zoom button:hover{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.map-zoom .ico{width:17px;height:17px}
+.map-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;flex-wrap:wrap;border-top:1px solid var(--border)}
+.map-addr{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:.92rem}
+.map-addr .ico{width:15px;height:15px;color:var(--accent)}
 
 /* Blog: avatar autore */
 .post-meta{align-items:center}

@@ -13,7 +13,11 @@
     notte:        { a: '#4A1D22', b: '#121212' },
     mediterraneo: { a: '#1B3A4B', b: '#0F2530' },
     bio:          { a: '#5C7A5C', b: '#3E523E' },
-    minimal:      { a: '#C9A227', b: '#8f7220' }
+    minimal:      { a: '#C9A227', b: '#8f7220' },
+    solare:       { a: '#E8A020', b: '#B97E16' },
+    oceano:       { a: '#0E7C7B', b: '#07504F' },
+    rosa:         { a: '#C2455D', b: '#8F2E42' },
+    grafite:      { a: '#3D6DE0', b: '#1E3A8A' }
   };
 
   /* ---------- 1. UTILITY: immagini placeholder (SVG data-uri) ---------- */
@@ -87,6 +91,23 @@
       '" loading="lazy" decoding="async"' +
       ' onerror="this.onerror=null;this.src=__ph(' + w + ',' + h + ',\'' + e + '\')">';
   }
+
+  /* ---------- 1c. CONTENUTI PERSONALIZZABILI (dal pannello) ---------- */
+  function site() { return AppState.site || {}; }
+
+  /* Monogramma del brand: iniziali delle prime due parole del nome */
+  function siteMark() {
+    var n = String(site().name || 'Forno Nero').trim().split(/\s+/);
+    var m = (n[0] ? n[0].charAt(0) : '') + (n[1] ? n[1].charAt(0) : (n[0] ? n[0].charAt(1) : ''));
+    return m.toUpperCase() || 'FN';
+  }
+
+  function waLink() {
+    return 'https://wa.me/' + String(site().whatsapp || '').replace(/[^\d]/g, '');
+  }
+
+  function siteName() { return esc(site().name || 'Forno Nero'); }
+  function siteTagline() { return esc(site().tagline || ''); }
 
   /* ---------- 2. QR CODE generato (placeholder deterministico) ---------- */
   function qrSVG(size) {
@@ -184,7 +205,6 @@
     nav_events: { it: 'Eventi', en: 'Events' },
     nav_blog: { it: 'Blog', en: 'Blog' },
     nav_contact: { it: 'Contatti', en: 'Contact' },
-    hero_tag: { it: 'Pizzeria &middot; Trattoria &middot; Forno a legna', en: 'Pizzeria &middot; Trattoria &middot; Wood-fired oven' },
     hero_title1: { it: 'Forno', en: 'Forno' },
     hero_title2: { it: 'Nero', en: 'Nero' },
     hero_sub: { it: 'Pizza napoletana e cucina di stagione. Impasto a lunga lievitazione e materie prime da filiera corta, ogni giorno dal 1978.', en: 'Neapolitan pizza and seasonal cooking. Long-leavened dough and short-chain ingredients, every day since 1978.' },
@@ -246,7 +266,12 @@
     testimonials_kicker: { it: 'Dicono di noi', en: 'What they say' },
     testimonials_title: { it: 'Le recensioni dei nostri ospiti', en: 'Reviews from our guests' },
     testimonials_sub: { it: 'Tre storie, tanti motivi per tornarci.', en: 'Three stories, plenty of reasons to come back.' },
-    float_book: { it: 'Prenota', en: 'Book' }
+    float_book: { it: 'Prenota', en: 'Book' },
+    wa_tip: { it: 'Scrivici su WhatsApp', en: 'Chat with us on WhatsApp' },
+    map_kicker: { it: 'Dove siamo', en: 'Where we are' },
+    map_title: { it: 'Il locale è qui', en: 'The place is here' },
+    map_sub: { it: 'Mappa interattiva con zoom e link alle indicazioni stradali.', en: 'Interactive map with zoom and a link to street directions.' },
+    map_open: { it: 'Apri in Google Maps', en: 'Open in Google Maps' }
   };
 
   /* ---------- 6. ICONE SVG inline (stroke-based, ereditano currentColor) ---------- */
@@ -269,9 +294,21 @@
       ig: '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>',
       fb: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
       pen: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',
-      music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'
+      music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+      nav: '<path d="M3 11l19-9-9 19-2-8-8-2z"/>',
+      plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+      minus: '<line x1="5" y1="12" x2="19" y2="12"/>'
     };
     return '<svg class="ico' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (I[name] || '') + '</svg>';
+  }
+
+  /* Icona WhatsApp: percorso pieno, il logo non è tracciabile a tratti */
+  function waIcon() {
+    return (
+      '<svg class="ico ico-wa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29z"/>' +
+      '</svg>'
+    );
   }
 
   function starsHTML(cls) {
@@ -294,8 +331,6 @@
       (sub ? tag(sub, 'p', 'sec-sub') : '') +
       '</div>';
   }
-
-  function reveal(cls) { return AppState.features.animations ? ' reveal ' + (cls || '') : ''; }
 
   /* ---------- 7. NAV ---------- */
   function navItems() {
@@ -328,7 +363,7 @@
 
   function headerHTML() {
     var layout = AppState.layout;
-    var brand = '<a class="nav-brand" href="#top"><span class="mark">FN</span><span>Forno Nero</span></a>';
+    var brand = '<a class="nav-brand" href="#top"><span class="mark">' + siteMark() + '</span><span>' + siteName() + '</span></a>';
     var h = '<header class="site-header"><div class="container nav">' + brand +
       navLinks() +
       '<div style="display:flex;align-items:center;gap:12px">' + langSwitch() +
@@ -345,7 +380,7 @@
         '<section class="hero" id="top"><div class="hero-orb"></div>' +
         '<div class="hero-pic" aria-hidden="true">' + imgTag('heroPizza', 900, 900, '', '', '&#127829;') + '</div>' +
         '<div class="container">' +
-        '<p class="hero-kicker" data-i18n="hero_tag">' + DICT.hero_tag.it + '</p>' +
+        '<p class="hero-kicker">' + siteTagline() + '</p>' +
         '<h1 class="hero-title" data-i18n="hero_title1">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
         '<p class="hero-sub" data-i18n="hero_sub">' + DICT.hero_sub.it + '</p>' +
         '<div class="hero-cta">' +
@@ -360,7 +395,7 @@
         '<section class="hero" id="top">' +
         '<div class="hero-bg" data-parallax style="--hero-img:url(&quot;' + imgUrl('interiorWarm', 1600, 1000).replace(/&/g, '&amp;') + '&quot;)"></div>' +
         '<div class="container hero-inner">' +
-        '<p class="hero-kicker" data-i18n="hero_tag">' + DICT.hero_tag.it + '</p>' +
+        '<p class="hero-kicker">' + siteTagline() + '</p>' +
         '<h1 class="hero-title" data-i18n="hero_title1">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
         '<p class="hero-sub" data-i18n="hero_sub">' + DICT.hero_sub.it + '</p>' +
         '<div class="hero-cta">' +
@@ -368,9 +403,9 @@
         '<a href="#contatti" class="btn btn-ghost" style="border-color:#fff;color:#fff" data-i18n="cta_book">' + DICT.cta_book.it + '</a>' +
         '</div>' +
         '<div class="hero-facts">' +
-        '<div class="hero-fact"><b data-i18n="fact_years">47</b><span data-i18n="fact_years">' + DICT.fact_years.it + '</span></div>' +
-        '<div class="hero-fact"><b>60</b><span>Coperti</span></div>' +
-        '<div class="hero-fact"><b>100%</b><span>Farine bio</span></div>' +
+        '<div class="hero-fact"><b>47</b><span data-i18n="fact_years">' + DICT.fact_years.it + '</span></div>' +
+        '<div class="hero-fact"><b>60</b><span data-i18n="fact_seats">' + DICT.fact_seats.it + '</span></div>' +
+        '<div class="hero-fact"><b>100%</b><span data-i18n="fact_flours">' + DICT.fact_flours.it + '</span></div>' +
         '</div></div></section>'
       );
     }
@@ -378,7 +413,7 @@
     return (
       '<section class="hero" id="top"><div class="container hero-grid">' +
       '<div class="hero-copy">' +
-      '<p class="hero-kicker" data-i18n="hero_tag">' + DICT.hero_tag.it + '</p>' +
+      '<p class="hero-kicker">' + siteTagline() + '</p>' +
       '<h1 class="hero-title">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
       '<p class="hero-sub" data-i18n="hero_sub">' + DICT.hero_sub.it + '</p>' +
       '<div class="hero-cta">' +
@@ -387,8 +422,8 @@
       '</div>' +
       '<div class="hero-stats">' +
       '<div><b>47</b><span data-i18n="fact_years">' + DICT.fact_years.it + '</span></div>' +
-      '<div><b>60</b><span>Coperti</span></div>' +
-      '<div><b>100%</b><span>Farine bio</span></div>' +
+      '<div><b>60</b><span data-i18n="fact_seats">' + DICT.fact_seats.it + '</span></div>' +
+      '<div><b>100%</b><span data-i18n="fact_flours">' + DICT.fact_flours.it + '</span></div>' +
       '</div></div>' +
       '<div class="hero-visual reveal">' +
       '<div class="hero-img-tilt">' + imgTag('pizza2', 600, 760, 'Pizza napoletana appena sfornata', '', '&#127829;') + '</div>' +
@@ -403,8 +438,8 @@
     var facts =
       '<div class="about-facts">' +
       '<div><b>47</b><span data-i18n="fact_years">' + DICT.fact_years.it + '</span></div>' +
-      '<div><b>60</b><span>Coperti</span></div>' +
-      '<div><b>100%</b><span>Farine bio</span></div></div>';
+      '<div><b>60</b><span data-i18n="fact_seats">' + DICT.fact_seats.it + '</span></div>' +
+      '<div><b>100%</b><span data-i18n="fact_flours">' + DICT.fact_flours.it + '</span></div></div>';
 
     if (layout === 'modern') {
       return (
@@ -705,53 +740,29 @@
       sectionHead('Logo & identità', 'Identità visiva', 'Due varianti dello stesso logo: una per fondi chiari, una per fondi scuri.', true) +
       '<div class="logo-grid">' +
       '<div class="logo-card light reveal"><div><div class="logo-mark">' +
-      '<div class="logo-square">FN</div><div class="logo-type"><b>Forno Nero</b><span>Pizzeria &middot; 1978</span></div></div>' +
+      '<div class="logo-square">' + siteMark() + '</div><div class="logo-type"><b>' + siteName() + '</b><span>Pizzeria &middot; 1978</span></div></div>' +
       '<p class="logo-cap">Variante chiara</p></div></div>' +
       '<div class="logo-card dark reveal reveal-d1"><div><div class="logo-mark">' +
-      '<div class="logo-square">FN</div><div class="logo-type"><b>Forno Nero</b><span>Pizzeria &middot; 1978</span></div></div>' +
+      '<div class="logo-square">' + siteMark() + '</div><div class="logo-type"><b>' + siteName() + '</b><span>Pizzeria &middot; 1978</span></div></div>' +
       '<p class="logo-cap" style="color:inherit;opacity:.6">Variante scura</p></div></div>' +
       '</div></div></section>'
     );
   }
 
-  /* ---------- 20. SEO (funzione) ---------- */
-  function seoJSONLD() {
-    return (
-      '<script type="application/ld+json">' +
-      JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Restaurant',
-        name: 'Forno Nero',
-        servesCuisine: 'Pizza, Cucina napoletana',
-        acceptsReservations: 'True',
-        address: { '@type': 'PostalAddress', addressLocality: 'Roma' },
-        aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.7', reviewCount: '312' }
-      }) +
-      '</script>'
-    );
-  }
-
-  function seoChip() {
-    return (
-      '<div class="seo-chip tip"><span class="dot"></span> SEO avanzata &middot; Schema markup attivo' +
-      '<span class="tip-box"><b>Schema markup (dati strutturati)</b><br>Dice a Google chi sei: nome, tipo di attività, orari, recensioni. Il sito appare con stelle e dettagli nei risultati di ricerca.</span></div>'
-    );
-  }
-
-  /* ---------- 21. GOOGLE BUSINESS PROFILE (funzione) ---------- */
+  /* ---------- 20. GOOGLE BUSINESS PROFILE (funzione) ---------- */
   function googleBusinessHTML() {
     return (
       '<section class="section alt" id="gbp"><div class="container">' +
       '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.googleBusiness.badge + '</span></div>' +
       sectionHead('Google Business Profile', 'La tua scheda su Google', 'Anteprima simulata di come appari nelle ricerche: recensioni, orari e mappa.', true) +
       '<div class="gbp-card reveal">' +
-      '<div class="gbp-head"><div class="gbp-logo">FN</div>' +
-      '<div style="flex:1"><b>Forno Nero &middot; Pizzeria</b>' +
+      '<div class="gbp-head"><div class="gbp-logo">' + siteMark() + '</div>' +
+      '<div style="flex:1"><b>' + siteName() + ' &middot; Pizzeria</b>' +
       starsHTML('gbp-stars') +
       '<div style="font-size:12px;color:var(--muted)">4,7 &middot; 312 recensioni</div>' +
       '<div class="gbp-actions"><span>Chiama</span><span>Indicazioni</span><span>Recensisci</span></div></div></div>' +
       '<div class="gbp-body">' +
-      '<div class="gbp-row"><span class="c-ico">' + icon('pin') + '</span><span><b>Via dei Fornai 12</b> &middot; centro storico</span></div>' +
+      '<div class="gbp-row"><span class="c-ico">' + icon('pin') + '</span><span><b>' + esc(site().address || '') + '</b></span></div>' +
       '<div class="gbp-row"><span class="c-ico">' + icon('clock') + '</span><span><b>Aperto</b> &middot; chiude alle 23:30 &middot; Mar&ndash;Dom</span></div>' +
       '<div class="gbp-map"><span class="gbp-pin">' + icon('pin') + '</span></div>' +
       '<div class="gbp-reviews">' +
@@ -771,10 +782,61 @@
       '<div class="cw-grid">' +
       '<div class="cw-card reveal"><h3><span class="cw-plain-tag">Testo semplice</span></h3>' +
       '<p class="cw-plain">Siamo una pizzeria. Facciamo pizze buone. Siamo aperti tutti i giorni. Vi aspettiamo. Venite a trovarci presto. Il nostro numero è questo qui sotto. Ciao.</p></div>' +
-      '<div class="cw-card reveal reveal-d1"><h3><span class="cw-pro-tag">' + icon('pen') + ' Testo professionale</span></h3>' +
+      '<div class="cw-card tip reveal reveal-d1"><h3><span class="cw-pro-tag">' + icon('pen') + ' Testo professionale</span></h3>' +
       '<p class="cw-pro">Dal 1978 impastiamo ogni giorno con <b>farine macinate a pietra</b> e lievitazioni lente fino a <b>72 ore</b>. Il risultato? Una pizza <span class="hl">leggera, digeribile e dal cornicione alveolato</span>, cotta nel nostro forno a legna. Vi aspettiamo dal martedì alla domenica, dalle 19:00: prenotate il vostro tavolo in un click.' +
       '<span class="tip-box"><b>Perché funziona?</b><br>Parole concrete, benefici per il cliente e una call-to-action chiara: così i testi comunicano valore, non solo informazioni.</span></p></div>' +
       '</div></div></section>'
+    );
+  }
+
+  /* ---------- 22b. PULSANTE WHATSAPP FLOTTANTE (funzione) ---------- */
+  function whatsappFloat() {
+    var num = waLink();
+    if (!num) return '';
+    return (
+      '<a class="wa-float" href="' + num + '" target="_blank" rel="noopener" aria-label="' + DICT.wa_tip.it + '">' +
+      waIcon() + '<span class="wa-tip" data-i18n="wa_tip">' + DICT.wa_tip.it + '</span></a>'
+    );
+  }
+
+  /* ---------- 22c. MAPPA INTERATTIVA (funzione) ---------- */
+  function mapHTML() {
+    var addr = site().address || '';
+    return (
+      '<section class="section alt" id="mappa"><div class="container">' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.map.badge + '</span></div>' +
+      sectionHead('map_kicker', 'map_title', 'map_sub', true) +
+      '<div class="map-card reveal">' +
+      '<div class="map-canvas" id="mapCanvas">' +
+      '<svg viewBox="0 0 800 420" aria-hidden="true">' +
+      '<rect width="800" height="420" fill="color-mix(in srgb,var(--bg-alt) 70%,var(--surface))"/>' +
+      '<g fill="color-mix(in srgb,var(--surface) 80%,var(--bg-alt))">' +
+      '<rect x="40" y="40" width="150" height="110" rx="8"/><rect x="230" y="40" width="170" height="70" rx="8"/>' +
+      '<rect x="440" y="40" width="150" height="130" rx="8"/><rect x="630" y="40" width="130" height="90" rx="8"/>' +
+      '<rect x="40" y="190" width="120" height="150" rx="8"/><rect x="200" y="150" width="200" height="120" rx="8"/>' +
+      '<rect x="440" y="210" width="180" height="130" rx="8"/><rect x="660" y="170" width="100" height="120" rx="8"/>' +
+      '</g>' +
+      '<g stroke="color-mix(in srgb,var(--border) 75%,transparent)" stroke-width="10" fill="none">' +
+      '<path d="M0 170H400M400 170H800"/><path d="M180 0V150M180 150V420"/>' +
+      '<path d="M610 0V210M610 210V420"/><path d="M0 330H300M300 330H800"/>' +
+      '</g>' +
+      '<g stroke="color-mix(in srgb,var(--accent) 30%,var(--surface))" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 14">' +
+      '<path d="M60 0V420M330 0V420M730 0V420"/><path d="M0 90H800M0 260H800"/>' +
+      '</g>' +
+      '<ellipse cx="180" cy="380" rx="95" ry="34" fill="color-mix(in srgb,#3E9B4F 28%,transparent)"/>' +
+      '<ellipse cx="700" cy="70" rx="60" ry="26" fill="color-mix(in srgb,#4A9FD8 22%,transparent)"/>' +
+      '</svg>' +
+      '<span class="map-pin"><span class="map-pin-label">' + siteName() + '</span>' + icon('pin') + '</span>' +
+      '<div class="map-zoom">' +
+      '<button type="button" data-zoom="0.35" aria-label="Ingrandisci">' + icon('plus') + '</button>' +
+      '<button type="button" data-zoom="-0.35" aria-label="Riduci">' + icon('minus') + '</button>' +
+      '</div>' +
+      '</div>' +
+      '<div class="map-actions">' +
+      '<a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(addr) + '" target="_blank" rel="noopener" data-i18n="map_open">' +
+      icon('nav') + '<span>' + DICT.map_open.it + '</span></a>' +
+      '<span class="map-addr">' + icon('pin') + esc(addr) + '</span>' +
+      '</div></div></div></section>'
     );
   }
 
@@ -832,9 +894,9 @@
       '<h2 data-i18n="contact_title">' + DICT.contact_title.it + '</h2>' +
       '<p class="sec-sub" data-i18n="contact_sub">' + DICT.contact_sub.it + '</p>' +
       '<ul class="c-list">' +
-      '<li><span class="c-ico">' + icon('pin') + '</span><div><b>Indirizzo</b><span>Via dei Fornai 12, 00100 Roma</span></div></li>' +
-      '<li><span class="c-ico">' + icon('phone') + '</span><div><b>Telefono</b><span>+39 06 1234 5678</span></div></li>' +
-      '<li><span class="c-ico">' + icon('mail') + '</span><div><b>Email</b><span>ciao@fornonero.it</span></div></li>' +
+      '<li><span class="c-ico">' + icon('pin') + '</span><div><b>Indirizzo</b><span>' + esc(site().address || '') + '</span></div></li>' +
+      '<li><span class="c-ico">' + icon('phone') + '</span><div><b>Telefono</b><span>' + esc(site().phone || '') + '</span></div></li>' +
+      '<li><span class="c-ico">' + icon('mail') + '</span><div><b>Email</b><span>' + esc(site().email || '') + '</span></div></li>' +
       '</ul>' +
       '<div class="hours"><div><span>Lun</span><b>Chiuso</b></div><div><span>Mar&ndash;Gio</span><b>19&ndash;23</b></div>' +
       '<div><span>Ven&ndash;Sab</span><b>19&ndash;23:30</b></div><div><span>Dom</span><b>19&ndash;23</b></div></div>' +
@@ -874,7 +936,7 @@
     return (
       '<footer class="footer"><div class="container">' +
       '<div class="foot-grid">' +
-      '<div class="foot-brand"><div><b><span class="mark">FN</span>Forno Nero</b>' +
+      '<div class="foot-brand"><div><b><span class="mark">' + siteMark() + '</span>' + siteName() + '</b>' +
       '<p data-i18n="footer_text">' + DICT.footer_text.it + '</p>' + mapSVG() + '</div></div>' +
       '<div><h4>Esplora</h4><ul>' +
       '<li><a href="#chi-siamo" data-i18n="nav_about">' + DICT.nav_about.it + '</a></li>' +
@@ -883,14 +945,14 @@
       '<li><a href="#contatti" data-i18n="nav_contact">' + DICT.nav_contact.it + '</a></li></ul></div>' +
       '<div><h4>Orari</h4><ul><li>Lun &middot; chiuso</li><li>Mar&ndash;Gio &middot; 19&ndash;23</li>' +
       '<li>Ven&ndash;Sab &middot; 19&ndash;23:30</li><li>Dom &middot; 19&ndash;23</li></ul></div>' +
-      '<div><h4>Contatti</h4><ul><li>Via dei Fornai 12, Roma</li><li>+39 06 1234 5678</li>' +
-      '<li>ciao@fornonero.it</li></ul>' +
+      '<div><h4>Contatti</h4><ul><li>' + esc(site().address || '') + '</li><li>' + esc(site().phone || '') + '</li>' +
+      '<li>' + esc(site().email || '') + '</li></ul>' +
       '<div class="foot-social">' +
       '<a href="#" aria-label="Instagram">' + icon('ig') + '</a>' +
       '<a href="#" aria-label="Facebook">' + icon('fb') + '</a>' +
       '<a href="#" aria-label="TikTok">' + icon('music') + '</a></div></div>' +
       '</div>' +
-      '<div class="foot-bottom"><span data-i18n="footer_tag">' + DICT.footer_tag.it + '</span>' +
+      '<div class="foot-bottom"><span data-i18n="footer_tag">' + DICT.footer_tag.it.replace('Forno Nero', siteName()) + '</span>' +
       '<span>Demo interattiva &middot; contenuti fittizi &middot; senza prezzi</span></div>' +
       '</div></footer>'
     );
@@ -957,6 +1019,12 @@
       'function upd(){el.style.setProperty("--p",input.value+"%");}' +
       'input.addEventListener("input",upd);input.addEventListener("change",upd);upd();' +
       '})(bas[ba0]);}' +
+
+      /* --- mappa interattiva: zoom --- */
+      'if(has("map")){var mcv=document.getElementById("mapCanvas");var mz=0;' +
+      'function setZoom(d){mz=Math.max(0,Math.min(2.8,mz+d));' +
+      'var svg=mcv?mcv.querySelector("svg"):null;if(svg){svg.style.transform="scale("+(1+mz)+")";}var pin=mcv?mcv.querySelector(".map-pin"):null;if(pin){pin.style.transform="translate(-50%,-100%) scale("+(1+mz)+")";}}' +
+      'var mbtns=mcv?mcv.querySelectorAll(".map-zoom button"):[];for(var mbi=0;mbi<mbtns.length;mbi++){(function(b){b.addEventListener("click",function(){setZoom(+b.getAttribute("data-zoom"));});})(mbtns[mbi]);}}' +
 
       /* --- prenotazione --- */
       'var bf=document.getElementById("bookForm");if(bf&&has("booking")){' +
@@ -1043,16 +1111,16 @@
     if (AppState.features.review) section += reviewHTML();
     section += testimonialsHTML();
     section += contactHTML();
+    if (AppState.features.map) section += mapHTML();
 
     var head = (
       '<meta charset="utf-8">' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-      '<title>Forno Nero &mdash; Pizzeria &amp; Cucina Napoletana</title>' +
+      '<title>' + siteName() + ' &mdash; Pizzeria &amp; Cucina Napoletana</title>' +
       '<link rel="preconnect" href="https://fonts.googleapis.com">' +
       '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
       '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..900&family=Outfit:wght@400..800&display=swap" rel="stylesheet">' +
-      '<style>' + window.PREVIEW_CSS + '</style>' +
-      (AppState.features.seo ? seoJSONLD() : '')
+      '<style>' + window.PREVIEW_CSS + '</style>'
     );
 
     var body = (
@@ -1062,7 +1130,7 @@
       footerHTML() +
       '<a class="book-float" href="' + (AppState.features.booking ? '#prenota' : '#contatti') + '" data-i18n="float_book">' +
       icon('calendar') + '<span>' + DICT.float_book.it + '</span></a>' +
-      (AppState.features.seo ? seoChip() : '') +
+      (AppState.features.whatsapp ? whatsappFloat() : '') +
       '<div class="modal" id="dishModal"></div>' +
       previewScript() +
       '</body>'

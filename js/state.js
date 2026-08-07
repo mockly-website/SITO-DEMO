@@ -13,14 +13,18 @@
     modern:    { id: 'modern',    name: 'Moderno',    tag: 'Asimmetrico & bold', icon: '&#9670;' }
   };
 
-  /* --- Le 5 palette predefinite (swatch = mini-anteprima realistica) ---
+  /* --- Le 9 palette predefinite (swatch = mini-anteprima realistica) ---
        prev: sfondo pagina, colore testo, accento → mini barra "bottone" */
   var PALETTES = [
     { id: 'trattoria',    name: 'Trattoria Calda',  swatches: ['#B23A2E', '#F4E9DA', '#2E2A26'], prev: { bg: '#F4E9DA', text: '#2E2A26', accent: '#B23A2E' } },
     { id: 'notte',        name: 'Pizzeria Notte',   swatches: ['#121212', '#E63946', '#F5F5F5'], prev: { bg: '#121212', text: '#F5F5F5', accent: '#E63946' } },
     { id: 'mediterraneo', name: 'Mediterraneo',     swatches: ['#1B3A4B', '#FFFFFF', '#D4A73D'], prev: { bg: '#FFFFFF', text: '#1B3A4B', accent: '#1B3A4B' } },
     { id: 'bio',          name: 'Naturale / Bio',   swatches: ['#5C7A5C', '#EDE6D6', '#7A5C3E'], prev: { bg: '#EDE6D6', text: '#33422F', accent: '#5C7A5C' } },
-    { id: 'minimal',      name: 'Minimal Elegante', swatches: ['#FAFAFA', '#1A1A1A', '#C9A227'], prev: { bg: '#FAFAFA', text: '#1A1A1A', accent: '#C9A227' } }
+    { id: 'minimal',      name: 'Minimal Elegante', swatches: ['#FAFAFA', '#1A1A1A', '#C9A227'], prev: { bg: '#FAFAFA', text: '#1A1A1A', accent: '#C9A227' } },
+    { id: 'solare',       name: 'Solare',           swatches: ['#E8A020', '#FFF8E7', '#4A3B2F'], prev: { bg: '#FFF8E7', text: '#4A3B2F', accent: '#E8A020' } },
+    { id: 'oceano',       name: 'Oceano',           swatches: ['#0E7C7B', '#EEF5F4', '#12343B'], prev: { bg: '#EEF5F4', text: '#12343B', accent: '#0E7C7B' } },
+    { id: 'rosa',         name: 'Rosé / Blush',     swatches: ['#C2455D', '#FBF1F2', '#4A2E33'], prev: { bg: '#FBF1F2', text: '#4A2E33', accent: '#C2455D' } },
+    { id: 'grafite',      name: 'Grafite',          swatches: ['#3D6DE0', '#191C22', '#EEF0F4'], prev: { bg: '#191C22', text: '#EEF0F4', accent: '#3D6DE0' } }
   ];
 
   /* --- Categorie del pannello (accordion) --- */
@@ -28,7 +32,6 @@
     { id: 'content',  name: 'Contenuti',                icon: '&#128221;' },
     { id: 'advanced', name: 'Funzioni avanzate',        icon: '&#9881;' },
     { id: 'design',   name: 'Design & Media',           icon: '&#127912;' },
-    { id: 'seo',      name: 'SEO & Visibilità',         icon: '&#128269;' },
     { id: 'review',   name: 'Revisione sito esistente', icon: '&#128260;' }
   ];
 
@@ -42,24 +45,43 @@
     digitalMenu:     { cat: 'advanced', icon: '&#128215;', name: 'Menu digitale interattivo',desc: 'Griglia piatti con foto, filtri per categoria e dettaglio',              badge: 'Menu digitale interattivo' },
     advancedContact: { cat: 'advanced', icon: '&#128225;', name: 'Form contatti avanzato',   desc: 'Validazione client-side in tempo reale e conferma simulata',            badge: 'Form contatti avanzato' },
     qrCode:          { cat: 'advanced', icon: '&#129516;', name: 'QR code menu / vetrina',   desc: 'Codice QR generato collegato al menu digitale',                         badge: 'QR code menu' },
+    whatsapp:        { cat: 'advanced', icon: '&#128172;', name: 'Pulsante WhatsApp',        desc: 'Bottone flottante che apre una chat WhatsApp con il locale',            badge: 'Chat WhatsApp' },
+    map:             { cat: 'advanced', icon: '&#128506;', name: 'Mappa interattiva',        desc: 'Sezione mappa con zoom e link alle indicazioni stradali',              badge: 'Mappa interattiva' },
+    googleBusiness:  { cat: 'advanced', icon: '&#128205;', name: 'Google Business Profile',  desc: 'Anteprima simulata della scheda Google con recensioni',                  badge: 'Google Business Profile' },
+    copywriting:     { cat: 'advanced', icon: '&#9999;',   name: 'Copywriting professionale',desc: 'Confronto testo semplice vs testo curato professionalmente',            badge: 'Copywriting professionale' },
     socialFeed:      { cat: 'design',   icon: '&#128247;', name: 'Feed social',              desc: 'Griglia stile Instagram con 6 immagini',                                 badge: 'Feed social integrato' },
     gallery:         { cat: 'design',   icon: '&#128444;', name: 'Galleria / lightbox',      desc: 'Griglia immagini con overlay e frecce di navigazione',                  badge: 'Galleria con lightbox' },
     animations:      { cat: 'design',   icon: '&#127919;', name: 'Animazioni custom',        desc: 'Hero animato, particelle canvas e parallax',                             badge: 'Animazioni custom' },
     proPhoto:        { cat: 'design',   icon: '&#128248;', name: 'Fotografia professionale', desc: 'Confronto prima / dopo su scatto gastronomico',                         badge: 'Fotografia professionale' },
     photoEdit:       { cat: 'design',   icon: '&#9998;',   name: 'Editing foto / ritocco',   desc: 'Ritocco, color grading e rimozione watermark',                          badge: 'Editing foto / ritocco' },
     logo:            { cat: 'design',   icon: '&#9997;',   name: 'Logo / identità visiva',   desc: 'Logo placeholder in 2 varianti (chiaro / scuro)',                        badge: 'Logo & identità visiva' },
-    seo:             { cat: 'seo',      icon: '&#127919;', name: 'SEO avanzata',            desc: 'Schema markup attivo con tooltip esplicativo',                          badge: 'SEO avanzata · Schema markup' },
-    googleBusiness:  { cat: 'seo',      icon: '&#128205;', name: 'Google Business Profile',  desc: 'Anteprima simulata della scheda Google con recensioni',                  badge: 'Google Business Profile' },
-    copywriting:     { cat: 'seo',      icon: '&#9999;',   name: 'Copywriting professionale',desc: 'Confronto testo semplice vs testo curato professionalmente',            badge: 'Copywriting professionale' },
     review:          { cat: 'review',   icon: '&#128260;', name: 'Prima / Dopo',             desc: 'Mockup confronto: sito vecchio vs versione rinnovata',                   badge: 'Prima / Dopo · rinnovamento' }
+  };
+
+  /* --- Contenuti personalizzabili del locale (dal pannello) --- */
+  var SITE_DEFAULTS = {
+    name: 'Forno Nero',
+    tagline: 'Pizzeria · Trattoria · Forno a legna',
+    phone: '+39 06 1234 5678',
+    email: 'ciao@fornonero.it',
+    address: 'Via dei Fornai 12, 00100 Roma',
+    whatsapp: '+39 06 1234 5678'
   };
 
   /* --- Stato dell'app (unico punto di verità) --- */
   var AppState = {
     layout: 'essential',          // essential | classic | modern
-    palette: 'trattoria',         // trattoria | notte | mediterraneo | bio | minimal
+    palette: 'trattoria',         // trattoria | notte | mediterraneo | bio | minimal | solare | oceano | rosa | grafite
     view: 'desktop',              // desktop | mobile
     lang: 'it',                   // it | en (persiste tra i rebuild)
+    site: {
+      name: SITE_DEFAULTS.name,
+      tagline: SITE_DEFAULTS.tagline,
+      phone: SITE_DEFAULTS.phone,
+      email: SITE_DEFAULTS.email,
+      address: SITE_DEFAULTS.address,
+      whatsapp: SITE_DEFAULTS.whatsapp
+    },
     features: {
       extraPage:       false,
       blog:            false,
@@ -68,13 +90,14 @@
       digitalMenu:     false,
       advancedContact: false,
       qrCode:          false,
+      whatsapp:        false,
+      map:             false,
       socialFeed:      false,
       gallery:         false,
       animations:      false,
       proPhoto:        false,
       photoEdit:       false,
       logo:            false,
-      seo:             false,
       googleBusiness:  false,
       copywriting:     false,
       review:          false
@@ -94,7 +117,7 @@
     return activeFeatures(state).length;
   }
 
-  window.AppData = { LAYOUTS: LAYOUTS, PALETTES: PALETTES, CATEGORIES: CATEGORIES, FEATURES: FEATURES };
+  window.AppData = { LAYOUTS: LAYOUTS, PALETTES: PALETTES, CATEGORIES: CATEGORIES, FEATURES: FEATURES, SITE_DEFAULTS: SITE_DEFAULTS };
   window.AppState = AppState;
   window.AppUtils = { activeFeatures: activeFeatures, activeCount: activeCount };
 })();

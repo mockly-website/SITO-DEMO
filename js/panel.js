@@ -216,6 +216,36 @@
     });
   }
 
+  /* ---------- CONTENUTI PERSONALIZZABILI ---------- */
+  var SITE_FIELDS = [
+    { key: 'name',     label: 'Nome del locale',    ph: 'Forno Nero' },
+    { key: 'tagline',  label: 'Tagline',            ph: 'Pizzeria · Trattoria · Forno a legna' },
+    { key: 'phone',    label: 'Telefono',           ph: '+39 06 1234 5678' },
+    { key: 'email',    label: 'Email',              ph: 'ciao@fornonero.it' },
+    { key: 'address',  label: 'Indirizzo',          ph: 'Via dei Fornai 12, 00100 Roma' },
+    { key: 'whatsapp', label: 'Numero WhatsApp',    ph: '+39 06 1234 5678' }
+  ];
+
+  var siteTimer = null;
+  function buildSite() {
+    var box = document.getElementById('siteFields');
+    if (!box) return;
+    box.innerHTML = '';
+    SITE_FIELDS.forEach(function (f) {
+      var wrap = el(
+        '<label class="site-field"><span>' + f.label + '</span>' +
+        '<input type="text" data-site="' + f.key + '" value="' + String(S.site[f.key] || '').replace(/"/g, '&quot;') + '" placeholder="' + f.ph + '"></label>'
+      );
+      var inp = wrap.querySelector('input');
+      inp.addEventListener('input', function () {
+        S.site[f.key] = inp.value;
+        if (siteTimer) clearTimeout(siteTimer);
+        siteTimer = setTimeout(function () { siteTimer = null; renderPreview(); }, 220);
+      });
+      box.appendChild(wrap);
+    });
+  }
+
   /* ---------- VISTA DESKTOP / MOBILE ---------- */
   function buildView() {
     each(document.querySelectorAll('#viewToggle .seg-btn'), function (b) {
@@ -249,9 +279,12 @@
     S.view = 'desktop';
     S.lang = 'it';
     Object.keys(S.features).forEach(function (k) { S.features[k] = false; });
+    S.site = {};
+    Object.keys(D.SITE_DEFAULTS).forEach(function (k) { S.site[k] = D.SITE_DEFAULTS[k]; });
     buildLayouts();
     buildPalettes();
     buildFeatures();
+    buildSite();
     setView('desktop');
     updateMeta();
     renderPreview();
@@ -291,6 +324,7 @@
   applyHash();
   buildLayouts();
   buildPalettes();
+  buildSite();
   buildFeatures();
   buildView();
   setView(S.view);

@@ -46,7 +46,12 @@ body.panel-open .app { padding-right: 360px; }
   width: 8px; height: 8px; border-radius: 50%; background: #2ecc71; flex: none;
   animation: livepulse 2s infinite;
 }
-.preview-meta { margin-left: auto; font-weight: 600; color: var(--p-text); }
+.preview-meta {
+  margin-left: auto; font-weight: 600; color: var(--p-text);
+  background: rgba(255, 255, 255, .05); border: 1px solid var(--p-border);
+  padding: 4px 12px; border-radius: 999px; font-size: 11px; letter-spacing: .02em;
+  white-space: nowrap; max-width: 46%; overflow: hidden; text-overflow: ellipsis;
+}
 .scale-info {
   font-size: 11px; color: var(--p-muted); white-space: nowrap;
   background: rgba(255, 255, 255, .05); border: 1px solid var(--p-border);
@@ -148,14 +153,33 @@ body.panel-open .panel { transform: none; box-shadow: -20px 0 60px rgba(0, 0, 0,
 }
 .panel-close:hover { color: #fff; background: var(--p-card); }
 
-.panel-scroll { flex: 1; overflow-y: auto; padding: 6px 18px 30px; }
+.panel-scroll { flex: 1; overflow-y: auto; padding: 6px 18px 30px; scrollbar-width: thin; scrollbar-color: #2c313c transparent; }
+.panel-scroll::-webkit-scrollbar { width: 10px; }
+.panel-scroll::-webkit-scrollbar-thumb { background: #2c313c; border-radius: 6px; border: 3px solid var(--p-bg); }
+.panel-scroll::-webkit-scrollbar-thumb:hover { background: #3a4150; }
+.panel-scroll::-webkit-scrollbar-track { background: transparent; }
 
 .panel-group { padding: 16px 0; border-bottom: 1px solid var(--p-border); }
 .group-label {
-  display: block; font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700;
   letter-spacing: .12em; text-transform: uppercase; color: var(--p-muted);
   margin-bottom: 12px;
 }
+.group-label::before { content: ""; width: 3px; height: 13px; border-radius: 2px; background: var(--p-accent); }
+.group-hint { font-size: 11.5px; color: var(--p-muted); line-height: 1.5; margin: -6px 0 12px; }
+
+/* ---------- Campi contenuti personalizzabili ---------- */
+.site-fields { display: grid; gap: 10px; }
+.site-field { display: grid; gap: 5px; }
+.site-field span { font-size: 11px; font-weight: 600; color: var(--p-muted); letter-spacing: .04em; }
+.site-field input {
+  width: 100%; padding: 9px 12px; font-size: 13px; color: var(--p-text);
+  background: var(--p-bg2); border: 1.5px solid var(--p-border); border-radius: 10px;
+  font-family: inherit; transition: border-color .2s, box-shadow .2s;
+}
+.site-field input::placeholder { color: #5d6470; }
+.site-field input:focus { outline: none; border-color: var(--p-accent); box-shadow: 0 0 0 3px rgba(232, 178, 92, .18); }
 
 /* ---------- Vista desktop/mobile ---------- */
 .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--p-bg2); padding: 6px; border-radius: 12px; }
@@ -163,6 +187,12 @@ body.panel-open .panel { transform: none; box-shadow: -20px 0 60px rgba(0, 0, 0,
   border: 0; background: transparent; color: var(--p-muted);
   font-size: 13px; font-weight: 600; padding: 9px 12px; border-radius: 9px;
   cursor: pointer; transition: .2s;
+}
+.seg-btn:hover { color: var(--p-text); }
+.seg-btn:focus-visible, .layout-card:focus-visible, .swatch:focus-visible,
+.acc-head:focus-visible, .fullscreen-btn:focus-visible, .reset-btn:focus-visible,
+.panel-close:focus-visible, .panel-toggle:focus-visible, .site-field input:focus-visible {
+  outline: 2px solid var(--p-accent); outline-offset: 2px;
 }
 .seg-btn.is-active { background: var(--p-accent); color: #14161b; box-shadow: 0 4px 12px rgba(232, 178, 92, .35); }
 .fullscreen-btn {
