@@ -287,7 +287,7 @@ input,select,textarea{font-family:inherit}
 .gbp-head{display:flex;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid var(--border)}
 .gbp-logo{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font-weight:800}
 .gbp-head b{display:block}
-.gbp-stars{color:#f5a623;font-size:15px;letter-spacing:2px}
+.gbp-stars{color:#f5a623;font-size:15px}
 .gbp-actions{display:flex;gap:8px;margin-top:8px}
 .gbp-actions span{font-size:11px;color:var(--accent);font-weight:600;background:color-mix(in srgb,var(--accent) 10%,transparent);padding:4px 10px;border-radius:999px}
 .gbp-body{padding:20px;display:grid;gap:14px}
@@ -381,7 +381,7 @@ input,select,textarea{font-family:inherit}
 .layout-essential .trust-row{background:transparent;border:none;box-shadow:none;justify-content:center;gap:14px;padding:10px 0}
 .trust-item{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted)}
 .trust-item b{color:var(--text);font-size:14px}
-.stars{color:#e0a62c;letter-spacing:2px;font-size:13px}
+.stars{display:inline-flex;gap:2px;color:#e0a62c;font-size:13px}
 .trust-div{width:1px;height:26px;background:var(--border);flex:none}
 .layout-essential .trust-div{display:none}
 .badge{font-size:11.5px;font-weight:700;letter-spacing:.04em;padding:6px 13px;border-radius:999px;background:color-mix(in srgb,var(--accent) 13%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 32%,transparent)}
@@ -426,12 +426,58 @@ input,select,textarea{font-family:inherit}
 .fx-anim .reveal.in{opacity:1;transform:none}
 .fx-anim .reveal-d1{transition-delay:.1s}.fx-anim .reveal-d2{transition-delay:.2s}.fx-anim .reveal-d3{transition-delay:.3s}
 
+/* ---------- 24. ICONE SVG + NUOVE SEZIONI (testimonianze, numeri, prenota flottante) ---------- */
+.ico{width:1em;height:1em;vertical-align:-.12em;flex:none;display:inline-block}
+.fx-tag .ico{width:11px;height:11px}
+.nav-toggle .ico{width:20px;height:20px}
+.scroll-hint .ico{width:26px;height:26px}
+.lb-btn .ico{width:24px;height:24px}
+.lb-close .ico{width:18px;height:18px}
+.c-ico .ico,.b-ico .ico{width:20px;height:20px}
+.foot-social a .ico{width:17px;height:17px}
+.gbp-pin{display:grid;place-items:center;color:var(--accent)}
+.gbp-pin .ico{width:38px;height:38px}
+
+/* Numeri / statistiche */
+.stats{padding:clamp(36px,5vw,60px) 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 16px;display:grid;gap:6px;justify-items:center;box-shadow:var(--shadow-sm)}
+.stat-kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.stat-num{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums}
+.stat>span{font-size:13px;color:var(--muted)}
+
+/* Testimonianze */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1080px;margin-inline:auto}
+.testimonial-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.testimonial-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.testimonial-card .stars{font-size:15px}
+.testimonial-card blockquote{font-size:.98rem;line-height:1.7;color:var(--text);font-style:italic}
+.testimonial-card figcaption{display:flex;align-items:center;gap:12px;margin-top:auto}
+.t-ava{width:46px;height:46px;border-radius:50%;object-fit:cover}
+.testimonial-card figcaption b{display:block;font-size:14.5px}
+.testimonial-card figcaption em{font-style:normal;font-size:12.5px;color:var(--muted)}
+
+/* Pulsante Prenota flottante */
+.book-float{position:fixed;right:22px;bottom:22px;z-index:50;display:inline-flex;align-items:center;gap:9px;padding:14px 22px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:15px;box-shadow:0 14px 30px -10px var(--accent);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.book-float:hover{transform:translateY(-3px);box-shadow:0 18px 36px -12px var(--accent)}
+.book-float .ico{width:17px;height:17px}
+
+/* Blog: avatar autore */
+.post-meta{align-items:center}
+.post-ava{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none}
+.post-author{font-weight:700;color:var(--text)}
+
+/* Stato di focus visibile e blocco neutro prima del caricamento delle foto */
+:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 75%,transparent);outline-offset:2px;border-radius:8px}
+.img-pal{background:color-mix(in srgb,var(--bg-alt) 55%,transparent)}
+
 /* ---------- 24. RESPONSIVE (anche dentro il frame mobile) ---------- */
 @media (max-width:1000px){
   .menu-grid,.dm-grid,.events-grid,.blog-grid{grid-template-columns:repeat(2,1fr)}
   .gal-grid{grid-template-columns:repeat(3,1fr)}
   .social-grid{grid-template-columns:repeat(3,1fr)}
   .foot-grid{grid-template-columns:1fr 1fr}
+  .testimonials-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:820px){
   .nav-toggle{display:inline-flex}
@@ -447,6 +493,7 @@ input,select,textarea{font-family:inherit}
   .gal-grid{grid-template-columns:repeat(2,1fr)}
   .social-grid{grid-template-columns:repeat(3,1fr)}
   .cw-grid,.logo-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
   .layout-modern .hero{min-height:auto;padding:90px 0 60px}
   .hero-visual{margin-top:10px}
   .trust-bar{margin-top:-30px;padding:0 14px}
@@ -460,7 +507,7 @@ input,select,textarea{font-family:inherit}
 @media (max-width:480px){
   .dm-grid{grid-template-columns:1fr}
   .menu-grid{grid-template-columns:1fr}
-  .events-grid,.blog-grid{grid-template-columns:1fr}
+  .events-grid,.blog-grid,.testimonials-grid{grid-template-columns:1fr}
   .about-facts{grid-template-columns:1fr}
   .hero-cta{flex-direction:column;align-items:stretch}
   .hero-cta .btn{width:100%}

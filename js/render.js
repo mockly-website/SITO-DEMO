@@ -66,7 +66,13 @@
     soup:         'photo-1547592166-23ac45744acd',
     gourmet:      'photo-1504674900247-0877df9cc836',
     dj:           'photo-1514525253161-7a46d19cd819',
-    generic:      'photo-1541167760496-1628856ab772'
+    generic:      'photo-1541167760496-1628856ab772',
+    ava1:         'photo-1494790108377-be9c29b29330',
+    ava2:         'photo-1507003211169-0a1dd7228f2d',
+    ava3:         'photo-1438761681033-6461ffad8d80',
+    ava4:         'photo-1544005313-94ddf0286df2',
+    ava5:         'photo-1500648767791-00dcc994a43e',
+    ava6:         'photo-1583394293214-28ded15ee548'
   };
 
   function imgUrl(key, w, h) {
@@ -124,7 +130,7 @@
   /* ---------- 3. BADGE funzione attiva (mai prezzi, solo etichette) ---------- */
   function fxTag(id) {
     var f = D.FEATURES[id];
-    return '<div class="fx-tag-bar"><span class="fx-tag">&#9733; Funzione extra &middot; ' + (f ? f.badge : id) + '</span></div>';
+    return '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' Funzione extra &middot; ' + (f ? f.badge : id) + '</span></div>';
   }
 
   /* ---------- 4. Contenuti demo ---------- */
@@ -144,9 +150,15 @@
   ];
 
   var BLOG_POSTS = [
-    { photo: 'pizza4', emoji: '&#127829;', date: '2 giorni fa', read: '4 min', title: 'La nuova carta delle pizze di stagione', excerpt: 'Tre nuove ricette ispirate all\'orto di novembre: scoprile in anteprima.' },
-    { photo: 'bread', emoji: '&#129506;', date: '1 settimana fa', read: '6 min', title: 'Dietro le quinte: il nostro impasto a 72 ore', excerpt: 'Farine, acqua e tempo. Ti raccontiamo come nasce la nostra pizza.' },
-    { photo: 'hospitality', emoji: '&#127854;', date: '2 settimane fa', read: '3 min', title: 'Intervista al fornaio: tre segreti del forno a legna', excerpt: 'Abbiamo chiesto a Vincenzo cosa rende speciale la sua giornata in forno.' }
+    { photo: 'pizza4', avatar: 'ava4', author: 'Giulia Ferraro', emoji: '&#127829;', date: '2 giorni fa', read: '4 min', title: 'La nuova carta delle pizze di stagione', excerpt: 'Tre nuove ricette ispirate all\'orto di novembre: scoprile in anteprima.' },
+    { photo: 'bread', avatar: 'ava5', author: 'Vincenzo Gallo', emoji: '&#129506;', date: '1 settimana fa', read: '6 min', title: 'Dietro le quinte: il nostro impasto a 72 ore', excerpt: 'Farine, acqua e tempo. Ti raccontiamo come nasce la nostra pizza.' },
+    { photo: 'hospitality', avatar: 'ava6', author: 'Marta Conti', emoji: '&#127854;', date: '2 settimane fa', read: '3 min', title: 'Intervista al fornaio: tre segreti del forno a legna', excerpt: 'Abbiamo chiesto a Vincenzo cosa rende speciale la sua giornata in forno.' }
+  ];
+
+  var TESTIMONIALS = [
+    { name: 'Sara Bianchi', role: 'Cliente affezionata', avatar: 'ava1', quote: 'La pizza più leggera che abbia mai mangiato: croccante fuori, morbidissima dentro. Il personale è davvero gentile.' },
+    { name: 'Marco De Santis', role: 'Cena in famiglia', avatar: 'ava2', quote: 'L\'impasto è un altro mondo rispetto ai soliti. Il nostro posto del cuore per il sabato sera, da anni.' },
+    { name: 'Elena Rossi', role: 'Recensione Google', avatar: 'ava3', quote: 'Locale semplice e accogliente, il profumo del forno a legna si sente dall\'ingresso. I paccheri al ragù di mare sono pazzeschi.' }
   ];
 
   var EVENTS = [
@@ -230,8 +242,42 @@
     c_ok_title: { it: 'Messaggio inviato!', en: 'Message sent!' },
     c_ok_msg: { it: 'Ti risponderemo al più presto. Grazie per averci scritto.', en: 'We will get back to you as soon as possible. Thank you for writing.' },
     footer_tag: { it: 'Forno Nero &mdash; dal 1978', en: 'Forno Nero &mdash; since 1978' },
-    footer_text: { it: 'Il gusto semplice di un vero forno a legna: pizza, cucina di stagione e tanta ospitalità.', en: 'The simple taste of a real wood-fired oven: pizza, seasonal cooking and warm hospitality.' }
+    footer_text: { it: 'Il gusto semplice di un vero forno a legna: pizza, cucina di stagione e tanta ospitalità.', en: 'The simple taste of a real wood-fired oven: pizza, seasonal cooking and warm hospitality.' },
+    testimonials_kicker: { it: 'Dicono di noi', en: 'What they say' },
+    testimonials_title: { it: 'Le recensioni dei nostri ospiti', en: 'Reviews from our guests' },
+    testimonials_sub: { it: 'Tre storie, tanti motivi per tornarci.', en: 'Three stories, plenty of reasons to come back.' },
+    float_book: { it: 'Prenota', en: 'Book' }
   };
+
+  /* ---------- 6. ICONE SVG inline (stroke-based, ereditano currentColor) ---------- */
+  function icon(name, cls) {
+    var I = {
+      menu: '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>',
+      down: '<polyline points="6 9 12 15 18 9"/>',
+      left: '<polyline points="15 18 9 12 15 6"/>',
+      right: '<polyline points="9 18 15 12 9 6"/>',
+      close: '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+      camera: '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',
+      pin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+      phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+      mail: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+      clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+      users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+      gift: '<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
+      calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+      star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26" fill="currentColor" stroke="none"/>',
+      ig: '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>',
+      fb: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+      music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'
+    };
+    return '<svg class="ico' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (I[name] || '') + '</svg>';
+  }
+
+  function starsHTML(cls) {
+    var s = '';
+    for (var si = 0; si < 5; si++) s += icon('star');
+    return '<span class="stars' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + s + '</span>';
+  }
 
   /* ---------- 6. Funzioni di supporto HTML ---------- */
   function esc(s) { return String(s).replace(/"/g, '&quot;'); }
@@ -285,7 +331,7 @@
     var h = '<header class="site-header"><div class="container nav">' + brand +
       navLinks() +
       '<div style="display:flex;align-items:center;gap:12px">' + langSwitch() +
-      '<button class="nav-toggle" aria-label="Menu">&#9776;</button></div>' +
+      '<button class="nav-toggle" aria-label="Menu">' + icon('menu') + '</button></div>' +
       '</div></header>';
     return h;
   }
@@ -305,7 +351,7 @@
         '<a href="#menu" class="btn" data-i18n="cta_menu">' + DICT.cta_menu.it + '</a>' +
         '<a href="#contatti" class="btn btn-ghost" data-i18n="cta_book">' + DICT.cta_book.it + '</a>' +
         '</div></div>' +
-        '<a class="scroll-hint" href="#chi-siamo" aria-label="Scorri per scoprire di pi\u00f9">&#9660;</a></section>'
+        '<a class="scroll-hint" href="#chi-siamo" aria-label="Scorri per scoprire di pi\u00f9">' + icon('down') + '</a></section>'
       );
     }
     if (layout === 'classic') {
@@ -385,6 +431,19 @@
     );
   }
 
+  /* ---------- 9b. NUMERI / STATISTICHE (sempre visibili, conteggio animato) ---------- */
+  function statsHTML() {
+    return (
+      '<section class="section stats" id="numeri"><div class="container">' +
+      '<div class="stats-grid">' +
+      '<div class="stat reveal"><span class="stat-kicker">Dal</span><b class="stat-num">1978</b><span>Anno di apertura</span></div>' +
+      '<div class="stat reveal reveal-d1"><b class="stat-num" data-count="12000">12.000</b><span>Pizze all\'anno</span></div>' +
+      '<div class="stat reveal reveal-d2"><b class="stat-num" data-count="60">60</b><span>Coperti in sala</span></div>' +
+      '<div class="stat reveal reveal-d3"><b class="stat-num" data-count="100">100</b><span>Farine bio</span></div>' +
+      '</div></div></section>'
+    );
+  }
+
   /* ---------- 10. MENU (base) ---------- */
   function baseMenuHTML() {
     var layout = AppState.layout;
@@ -451,7 +510,7 @@
     }).join('');
     return (
       '<section class="section" id="eventi"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.extraPage.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.extraPage.badge + '</span></div>' +
       sectionHead('events_kicker', 'events_title', 'events_sub') +
       '<div class="events-grid">' + cards + '</div></div></section>'
     );
@@ -462,14 +521,34 @@
     var cards = BLOG_POSTS.map(function (p, i) {
       return '<article class="post-card reveal reveal-d' + (i + 1) + '">' +
         imgTag(p.photo, 600, 380, p.title, '', p.emoji) +
-        '<div class="post-body"><div class="post-meta"><span>' + p.date + '</span><span>&middot; ' + p.read + '</span></div>' +
+        '<div class="post-body"><div class="post-meta">' + imgTag(p.avatar, 64, 64, p.author, 'post-ava', '&#128100;') +
+        '<span class="post-author">' + p.author + '</span><span>&middot; ' + p.date + '</span><span>&middot; ' + p.read + '</span></div>' +
         '<h3>' + p.title + '</h3><p>' + p.excerpt + '</p></div></article>';
     }).join('');
     return (
       '<section class="section alt" id="blog"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.blog.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.blog.badge + '</span></div>' +
       sectionHead('blog_kicker', 'blog_title', 'blog_sub') +
       '<div class="blog-grid">' + cards + '</div></div></section>'
+    );
+  }
+
+  /* ---------- 13b. TESTIMONIANZE (sempre visibili) ---------- */
+  function testimonialsHTML() {
+    var cards = TESTIMONIALS.map(function (t, i) {
+      return (
+        '<figure class="testimonial-card reveal reveal-d' + (i + 1) + '">' +
+        starsHTML() +
+        '<blockquote>' + t.quote + '</blockquote>' +
+        '<figcaption>' + imgTag(t.avatar, 80, 80, 'Foto di ' + t.name, 't-ava', '&#128100;') +
+        '<span><b>' + t.name + '</b><em>' + t.role + '</em></span></figcaption>' +
+        '</figure>'
+      );
+    }).join('');
+    return (
+      '<section class="section alt" id="testimonianze"><div class="container">' +
+      sectionHead('testimonials_kicker', 'testimonials_title', 'testimonials_sub', true) +
+      '<div class="testimonials-grid">' + cards + '</div></div></section>'
     );
   }
 
@@ -477,14 +556,14 @@
   function bookingHTML() {
     return (
       '<section class="section" id="prenota"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.booking.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.booking.badge + '</span></div>' +
       '<div class="booking-wrap">' +
       '<div class="booking-info"><span class="kicker" data-i18n="booking_kicker">' + DICT.booking_kicker.it + '</span>' +
       '<h2 data-i18n="booking_title">' + DICT.booking_title.it + '</h2>' +
       '<p class="sec-sub" data-i18n="booking_sub">' + DICT.booking_sub.it + '</p>' +
-      '<ul><li><span style="font-size:1.4rem">&#9201;</span><span><b>Orario</b><br>Cena dalle 19:00 alle 23:30</span></li>' +
-      '<li><span style="font-size:1.4rem">&#128100;</span><span><b>Gruppi</b><br>Tavoli fino a 12 persone</span></li>' +
-      '<li><span style="font-size:1.4rem">&#127881;</span><span><b>Occasioni</b><br>Compleanni e cene di lavoro</span></li></ul>' +
+      '<ul><li><span class="b-ico">' + icon('clock') + '</span><span><b>Orario</b><br>Cena dalle 19:00 alle 23:30</span></li>' +
+      '<li><span class="b-ico">' + icon('users') + '</span><span><b>Gruppi</b><br>Tavoli fino a 12 persone</span></li>' +
+      '<li><span class="b-ico">' + icon('gift') + '</span><span><b>Occasioni</b><br>Compleanni e cene di lavoro</span></li></ul>' +
       '</div>' +
       '<div class="form-card"><form id="bookForm" novalidate>' +
       '<div class="form-row">' +
@@ -530,14 +609,14 @@
     });
     return (
       '<section class="section" id="galleria"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.gallery.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.gallery.badge + '</span></div>' +
       sectionHead('gallery_kicker', 'gallery_title', null, true) +
       '<div class="gal-grid">' + items + '</div>' +
       '<div class="lightbox" id="lb" role="dialog">' +
-      '<button class="lb-btn lb-prev" aria-label="Precedente">&#8249;</button>' +
+      '<button class="lb-btn lb-prev" aria-label="Precedente">' + icon('left') + '</button>' +
       '<img id="lbImg" src="" alt="">' +
-      '<button class="lb-btn lb-next" aria-label="Successiva">&#8250;</button>' +
-      '<button class="lb-close" aria-label="Chiudi">&#10005;</button>' +
+      '<button class="lb-btn lb-next" aria-label="Successiva">' + icon('right') + '</button>' +
+      '<button class="lb-close" aria-label="Chiudi">' + icon('close') + '</button>' +
       '<span class="lb-count" id="lbCount"></span>' +
       '<span class="lb-cap" id="lbCap"></span></div>' +
       '</div></section>'
@@ -551,10 +630,10 @@
     }).join('');
     return (
       '<section class="section" id="social"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.socialFeed.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.socialFeed.badge + '</span></div>' +
       sectionHead('social_kicker', 'social_title', null, true) +
       '<div class="social-grid">' + items + '</div>' +
-      '<div class="social-cta"><a class="btn" href="#social" onclick="return false">&#128247; <span data-i18n="social_cta">' + DICT.social_cta.it + '</span></a></div>' +
+      '<div class="social-cta"><a class="btn" href="#social" onclick="return false">' + icon('camera') + ' <span data-i18n="social_cta">' + DICT.social_cta.it + '</span></a></div>' +
       '</div></section>'
     );
   }
@@ -563,7 +642,7 @@
   function qrHTML() {
     return (
       '<section class="section alt" id="qr"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.qrCode.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.qrCode.badge + '</span></div>' +
       '<div class="qr-grid">' +
       '<div class="qr-card reveal">' + qrSVG(220) + '</div>' +
       '<div class="reveal reveal-d1"><span class="kicker" data-i18n="qr_kicker">' + DICT.qr_kicker.it + '</span>' +
@@ -590,7 +669,7 @@
   function proPhotoHTML() {
     return (
       '<section class="section" id="foto-pro"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.proPhoto.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.proPhoto.badge + '</span></div>' +
       sectionHead('Fotografia professionale', 'Fotografia professionale', 'Lo stesso piatto, fotografato in modo professionale: luce, composizione e colore fanno la differenza.', true) +
       baSlider(
         imgTag('heroPizza', 900, 506, 'Foto amatoriale della pizza', 'img-wm', '&#127829;'),
@@ -605,7 +684,7 @@
   function photoEditHTML() {
     return (
       '<section class="section alt" id="editing"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.photoEdit.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.photoEdit.badge + '</span></div>' +
       sectionHead('Editing & ritocco', 'Editing foto / ritocco', 'Correzione colore, pulizia e rimozione di elementi di disturbo come i watermark.', true) +
       baSlider(
         '<div class="ba-wm" aria-hidden="true">WATERMARK</div>' + imgTag('pasta', 900, 506, 'Prima del ritocco: foto con watermark', 'img-wm', '&#127837;'),
@@ -621,7 +700,7 @@
   function logoHTML() {
     return (
       '<section class="section" id="identita"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.logo.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.logo.badge + '</span></div>' +
       sectionHead('Logo & identità', 'Identità visiva', 'Due varianti dello stesso logo: una per fondi chiari, una per fondi scuri.', true) +
       '<div class="logo-grid">' +
       '<div class="logo-card light reveal"><div><div class="logo-mark">' +
@@ -662,21 +741,21 @@
   function googleBusinessHTML() {
     return (
       '<section class="section alt" id="gbp"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.googleBusiness.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.googleBusiness.badge + '</span></div>' +
       sectionHead('Google Business Profile', 'La tua scheda su Google', 'Anteprima simulata di come appari nelle ricerche: recensioni, orari e mappa.', true) +
       '<div class="gbp-card reveal">' +
       '<div class="gbp-head"><div class="gbp-logo">FN</div>' +
       '<div style="flex:1"><b>Forno Nero &middot; Pizzeria</b>' +
-      '<div class="gbp-stars" title="4,7 su 5">&#9733;&#9733;&#9733;&#9733;&#189;</div>' +
+      starsHTML('gbp-stars') +
       '<div style="font-size:12px;color:var(--muted)">4,7 &middot; 312 recensioni</div>' +
       '<div class="gbp-actions"><span>Chiama</span><span>Indicazioni</span><span>Recensisci</span></div></div></div>' +
       '<div class="gbp-body">' +
-      '<div class="gbp-row"><span>&#128205;</span><span><b>Via dei Fornai 12</b> &middot; centro storico</span></div>' +
-      '<div class="gbp-row"><span>&#9201;</span><span><b>Aperto</b> &middot; chiude alle 23:30 &middot; Mar&ndash;Dom</span></div>' +
-      '<div class="gbp-map"><span class="gbp-pin">&#128205;</span></div>' +
+      '<div class="gbp-row"><span class="c-ico">' + icon('pin') + '</span><span><b>Via dei Fornai 12</b> &middot; centro storico</span></div>' +
+      '<div class="gbp-row"><span class="c-ico">' + icon('clock') + '</span><span><b>Aperto</b> &middot; chiude alle 23:30 &middot; Mar&ndash;Dom</span></div>' +
+      '<div class="gbp-map"><span class="gbp-pin">' + icon('pin') + '</span></div>' +
       '<div class="gbp-reviews">' +
-      '<div class="gbp-rev"><div style="font-size:15px;color:#f5a623">&#9733;&#9733;&#9733;&#9733;&#9733;</div><span data-i18n="gbp_rev1">' + DICT.gbp_rev1.it + '</span></div>' +
-      '<div class="gbp-rev"><div style="font-size:15px;color:#f5a623">&#9733;&#9733;&#9733;&#9733;&#9733;</div><span data-i18n="gbp_rev2">' + DICT.gbp_rev2.it + '</span></div>' +
+      '<div class="gbp-rev">' + starsHTML('gbp-stars') + '<span data-i18n="gbp_rev1">' + DICT.gbp_rev1.it + '</span></div>' +
+      '<div class="gbp-rev">' + starsHTML('gbp-stars') + '<span data-i18n="gbp_rev2">' + DICT.gbp_rev2.it + '</span></div>' +
       '</div></div></div>' +
       '</div></section>'
     );
@@ -686,7 +765,7 @@
   function copywritingHTML() {
     return (
       '<section class="section" id="copy"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.copywriting.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.copywriting.badge + '</span></div>' +
       sectionHead('Copywriting', 'Testi che vendono', 'Stesse informazioni, due modi di raccontarle: la differenza si sente.', true) +
       '<div class="cw-grid">' +
       '<div class="cw-card reveal"><h3><span class="cw-plain-tag">Testo semplice</span></h3>' +
@@ -702,7 +781,7 @@
   function reviewHTML() {
     return (
       '<section class="section alt" id="revisione"><div class="container">' +
-      '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.review.badge + '</span></div>' +
+      '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.review.badge + '</span></div>' +
       sectionHead('Prima / Dopo', 'Il rinnovamento del tuo sito', 'Trascina il cursore per confrontare la versione attuale con quella rinnovata.', true) +
       baSlider(
         '<div class="mock mock-old"><div class="m-bar"></div><div class="m-hero"></div><div class="m-row"></div><div class="m-row"></div><div class="m-row"></div></div>',
@@ -723,7 +802,7 @@
     if (advanced) {
       form = (
         '<div class="form-card">' +
-        '<div class="fx-tag-bar" style="margin-bottom:18px"><span class="fx-tag">&#9733; ' + D.FEATURES.advancedContact.badge + '</span></div>' +
+        '<div class="fx-tag-bar" style="margin-bottom:18px"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.advancedContact.badge + '</span></div>' +
         '<form id="contactForm" novalidate>' +
         '<div class="field"><label for="cf-name" data-i18n="c_name">' + DICT.c_name.it + '</label>' +
         '<input id="cf-name" type="text" required minlength="2" data-i18n-ph="c_name"><span class="err">Servono almeno 2 caratteri</span></div>' +
@@ -752,9 +831,9 @@
       '<h2 data-i18n="contact_title">' + DICT.contact_title.it + '</h2>' +
       '<p class="sec-sub" data-i18n="contact_sub">' + DICT.contact_sub.it + '</p>' +
       '<ul class="c-list">' +
-      '<li><span class="c-ico">&#128205;</span><div><b>Indirizzo</b><span>Via dei Fornai 12, 00100 Roma</span></div></li>' +
-      '<li><span class="c-ico">&#128222;</span><div><b>Telefono</b><span>+39 06 1234 5678</span></div></li>' +
-      '<li><span class="c-ico">&#9993;</span><div><b>Email</b><span>ciao@fornonero.it</span></div></li>' +
+      '<li><span class="c-ico">' + icon('pin') + '</span><div><b>Indirizzo</b><span>Via dei Fornai 12, 00100 Roma</span></div></li>' +
+      '<li><span class="c-ico">' + icon('phone') + '</span><div><b>Telefono</b><span>+39 06 1234 5678</span></div></li>' +
+      '<li><span class="c-ico">' + icon('mail') + '</span><div><b>Email</b><span>ciao@fornonero.it</span></div></li>' +
       '</ul>' +
       '<div class="hours"><div><span>Lun</span><b>Chiuso</b></div><div><span>Mar&ndash;Gio</span><b>19&ndash;23</b></div>' +
       '<div><span>Ven&ndash;Sab</span><b>19&ndash;23:30</b></div><div><span>Dom</span><b>19&ndash;23</b></div></div>' +
@@ -779,8 +858,7 @@
   function trustBarHTML() {
     return (
       '<div class="trust-bar"><div class="container trust-row">' +
-      '<div class="trust-item"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
-      '<span><b>4,7</b> &middot; 312 recensioni</span></div>' +
+      '<div class="trust-item">' + starsHTML() + '<span><b>4,7</b> &middot; 312 recensioni</span></div>' +
       '<span class="trust-div" aria-hidden="true"></span>' +
       '<div class="trust-item"><b>Dal 1978</b><span>tre generazioni</span></div>' +
       '<span class="trust-div" aria-hidden="true"></span>' +
@@ -807,9 +885,9 @@
       '<div><h4>Contatti</h4><ul><li>Via dei Fornai 12, Roma</li><li>+39 06 1234 5678</li>' +
       '<li>ciao@fornonero.it</li></ul>' +
       '<div class="foot-social">' +
-      '<a href="#" aria-label="Instagram">&#128247;</a>' +
-      '<a href="#" aria-label="Facebook">&#128101;</a>' +
-      '<a href="#" aria-label="TikTok">&#127916;</a></div></div>' +
+      '<a href="#" aria-label="Instagram">' + icon('ig') + '</a>' +
+      '<a href="#" aria-label="Facebook">' + icon('fb') + '</a>' +
+      '<a href="#" aria-label="TikTok">' + icon('music') + '</a></div></div>' +
       '</div>' +
       '<div class="foot-bottom"><span data-i18n="footer_tag">' + DICT.footer_tag.it + '</span>' +
       '<span>Demo interattiva &middot; contenuti fittizi &middot; senza prezzi</span></div>' +
@@ -927,6 +1005,15 @@
       'var ios=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++){if(es[i].isIntersecting){es[i].target.classList.add("in");ios.unobserve(es[i].target);}}},{threshold:0.12});' +
       'var rv=document.querySelectorAll(".reveal");for(var r0=0;r0<rv.length;r0++){ios.observe(rv[r0]);}' +
       '}' +
+
+      /* --- contatori statistiche: conteggio leggero al primo ingresso --- */
+      'var sns=document.querySelectorAll(".stat-num[data-count]");' +
+      'if("IntersectionObserver" in window&&sns.length){' +
+      'var cnt=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++){if(es[i].isIntersecting){countUp(es[i].target);cnt.unobserve(es[i].target);}}},{threshold:0.4});' +
+      'function countUp(el){var target=parseInt(el.getAttribute("data-count"),10);var dur=1300;var t0=null;' +
+      'function step(ts){if(!t0){t0=ts;}var p=Math.min((ts-t0)/dur,1);var val=Math.round(target*(1-Math.pow(1-p,3)));el.textContent=val.toLocaleString("it-IT");if(p<1){requestAnimationFrame(step);}else{el.textContent=target.toLocaleString("it-IT");}}' +
+      'requestAnimationFrame(step);}' +
+      'for(var i3=0;i3<sns.length;i3++){cnt.observe(sns[i3]);}}' +
       '})();</' + 'script>'
     );
   }
@@ -939,6 +1026,7 @@
     var section = '';
 
     section += aboutHTML();
+    section += statsHTML();
     section += AppState.features.digitalMenu ? digitalMenuHTML() : baseMenuHTML();
     if (AppState.features.extraPage) section += eventsHTML();
     if (AppState.features.blog) section += blogHTML();
@@ -952,6 +1040,7 @@
     if (AppState.features.googleBusiness) section += googleBusinessHTML();
     if (AppState.features.copywriting) section += copywritingHTML();
     if (AppState.features.review) section += reviewHTML();
+    section += testimonialsHTML();
     section += contactHTML();
 
     var head = (
@@ -967,6 +1056,8 @@
       headerHTML() +
       '<main>' + heroHTML() + trustBarHTML() + section + '</main>' +
       footerHTML() +
+      '<a class="book-float" href="' + (AppState.features.booking ? '#prenota' : '#contatti') + '" data-i18n="float_book">' +
+      icon('calendar') + '<span>' + DICT.float_book.it + '</span></a>' +
       (AppState.features.seo ? seoChip() : '') +
       '<div class="modal" id="dishModal"></div>' +
       previewScript() +
