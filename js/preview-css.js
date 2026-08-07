@@ -58,6 +58,13 @@ input,select,textarea{font-family:inherit}
 .center{text-align:center}
 .center .sec-sub{margin-inline:auto}
 
+/* Fotografie reali: leggera "tinta" coerente con la palette (le foto restano
+   riconoscibili ma integrate col brand). .img-wm = versione "amatoriale"
+   desaturata per i before/after, .ba-wm = watermark finto da rimuovere. */
+.img-pal{box-shadow:inset 0 0 0 1000px color-mix(in srgb,var(--accent) 7%,transparent)}
+.img-wm{filter:saturate(.22) contrast(.9) brightness(1.06)}
+.ba-wm{position:absolute;inset:0;z-index:2;display:grid;place-items:center;color:rgba(255,255,255,.5);font-weight:800;letter-spacing:.22em;font-size:clamp(1rem,3vw,2rem);transform:rotate(-16deg);pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+
 /* ---------- 2. BUTTONS, TAG, BADGE ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.85rem 1.7rem;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:600;font-size:15px;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s var(--ease)}
 .btn:hover{transform:translateY(-3px);box-shadow:0 12px 26px -10px var(--accent);background:var(--accent-2)}
@@ -256,6 +263,7 @@ input,select,textarea{font-family:inherit}
 .lb-prev{left:16px}.lb-next{right:16px}
 .lb-close{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:16px}
 .lb-count{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:#fff;font-size:14px;letter-spacing:.1em}
+.lb-cap{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);color:#fff;font-size:15px;font-weight:600;letter-spacing:.02em;background:rgba(0,0,0,.45);padding:6px 16px;border-radius:999px;max-width:min(80vw,600px);text-align:center}
 
 /* ---------- 13. FEED SOCIAL (funzione) ---------- */
 .social-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}

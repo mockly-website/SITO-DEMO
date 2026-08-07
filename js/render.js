@@ -37,6 +37,51 @@
   function grad() { return PALETTE_GRAD[AppState.palette] || PALETTE_GRAD.trattoria; }
   function phw(w, h, emoji) { var g = grad(); return ph(w, h, emoji, g.a, g.b); }
 
+  /* ---------- 1b. CATALOGO FOTO REALI (Unsplash, URL fissi) ----------
+     URL verificati manualmente e coerenti con il soggetto. Ogni <img>
+     reale ha onerror → __ph() (helper definito nello script dell'anteprima)
+     che ricrea il placeholder SVG con i colori della palette corrente. */
+  var STOCK_BASE = 'https://images.unsplash.com/';
+  var STOCK_PHOTOS = {
+    heroPizza:    'photo-1513104890138-7c749659a591',
+    pizza2:       'photo-1593560708920-61dd98c46a4e',
+    pizza3:       'photo-1565299624946-b28f40a0ae38',
+    pizza4:       'photo-1574071318508-1cdbab80d002',
+    interiorWarm: 'photo-1555396273-367ea4eb4db5',
+    interiorCafe: 'photo-1445116572660-236099ec97a0',
+    restaurant:   'photo-1466978913421-dad2ebd01d17',
+    hospitality:  'photo-1556910103-1c02745aae4d',
+    cafeteria:    'photo-1567521464027-f127ff144326',
+    pasta:        'photo-1621996346565-e3dbc646d9a9',
+    tiramisu:     'photo-1571877227200-a0d98ea607e9',
+    cake:         'photo-1551024506-0bccd828d307',
+    chocolate:    'photo-1497034825429-c343d7c6a68f',
+    gelato:       'photo-1563805042-7684c019e1cb',
+    wine:         'photo-1510812431401-41d2bd2722f3',
+    cocktail:     'photo-1551024709-8f23befc6f87',
+    fries:        'photo-1541592106381-b31e9677c0e5',
+    kitchen:      'photo-1563379926898-05f4575a45d8',
+    bread:        'photo-1509440159596-0249088772ff',
+    bowl:         'photo-1512621776951-a57141f2eefd',
+    soup:         'photo-1547592166-23ac45744acd',
+    gourmet:      'photo-1504674900247-0877df9cc836',
+    dj:           'photo-1514525253161-7a46d19cd819',
+    generic:      'photo-1541167760496-1628856ab772'
+  };
+
+  function imgUrl(key, w, h) {
+    var id = STOCK_PHOTOS[key] || STOCK_PHOTOS.generic;
+    return STOCK_BASE + id + '?auto=format&fit=crop&w=' + w + '&h=' + h + '&q=80';
+  }
+
+  function imgTag(key, w, h, alt, cls, emoji) {
+    var e = emoji || '&#128523;';
+    return '<img class="img-pal' + (cls ? ' ' + cls : '') + '" src="' +
+      imgUrl(key, w, h).replace(/&/g, '&amp;') + '" alt="' + esc(alt || '') +
+      '" loading="lazy" decoding="async"' +
+      ' onerror="this.onerror=null;this.src=__ph(' + w + ',' + h + ',\'' + e + '\')">';
+  }
+
   /* ---------- 2. QR CODE generato (placeholder deterministico) ---------- */
   function qrSVG(size) {
     var n = 29, cell = size / n, seed = 42;
@@ -84,39 +129,39 @@
 
   /* ---------- 4. Contenuti demo ---------- */
   var DISHES = [
-    { cat: 'Antipasti', name: 'Burrata & pomodorini',   emoji: '&#129472;', desc: 'Burrata pugliese, pomodorini confit, basilico fresco e olio EVO.', tags: ['Vegetariano'] },
-    { cat: 'Antipasti', name: 'Crocchè di patate',      emoji: '&#129364;', desc: 'Crocchè croccanti fuori, morbidi dentro, serviti con salsa verde.', tags: ['Vegano'] },
-    { cat: 'Antipasti', name: 'Frittatina napoletana',  emoji: '&#127859;', desc: 'La classica frittatina con pasta, piselli e besciamella.', tags: ['Popolare'] },
-    { cat: 'Primi',     name: 'Paccheri al ragù di mare', emoji: '&#127837;', desc: 'Pasta fresca, gamberi rossi, pomodorini e bottarga di muggine.', tags: ['Pesce'] },
-    { cat: 'Primi',     name: 'Vellutata di zucca',     emoji: '&#127817;', desc: 'Zucca lunga, latte di cocco, mandorle tostate e olio al peperoncino.', tags: ['Vegetariano', 'Senza glutine'] },
-    { cat: 'Primi',     name: 'Gnocchi alla sorrentina', emoji: '&#129472;', desc: 'Gnocchi di patate, pomodoro San Marzano e fior di latte.', tags: ['Vegetariano'] },
-    { cat: 'Pizze',     name: 'Margherita DOC',         emoji: '&#127829;', desc: 'Pomodoro San Marzano, fior di latte, basilico e olio EVO.', tags: ['Vegetariano', 'Popolare'] },
-    { cat: 'Pizze',     name: 'Forno Nero',             emoji: '&#127829;', desc: 'Impasto al carbone vegetale, bufala, nduja e miele piccante.', tags: ['Piccante'] },
-    { cat: 'Pizze',     name: 'Diavola',                emoji: '&#127829;', desc: 'Salame piccante, pomodoro, fior di latte e olive nere.', tags: ['Piccante'] },
-    { cat: 'Dolci',     name: 'Tiramisù della casa',    emoji: '&#127854;', desc: 'Mascarpone, savoiardi al caffè e cacao amaro.', tags: ['Popolare'] },
-    { cat: 'Dolci',     name: 'Babà al rum',            emoji: '&#127853;', desc: 'Babà artigianale bagnato al rum, servito con crema chantilly.', tags: ['Classico'] },
-    { cat: 'Dolci',     name: 'Sorbetto al limone',     emoji: '&#127819;', desc: 'Sorbetto fresco al limone di Sorrento con menta.', tags: ['Vegano', 'Senza glutine'] }
+    { photo: 'bowl',      cat: 'Antipasti', name: 'Burrata & pomodorini',   emoji: '&#129472;', desc: 'Burrata pugliese, pomodorini confit, basilico fresco e olio EVO.', tags: ['Vegetariano'] },
+    { photo: 'fries',     cat: 'Antipasti', name: 'Crocchè di patate',      emoji: '&#129364;', desc: 'Crocchè croccanti fuori, morbidi dentro, serviti con salsa verde.', tags: ['Vegano'] },
+    { photo: 'kitchen',   cat: 'Antipasti', name: 'Frittatina napoletana',  emoji: '&#127859;', desc: 'La classica frittatina con pasta, piselli e besciamella.', tags: ['Popolare'] },
+    { photo: 'pasta',     cat: 'Primi',     name: 'Paccheri al ragù di mare', emoji: '&#127837;', desc: 'Pasta fresca, gamberi rossi, pomodorini e bottarga di muggine.', tags: ['Pesce'] },
+    { photo: 'soup',      cat: 'Primi',     name: 'Vellutata di zucca',     emoji: '&#127817;', desc: 'Zucca lunga, latte di cocco, mandorle tostate e olio al peperoncino.', tags: ['Vegetariano', 'Senza glutine'] },
+    { photo: 'gourmet',   cat: 'Primi',     name: 'Gnocchi alla sorrentina', emoji: '&#129472;', desc: 'Gnocchi di patate, pomodoro San Marzano e fior di latte.', tags: ['Vegetariano'] },
+    { photo: 'heroPizza', cat: 'Pizze',     name: 'Margherita DOC',         emoji: '&#127829;', desc: 'Pomodoro San Marzano, fior di latte, basilico e olio EVO.', tags: ['Vegetariano', 'Popolare'] },
+    { photo: 'pizza3',    cat: 'Pizze',     name: 'Forno Nero',             emoji: '&#127829;', desc: 'Impasto al carbone vegetale, bufala, nduja e miele piccante.', tags: ['Piccante'] },
+    { photo: 'pizza2',    cat: 'Pizze',     name: 'Diavola',                emoji: '&#127829;', desc: 'Salame piccante, pomodoro, fior di latte e olive nere.', tags: ['Piccante'] },
+    { photo: 'tiramisu',  cat: 'Dolci',     name: 'Tiramisù della casa',    emoji: '&#127854;', desc: 'Mascarpone, savoiardi al caffè e cacao amaro.', tags: ['Popolare'] },
+    { photo: 'cake',      cat: 'Dolci',     name: 'Babà al rum',            emoji: '&#127853;', desc: 'Babà artigianale bagnato al rum, servito con crema chantilly.', tags: ['Classico'] },
+    { photo: 'gelato',    cat: 'Dolci',     name: 'Sorbetto al limone',     emoji: '&#127819;', desc: 'Sorbetto fresco al limone di Sorrento con menta.', tags: ['Vegano', 'Senza glutine'] }
   ];
 
   var BLOG_POSTS = [
-    { emoji: '&#127829;', date: '2 giorni fa', read: '4 min', title: 'La nuova carta delle pizze di stagione', excerpt: 'Tre nuove ricette ispirate all\'orto di novembre: scoprile in anteprima.' },
-    { emoji: '&#129506;', date: '1 settimana fa', read: '6 min', title: 'Dietro le quinte: il nostro impasto a 72 ore', excerpt: 'Farine, acqua e tempo. Ti raccontiamo come nasce la nostra pizza.' },
-    { emoji: '&#127854;', date: '2 settimane fa', read: '3 min', title: 'Intervista al fornaio: tre segreti del forno a legna', excerpt: 'Abbiamo chiesto a Vincenzo cosa rende speciale la sua giornata in forno.' }
+    { photo: 'pizza4', emoji: '&#127829;', date: '2 giorni fa', read: '4 min', title: 'La nuova carta delle pizze di stagione', excerpt: 'Tre nuove ricette ispirate all\'orto di novembre: scoprile in anteprima.' },
+    { photo: 'bread', emoji: '&#129506;', date: '1 settimana fa', read: '6 min', title: 'Dietro le quinte: il nostro impasto a 72 ore', excerpt: 'Farine, acqua e tempo. Ti raccontiamo come nasce la nostra pizza.' },
+    { photo: 'hospitality', emoji: '&#127854;', date: '2 settimane fa', read: '3 min', title: 'Intervista al fornaio: tre segreti del forno a legna', excerpt: 'Abbiamo chiesto a Vincenzo cosa rende speciale la sua giornata in forno.' }
   ];
 
   var EVENTS = [
-    { emoji: '&#127863;', date: 'Ven 12', name: 'Degustazione vini naturali', desc: 'Cinque etichette piccole e artigianali abbinate a tre assaggi del nostro menù.' },
-    { emoji: '&#127928;', date: 'Sab 20', name: 'Serata jazz dal vivo', desc: 'Un trio acustico accompagna la cena: consigliata la prenotazione.' },
-    { emoji: '&#127858;', date: 'Dom 28', name: 'Laboratorio pizza per bambini', desc: 'Impastare, stendere e infornare: un pomeriggio per i piccoli pizzaioli.' }
+    { photo: 'wine', emoji: '&#127863;', date: 'Ven 12', name: 'Degustazione vini naturali', desc: 'Cinque etichette piccole e artigianali abbinate a tre assaggi del nostro menù.' },
+    { photo: 'dj', emoji: '&#127928;', date: 'Sab 20', name: 'Serata jazz dal vivo', desc: 'Un trio acustico accompagna la cena: consigliata la prenotazione.' },
+    { photo: 'pizza4', emoji: '&#127858;', date: 'Dom 28', name: 'Laboratorio pizza per bambini', desc: 'Impastare, stendere e infornare: un pomeriggio per i piccoli pizzaioli.' }
   ];
 
   var POSTS = [
-    { emoji: '&#127829;', title: 'Pizza e amici', likes: '234' },
-    { emoji: '&#127860;', title: 'Vino & pane', likes: '187' },
-    { emoji: '&#127861;', title: 'Aperitivo', likes: '310' },
-    { emoji: '&#127859;', title: 'La cucina', likes: '142' },
-    { emoji: '&#127853;', title: 'Dolci fatti in casa', likes: '268' },
-    { emoji: '&#127748;', title: 'La terrazza', likes: '351' }
+    { photo: 'pizza3',     emoji: '&#127829;', title: 'Pizza e amici', likes: '234' },
+    { photo: 'wine',       emoji: '&#127860;', title: 'Vino & pane', likes: '187' },
+    { photo: 'cocktail',   emoji: '&#127861;', title: 'Aperitivo', likes: '310' },
+    { photo: 'kitchen',    emoji: '&#127859;', title: 'La cucina', likes: '142' },
+    { photo: 'cake',       emoji: '&#127853;', title: 'Dolci fatti in casa', likes: '268' },
+    { photo: 'cafeteria',  emoji: '&#127748;', title: 'La terrazza', likes: '351' }
   ];
 
   /* ---------- 5. Dizionario multilingua (IT / EN) ---------- */
@@ -251,7 +296,7 @@
     if (layout === 'essential') {
       return (
         '<section class="hero" id="top"><div class="hero-orb"></div>' +
-        '<div class="hero-pic" aria-hidden="true"><img src="' + phw(900, 900, '&#127829;') + '" alt=""></div>' +
+        '<div class="hero-pic" aria-hidden="true">' + imgTag('heroPizza', 900, 900, '', '', '&#127829;') + '</div>' +
         '<div class="container">' +
         '<p class="hero-kicker" data-i18n="hero_tag">' + DICT.hero_tag.it + '</p>' +
         '<h1 class="hero-title" data-i18n="hero_title1">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
@@ -266,7 +311,7 @@
     if (layout === 'classic') {
       return (
         '<section class="hero" id="top">' +
-        '<div class="hero-bg" data-parallax style="--hero-img:url(&quot;' + phw(1400, 900, '&#127829;') + '&quot;)"></div>' +
+        '<div class="hero-bg" data-parallax style="--hero-img:url(&quot;' + imgUrl('interiorWarm', 1600, 1000).replace(/&/g, '&amp;') + '&quot;)"></div>' +
         '<div class="container hero-inner">' +
         '<p class="hero-kicker" data-i18n="hero_tag">' + DICT.hero_tag.it + '</p>' +
         '<h1 class="hero-title" data-i18n="hero_title1">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
@@ -299,7 +344,7 @@
       '<div><b>100%</b><span>Farine bio</span></div>' +
       '</div></div>' +
       '<div class="hero-visual reveal">' +
-      '<div class="hero-img-tilt"><img src="' + phw(600, 760, '&#127829;') + '" alt="Pizza"></div>' +
+      '<div class="hero-img-tilt">' + imgTag('pizza2', 600, 760, 'Pizza napoletana appena sfornata', '', '&#127829;') + '</div>' +
       '<span class="hero-stamp">Dal 1978</span>' +
       '</div></div></section>'
     );
@@ -318,7 +363,7 @@
       return (
         '<section class="section" id="chi-siamo"><div class="container">' +
         '<div class="about-grid">' +
-        '<div class="about-media reveal"><img src="' + phw(700, 520, '&#128588;') + '" alt="La nostra cucina"></div>' +
+        '<div class="about-media reveal">' + imgTag('restaurant', 700, 520, 'La nostra cucina', '', '&#128588;') + '</div>' +
         '<div class="reveal reveal-d1">' +
         '<div class="about-num">01</div>' +
         '<span class="kicker" data-i18n="about_kicker">' + DICT.about_kicker.it + '</span>' +
@@ -327,7 +372,7 @@
         '</div></div></div></section>'
       );
     }
-    var media = '<div class="about-media reveal"><img src="' + phw(700, 520, '&#127867;') + '" alt="I nostri vini"></div>';
+    var media = '<div class="about-media reveal">' + imgTag('wine', 700, 520, 'I nostri vini', '', '&#127867;') + '</div>';
     return (
       '<section class="section alt" id="chi-siamo"><div class="container">' +
       '<div class="about-grid">' +
@@ -346,12 +391,12 @@
     /* Menù base: solo vetrina, senza filtri né interattività (quelli
        arrivano con il Menu Digitale). Sempre presente, 6 piatti. */
     var dishes = [
-      { emoji: '&#127829;', name: 'Margherita DOC', desc: 'Pomodoro San Marzano, fior di latte e basilico fresco.', tag: 'Vegetariana' },
-      { emoji: '&#127829;', name: 'Forno Nero', desc: 'Impasto al carbone vegetale, bufala, nduja e miele piccante.', tag: 'Piccante' },
-      { emoji: '&#127829;', name: 'Diavola', desc: 'Salame piccante, fior di latte e olive nere.', tag: 'Piccante' },
-      { emoji: '&#127837;', name: 'Paccheri al ragù di mare', desc: 'Pasta fresca, gamberi rossi, pomodorini e bottarga.', tag: 'Pesce' },
-      { emoji: '&#129364;', name: 'Crocchè di patate', desc: 'Croccanti fuori, morbidi dentro, con salsa verde.', tag: 'Vegano' },
-      { emoji: '&#127854;', name: 'Tiramisù della casa', desc: 'Mascarpone, savoiardi al caffè e cacao amaro.', tag: 'Dolce' }
+      { photo: 'heroPizza', emoji: '&#127829;', name: 'Margherita DOC', desc: 'Pomodoro San Marzano, fior di latte e basilico fresco.', tag: 'Vegetariana' },
+      { photo: 'pizza3', emoji: '&#127829;', name: 'Forno Nero', desc: 'Impasto al carbone vegetale, bufala, nduja e miele piccante.', tag: 'Piccante' },
+      { photo: 'pizza2', emoji: '&#127829;', name: 'Diavola', desc: 'Salame piccante, fior di latte e olive nere.', tag: 'Piccante' },
+      { photo: 'pasta', emoji: '&#127837;', name: 'Paccheri al ragù di mare', desc: 'Pasta fresca, gamberi rossi, pomodorini e bottarga.', tag: 'Pesce' },
+      { photo: 'fries', emoji: '&#129364;', name: 'Crocchè di patate', desc: 'Croccanti fuori, morbidi dentro, con salsa verde.', tag: 'Vegano' },
+      { photo: 'tiramisu', emoji: '&#127854;', name: 'Tiramisù della casa', desc: 'Mascarpone, savoiardi al caffè e cacao amaro.', tag: 'Dolce' }
     ];
     if (layout === 'modern') {
       var rows = '';
@@ -364,7 +409,7 @@
     }
     var cards = '';
     dishes.forEach(function (d) {
-      cards += '<article class="dish-card reveal"><img src="' + phw(500, 320, d.emoji) + '" alt="' + esc(d.name) + '">' +
+      cards += '<article class="dish-card reveal">' + imgTag(d.photo, 500, 320, d.name, '', d.emoji) +
         '<div class="dish-body"><h3>' + d.name + '</h3><p>' + d.desc + '</p></div></article>';
     });
     return '<section class="section alt" id="menu"><div class="container">' + sectionHead('menu_kicker', 'menu_title', 'menu_sub', true) +
@@ -381,7 +426,7 @@
     DISHES.forEach(function (d, i) {
       cards += '<article class="dish reveal reveal-d' + ((i % 3) + 1) + '" data-cat="' + d.cat + '" data-idx="' + i + '">' +
         (d.tags.indexOf('Popolare') > -1 ? '<span class="pop">Popolare</span>' : '') +
-        '<img src="' + phw(400, 400, d.emoji) + '" alt="' + esc(d.name) + '">' +
+        imgTag(d.photo, 400, 400, d.name, '', d.emoji) +
         '<div class="dish-body"><h3>' + d.name + '</h3><p>' + d.desc + '</p>' +
         '<div class="dish-tags">' + d.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div></div></article>';
     });
@@ -400,7 +445,7 @@
   function eventsHTML() {
     var cards = EVENTS.map(function (e, i) {
       return '<article class="event-card reveal reveal-d' + (i + 1) + (i === 0 ? ' is-live' : '') + '">' +
-        '<img src="' + phw(600, 340, e.emoji) + '" alt="' + esc(e.name) + '">' +
+        imgTag(e.photo, 600, 340, e.name, '', e.emoji) +
         '<div class="event-body"><span class="event-date">' + e.date + '</span>' +
         '<h3>' + e.name + '</h3><p>' + e.desc + '</p></div></article>';
     }).join('');
@@ -416,7 +461,7 @@
   function blogHTML() {
     var cards = BLOG_POSTS.map(function (p, i) {
       return '<article class="post-card reveal reveal-d' + (i + 1) + '">' +
-        '<img src="' + phw(600, 380, p.emoji) + '" alt="">' +
+        imgTag(p.photo, 600, 380, p.title, '', p.emoji) +
         '<div class="post-body"><div class="post-meta"><span>' + p.date + '</span><span>&middot; ' + p.read + '</span></div>' +
         '<h3>' + p.title + '</h3><p>' + p.excerpt + '</p></div></article>';
     }).join('');
@@ -468,14 +513,20 @@
   }
 
   /* ---------- 15. GALLERIA + LIGHTBOX (funzione) ---------- */
-  var GALLERY = ['&#127829;', '&#127837;', '&#127860;', '&#127864;', '&#127854;', '&#127861;', '&#129472;', '&#127826;'];
+  var GALLERY = [
+    { photo: 'heroPizza',    emoji: '&#127829;', cap: 'La nostra margherita DOC' },
+    { photo: 'pasta',        emoji: '&#127837;', cap: 'Paccheri al ragù di mare' },
+    { photo: 'wine',         emoji: '&#127860;', cap: 'Calici e piccola cantina' },
+    { photo: 'cocktail',     emoji: '&#127864;', cap: 'Aperitivo della casa' },
+    { photo: 'tiramisu',     emoji: '&#127854;', cap: 'Tiramisù della casa' },
+    { photo: 'interiorCafe', emoji: '&#127861;', cap: 'Il bancone del caffè' },
+    { photo: 'bowl',         emoji: '&#129472;', cap: 'Insalate di stagione' },
+    { photo: 'restaurant',   emoji: '&#127826;', cap: 'La sala in estate' }
+  ];
   function galleryHTML() {
-    var imgs = [];
     var items = '';
-    GALLERY.forEach(function (e, i) {
-      var uri = phw(500, 500, e);
-      imgs.push(uri);
-      items += '<div class="gal-item" data-i="' + i + '"><img src="' + uri + '" alt=""></div>';
+    GALLERY.forEach(function (g, i) {
+      items += '<div class="gal-item" data-i="' + i + '">' + imgTag(g.photo, 500, 500, g.cap, '', g.emoji) + '</div>';
     });
     return (
       '<section class="section" id="galleria"><div class="container">' +
@@ -487,7 +538,8 @@
       '<img id="lbImg" src="" alt="">' +
       '<button class="lb-btn lb-next" aria-label="Successiva">&#8250;</button>' +
       '<button class="lb-close" aria-label="Chiudi">&#10005;</button>' +
-      '<span class="lb-count" id="lbCount"></span></div>' +
+      '<span class="lb-count" id="lbCount"></span>' +
+      '<span class="lb-cap" id="lbCap"></span></div>' +
       '</div></section>'
     );
   }
@@ -495,7 +547,7 @@
   /* ---------- 16. FEED SOCIAL (funzione) ---------- */
   function socialHTML() {
     var items = POSTS.map(function (p) {
-      return '<div class="social-item"><img src="' + phw(300, 300, p.emoji) + '" alt="' + esc(p.title) + '"></div>';
+      return '<div class="social-item">' + imgTag(p.photo, 300, 300, p.title, '', p.emoji) + '</div>';
     }).join('');
     return (
       '<section class="section" id="social"><div class="container">' +
@@ -536,14 +588,13 @@
   }
 
   function proPhotoHTML() {
-    var g = grad();
     return (
       '<section class="section" id="foto-pro"><div class="container">' +
       '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.proPhoto.badge + '</span></div>' +
       sectionHead('Fotografia professionale', 'Fotografia professionale', 'Lo stesso piatto, fotografato in modo professionale: luce, composizione e colore fanno la differenza.', true) +
       baSlider(
-        '<img src="' + ph(900, 506, '&#127829;', '#8f9296', '#6d7073') + '" alt="Foto amatoriale">',
-        '<img src="' + ph(900, 506, '&#127829;', g.a, g.b) + '" alt="Foto professionale">',
+        imgTag('heroPizza', 900, 506, 'Foto amatoriale della pizza', 'img-wm', '&#127829;'),
+        imgTag('pizza2', 900, 506, 'Foto professionale della pizza', '', '&#127829;'),
         'Prima · amatoriale', 'Dopo · professionale'
       ) +
       '<p class="ba-note"><b>Risultato:</b> piatti più appetitosi e un sito che trasmette subito la qualità del locale.</p>' +
@@ -552,14 +603,13 @@
   }
 
   function photoEditHTML() {
-    var g = grad();
     return (
       '<section class="section alt" id="editing"><div class="container">' +
       '<div class="fx-tag-bar"><span class="fx-tag">&#9733; ' + D.FEATURES.photoEdit.badge + '</span></div>' +
       sectionHead('Editing & ritocco', 'Editing foto / ritocco', 'Correzione colore, pulizia e rimozione di elementi di disturbo come i watermark.', true) +
       baSlider(
-        '<img src="' + ph(900, 506, '&#127837;', '#9a9da1', '#777a7e') + '" alt="Prima del ritocco" style="filter:saturate(.2) contrast(.9)">',
-        '<img src="' + ph(900, 506, '&#127837;', g.b, g.a) + '" alt="Dopo il ritocco">',
+        '<div class="ba-wm" aria-hidden="true">WATERMARK</div>' + imgTag('pasta', 900, 506, 'Prima del ritocco: foto con watermark', 'img-wm', '&#127837;'),
+        imgTag('pasta', 900, 506, 'Dopo il ritocco: foto pulita', '', '&#127837;'),
         'Prima · watermark', 'Dopo · ritocco'
       ) +
       '<p class="ba-note"><b>Risultato:</b> immagini pulite, senza watermark, coerenti con la palette del sito.</p>' +
@@ -769,13 +819,14 @@
 
   /* ---------- 27. SCRIPT INTERNO DELL'ANTEPRIMA ---------- */
   function previewScript() {
-    var DISH_IMGS = DISHES.map(function (d) { return phw(800, 450, d.emoji); });
+    var DISH_IMGS = DISHES.map(function (d) { return { src: imgUrl(d.photo, 800, 450), fb: phw(800, 450, d.emoji) }; });
     return (
       '<script>(function(){' +
       'var root=document.documentElement;' +
       'var feats=(root.getAttribute("data-features")||"").split(" ").filter(Boolean);' +
       'function has(f){return feats.indexOf(f)>-1;}' +
       'var DICT=' + JSON.stringify(DICT) + ';var lang="' + (AppState.lang || 'it') + '";' +
+      'window.__ph=function(w,h,e){var Q=String.fromCharCode(39),cs=getComputedStyle(root),a=cs.getPropertyValue("--accent").trim()||"#C0563F",b=cs.getPropertyValue("--accent-2").trim()||"#8C2B21";return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent("<svg xmlns="+Q+"http://www.w3.org/2000/svg"+Q+" width="+Q+w+Q+" height="+Q+h+Q+" viewBox="+Q+"0 0 "+w+" "+h+Q+"><defs><linearGradient id="+Q+"g"+Q+" x1="+Q+"0"+Q+" y1="+Q+"0"+Q+" x2="+Q+"1"+Q+" y2="+Q+"1"+Q+"><stop offset="+Q+"0"+Q+" stop-color="+Q+a+Q+"/><stop offset="+Q+"1"+Q+" stop-color="+Q+b+Q+"/></linearGradient></defs><rect width="+Q+"100%"+Q+" height="+Q+"100%"+Q+" fill="+Q+"url(#g)"+Q+"/><text x="+Q+"50%"+Q+" y="+Q+"54%"+Q+" font-size="+Q+(h*0.34)+Q+" text-anchor="+Q+"middle"+Q+" dominant-baseline="+Q+"central"+Q+">"+e+"</text></svg>");};' +
       'function mark(field,bad){field.classList.toggle("invalid",bad);return bad;}' +
 
       /* --- multilingua --- */
@@ -803,16 +854,17 @@
       '}});})(chips[ci]);}' +
       'function openDish(idx){var d=dishes[idx];if(!d)return;var m=document.getElementById("dishModal");' +
       'var tags="";for(var t=0;t<d.tags.length;t++){tags+="<span>"+d.tags[t]+"</span>";}' +
-      'm.innerHTML="<button class=\\"modal-close\\">\\u2715</button>"+"<img src=\\""+dishImgs[idx]+"\\" alt=\\"\\">"+"<div class=\\"modal-body\\"><h3 class=\\"modal-title\\">"+d.name+"</h3><p class=\\"modal-desc\\">"+d.desc+"</p><div class=\\"dish-tags\\">"+tags+"</div></div>";' +
+      'm.innerHTML="<button class=\\"modal-close\\">\\u2715</button>"+"<img src=\\""+dishImgs[idx].src+"\\" alt=\\"\\">"+"<div class=\\"modal-body\\"><h3 class=\\"modal-title\\">"+d.name+"</h3><p class=\\"modal-desc\\">"+d.desc+"</p><div class=\\"dish-tags\\">"+tags+"</div></div>";' +
+      'var mi=m.querySelector("img");if(mi){mi.onerror=function(){this.onerror=null;this.src=dishImgs[idx].fb;};}' +
       'm.className="modal open";}' +
       'var dishEls=document.querySelectorAll(".dish[data-idx]");for(var di=0;di<dishEls.length;di++){(function(el){el.addEventListener("click",function(){openDish(+el.getAttribute("data-idx"));});})(dishEls[di]);}' +
       'document.addEventListener("click",function(e){if(e.target.classList&&(e.target.classList.contains("modal-close")||e.target.classList.contains("modal"))){var mm=document.querySelector(".modal");if(mm){mm.classList.remove("open");}}});' +
       'document.addEventListener("keydown",function(e){if(e.key==="Escape"){var mm2=document.querySelector(".modal");if(mm2){mm2.classList.remove("open");}}});' +
 
       /* --- galleria lightbox --- */
-      'var gal=' + JSON.stringify(GALLERY.map(function (e) { return phw(500, 500, e); })) + ';var gi=0;' +
+      'var gal=' + JSON.stringify(GALLERY.map(function (g) { return { src: imgUrl(g.photo, 900, 900), fb: phw(500, 500, g.emoji), cap: g.cap }; })) + ';var gi=0;' +
       'var lb=document.getElementById("lb");if(lb){' +
-      'function show(i){gi=(i+gal.length)%gal.length;var img=document.getElementById("lbImg");img.src=gal[gi];document.getElementById("lbCount").textContent=(gi+1)+" / "+gal.length;}' +
+      'function show(i){gi=(i+gal.length)%gal.length;var img=document.getElementById("lbImg");var g=gal[gi];img.onerror=function(){this.onerror=null;this.src=g.fb;};img.src=g.src;var cap=document.getElementById("lbCap");if(cap){cap.textContent=g.cap;}document.getElementById("lbCount").textContent=(gi+1)+" / "+gal.length;}' +
       'var gitems=document.querySelectorAll(".gal-item");for(var g0=0;g0<gitems.length;g0++){(function(el){el.addEventListener("click",function(){show(+el.getAttribute("data-i"));lb.classList.add("open");});})(gitems[g0]);}' +
       'document.querySelector(".lb-prev").addEventListener("click",function(e){e.stopPropagation();show(gi-1);});' +
       'document.querySelector(".lb-next").addEventListener("click",function(e){e.stopPropagation();show(gi+1);});' +
