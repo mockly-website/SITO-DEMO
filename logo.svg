@@ -1,0 +1,15 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo ristorante">
+  <defs>
+    <linearGradient id="logoBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E8542B"/>
+      <stop offset="1" stop-color="#C43A12"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#logoBg)"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="36" stroke-linecap="round">
+    <ellipse cx="256" cy="280" rx="136" ry="44"/>
+    <path d="M120 280 C120 416 392 416 392 280"/>
+    <path d="M192 176 Q156 120 192 68"/>
+    <path d="M320 176 Q356 120 320 68"/>
+  </g>
+</svg>

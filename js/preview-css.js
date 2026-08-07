@@ -106,6 +106,7 @@ input,select,textarea{font-family:inherit}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 0}
 .nav-brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;letter-spacing:-.02em}
 .nav-brand .mark{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font-weight:800;font-size:15px;flex:none}
+.emblem{width:58%;height:58%}
 .layout-essential .nav{justify-content:center;gap:36px}
 .layout-essential .nav-brand{display:none}
 .nav-links{display:flex;align-items:center;gap:26px;list-style:none}

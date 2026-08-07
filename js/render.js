@@ -95,11 +95,14 @@
   /* ---------- 1c. CONTENUTI PERSONALIZZABILI (dal pannello) ---------- */
   function site() { return AppState.site || {}; }
 
-  /* Monogramma del brand: iniziali delle prime due parole del nome */
-  function siteMark() {
-    var n = String(site().name || 'Forno Nero').trim().split(/\s+/);
-    var m = (n[0] ? n[0].charAt(0) : '') + (n[1] ? n[1].charAt(0) : (n[0] ? n[0].charAt(1) : ''));
-    return m.toUpperCase() || 'FN';
+  /* Emblema del brand: ciotola di pasta con vapore (SVG inline adattivo alla palette) */
+  function logoEmblem() {
+    return '<svg class="emblem" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<ellipse cx="32" cy="35" rx="17" ry="5.5"/>' +
+      '<path d="M15 35 C15 52 49 52 49 35"/>' +
+      '<path d="M24 22 Q19.5 15 24 8.5"/>' +
+      '<path d="M40 22 Q44.5 15 40 8.5"/>' +
+      '</svg>';
   }
 
   function waLink() {
@@ -363,7 +366,7 @@
 
   function headerHTML() {
     var layout = AppState.layout;
-    var brand = '<a class="nav-brand" href="#top"><span class="mark">' + siteMark() + '</span><span>' + siteName() + '</span></a>';
+    var brand = '<a class="nav-brand" href="#top"><span class="mark">' + logoEmblem() + '</span><span>' + siteName() + '</span></a>';
     var h = '<header class="site-header"><div class="container nav">' + brand +
       navLinks() +
       '<div style="display:flex;align-items:center;gap:12px">' + langSwitch() +
@@ -740,10 +743,10 @@
       sectionHead('Logo & identità', 'Identità visiva', 'Due varianti dello stesso logo: una per fondi chiari, una per fondi scuri.', true) +
       '<div class="logo-grid">' +
       '<div class="logo-card light reveal"><div><div class="logo-mark">' +
-      '<div class="logo-square">' + siteMark() + '</div><div class="logo-type"><b>' + siteName() + '</b><span>Pizzeria &middot; 1978</span></div></div>' +
+      '<div class="logo-square">' + logoEmblem() + '</div><div class="logo-type"><b>' + siteName() + '</b><span>Pizzeria &middot; 1978</span></div></div>' +
       '<p class="logo-cap">Variante chiara</p></div></div>' +
       '<div class="logo-card dark reveal reveal-d1"><div><div class="logo-mark">' +
-      '<div class="logo-square">' + siteMark() + '</div><div class="logo-type"><b>' + siteName() + '</b><span>Pizzeria &middot; 1978</span></div></div>' +
+      '<div class="logo-square">' + logoEmblem() + '</div><div class="logo-type"><b>' + siteName() + '</b><span>Pizzeria &middot; 1978</span></div></div>' +
       '<p class="logo-cap" style="color:inherit;opacity:.6">Variante scura</p></div></div>' +
       '</div></div></section>'
     );
@@ -756,7 +759,7 @@
       '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.googleBusiness.badge + '</span></div>' +
       sectionHead('Google Business Profile', 'La tua scheda su Google', 'Anteprima simulata di come appari nelle ricerche: recensioni, orari e mappa.', true) +
       '<div class="gbp-card reveal">' +
-      '<div class="gbp-head"><div class="gbp-logo">' + siteMark() + '</div>' +
+      '<div class="gbp-head"><div class="gbp-logo">' + logoEmblem() + '</div>' +
       '<div style="flex:1"><b>' + siteName() + ' &middot; Pizzeria</b>' +
       starsHTML('gbp-stars') +
       '<div style="font-size:12px;color:var(--muted)">4,7 &middot; 312 recensioni</div>' +
@@ -936,7 +939,7 @@
     return (
       '<footer class="footer"><div class="container">' +
       '<div class="foot-grid">' +
-      '<div class="foot-brand"><div><b><span class="mark">' + siteMark() + '</span>' + siteName() + '</b>' +
+      '<div class="foot-brand"><div><b><span class="mark">' + logoEmblem() + '</span>' + siteName() + '</b>' +
       '<p data-i18n="footer_text">' + DICT.footer_text.it + '</p>' + mapSVG() + '</div></div>' +
       '<div><h4>Esplora</h4><ul>' +
       '<li><a href="#chi-siamo" data-i18n="nav_about">' + DICT.nav_about.it + '</a></li>' +
