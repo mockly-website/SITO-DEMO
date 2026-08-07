@@ -127,6 +127,7 @@ input,select,textarea{font-family:inherit}
 
 /* Badge orari Aperto/Chiuso */
 .open-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:color-mix(in srgb,var(--bg) 82%,transparent);font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;flex:none;line-height:1}
+.open-badge[hidden]{display:none}
 .open-badge .ob-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
 .open-badge.is-open{color:var(--text);border-color:color-mix(in srgb,#2ecc71 55%,var(--border))}
 .open-badge.is-open .ob-dot{background:#2ecc71;box-shadow:0 0 0 3px rgba(46,204,113,.25)}

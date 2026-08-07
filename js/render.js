@@ -1059,8 +1059,9 @@
       'return ok?out:null;}' +
       'function inRange(d0,d1,d){if(d0<=d1)return d>=d0&&d<=d1;return d>=d0||d<=d1;}' +
       'function isOpenNow(par,now){var d=now.getDay(),m=now.getHours()*60+now.getMinutes();' +
-      'for(var i=0;i<par.length;i++){var p=par[i];if(!inRange(p.d0,p.d1,d))continue;' +
-      'for(var j=0;j<p.ints.length;j++){if(m>=p.ints[j].open&&m<p.ints[j].close)return true;}}return false;}' +
+      'for(var i=0;i<par.length;i++){var p=par[i];if(inRange(p.d0,p.d1,d)){' +
+      'for(var j=0;j<p.ints.length;j++){if(m>=p.ints[j].open&&m<p.ints[j].close)return true;}}' +
+      'var pd=(d+6)%7;if(inRange(p.d0,p.d1,pd)){for(var j=0;j<p.ints.length;j++){if(p.ints[j].close>1440&&m<p.ints[j].close-1440)return true;}}}return false;}' +
       'function nextOpen(par,now){var dm=now.getHours()*60+now.getMinutes(),best=null;' +
       'for(var i=0;i<par.length;i++){var p=par[i];for(var j=0;j<p.ints.length;j++){' +
       'for(var dd=0;dd<7;dd++){var day=(p.d0+dd)%7;if(!inRange(p.d0,p.d1,day))continue;' +
