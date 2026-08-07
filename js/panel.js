@@ -295,7 +295,10 @@
         if (t === 'mobile' || t === 'desktop') S.view = t;
         if (D.LAYOUTS[t]) S.layout = t;
         if (D.PALETTES.filter(function (p) { return p.id === t; }).length) S.palette = t;
-        if (D.FEATURES[t] !== undefined) S.features[t] = true;
+        /* match case-insensitive sulle chiavi (es. "extrapage" o "extraPage") */
+        for (var fk in D.FEATURES) {
+          if (fk.toLowerCase() === t) { S.features[fk] = true; break; }
+        }
       });
     } catch (e) { /* hash malformato: si ignora */ }
   }
