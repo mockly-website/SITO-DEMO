@@ -44,7 +44,7 @@
     booking:         { cat: 'advanced', icon: '&#128197;', name: 'Prenotazione online',      desc: 'Form data/ora/persone con validazione JS vanilla',                       badge: 'Prenotazione online' },
     digitalMenu:     { cat: 'advanced', icon: '&#128215;', name: 'Menu digitale interattivo',desc: 'Griglia piatti con foto, filtri per categoria e dettaglio',              badge: 'Menu digitale interattivo' },
     advancedContact: { cat: 'advanced', icon: '&#128225;', name: 'Form contatti avanzato',   desc: 'Validazione client-side in tempo reale e conferma simulata',            badge: 'Form contatti avanzato' },
-    qrCode:          { cat: 'advanced', icon: '&#129516;', name: 'QR code menu / vetrina',   desc: 'Codice QR generato collegato al menu digitale',                         badge: 'QR code menu' },
+    qrCode:          { cat: 'advanced', icon: '&#129516;', name: 'QR code menu digitale', desc: 'Codice QR per aprire il menu digitale da tavolo',                          badge: 'QR code menu digitale' },
     whatsapp:        { cat: 'advanced', icon: '&#128172;', name: 'Pulsante WhatsApp',        desc: 'Bottone flottante che apre una chat WhatsApp con il locale',            badge: 'Chat WhatsApp' },
     map:             { cat: 'advanced', icon: '&#128506;', name: 'Mappa interattiva',        desc: 'Sezione mappa con zoom e link alle indicazioni stradali',              badge: 'Mappa interattiva' },
     googleBusiness:  { cat: 'advanced', icon: '&#128205;', name: 'Google Business Profile',  desc: 'Anteprima simulata della scheda Google con recensioni',                  badge: 'Google Business Profile' },
@@ -55,7 +55,7 @@
     review:          { cat: 'review',   icon: '&#128260;', name: 'Prima / Dopo',             desc: 'Mockup confronto: sito vecchio vs versione rinnovata',                   badge: 'Prima / Dopo · rinnovamento' },
     storia:          { cat: 'content',  icon: '&#128337;', name: 'La nostra storia',         desc: 'Timeline del locale dal 1978 a oggi',                                    badge: 'La nostra storia' },
     degustazioni:    { cat: 'content',  icon: '&#127863;', name: 'Degustazioni & corsi',     desc: 'Card esperienze: vini, corsi di cucina e masterclass',                  badge: 'Degustazioni & corsi' },
-    giftCard:        { cat: 'content',  icon: '&#127873;', name: 'Buoni regalo',             desc: 'Sezione regali con tagli da 25/50/100 euro',                            badge: 'Buoni regalo' },
+    giftCard:        { cat: 'content',  icon: '&#127873;', name: 'Buoni cena',               desc: 'Regala un aperitivo, una cena o una degustazione',                     badge: 'Buoni cena' },
     loyalty:         { cat: 'advanced', icon: '&#127942;', name: 'Programma fedeltà',        desc: 'Card punti con livelli e barra di avanzamento',                         badge: 'Programma fedeltà' }
   };
 
@@ -66,7 +66,10 @@
     phone: '+39 06 1234 5678',
     email: 'ciao@fornonero.it',
     address: 'Via dei Fornai 12, 00100 Roma',
-    whatsapp: '+39 06 1234 5678'
+    whatsapp: '+39 06 1234 5678',
+    hours: 'Mar–Dom 19:00–23:30',
+    instagram: '@fornonero',
+    facebook: '/fornonero'
   };
 
   /* --- Stato dell'app (unico punto di verità) --- */
@@ -81,7 +84,10 @@
       phone: SITE_DEFAULTS.phone,
       email: SITE_DEFAULTS.email,
       address: SITE_DEFAULTS.address,
-      whatsapp: SITE_DEFAULTS.whatsapp
+      whatsapp: SITE_DEFAULTS.whatsapp,
+      hours: SITE_DEFAULTS.hours,
+      instagram: SITE_DEFAULTS.instagram,
+      facebook: SITE_DEFAULTS.facebook
     },
     features: {
       extraPage:       false,

@@ -218,12 +218,15 @@
 
   /* ---------- CONTENUTI PERSONALIZZABILI ---------- */
   var SITE_FIELDS = [
-    { key: 'name',     label: 'Nome del locale',    ph: 'Forno Nero' },
-    { key: 'tagline',  label: 'Tagline',            ph: 'Pizzeria · Trattoria · Forno a legna' },
-    { key: 'phone',    label: 'Telefono',           ph: '+39 06 1234 5678' },
-    { key: 'email',    label: 'Email',              ph: 'ciao@fornonero.it' },
-    { key: 'address',  label: 'Indirizzo',          ph: 'Via dei Fornai 12, 00100 Roma' },
-    { key: 'whatsapp', label: 'Numero WhatsApp',    ph: '+39 06 1234 5678' }
+    { key: 'name',      label: 'Nome del locale',    ph: 'Forno Nero' },
+    { key: 'tagline',   label: 'Tagline',            ph: 'Pizzeria · Trattoria · Forno a legna' },
+    { key: 'phone',     label: 'Telefono',           ph: '+39 06 1234 5678' },
+    { key: 'email',     label: 'Email',              ph: 'ciao@fornonero.it' },
+    { key: 'address',   label: 'Indirizzo',          ph: 'Via dei Fornai 12, 00100 Roma' },
+    { key: 'whatsapp',  label: 'Numero WhatsApp',    ph: '+39 06 1234 5678' },
+    { key: 'hours',     label: 'Orari di apertura',  ph: 'Mar–Dom 19:00–23:30' },
+    { key: 'instagram', label: 'Instagram',          ph: '@fornonero' },
+    { key: 'facebook',  label: 'Facebook',           ph: '/fornonero' }
   ];
 
   var siteTimer = null;

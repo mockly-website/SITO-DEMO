@@ -208,8 +208,6 @@
     nav_events: { it: 'Eventi', en: 'Events' },
     nav_blog: { it: 'Blog', en: 'Blog' },
     nav_contact: { it: 'Contatti', en: 'Contact' },
-    hero_title1: { it: 'Forno', en: 'Forno' },
-    hero_title2: { it: 'Nero', en: 'Nero' },
     hero_sub: { it: 'Pizza napoletana e cucina di stagione. Impasto a lunga lievitazione e materie prime da filiera corta, ogni giorno dal 1978.', en: 'Neapolitan pizza and seasonal cooking. Long-leavened dough and short-chain ingredients, every day since 1978.' },
     cta_menu: { it: 'Scopri il menu', en: 'Explore the menu' },
     cta_book: { it: 'Prenota un tavolo', en: 'Book a table' },
@@ -385,7 +383,7 @@
         '<div class="hero-pic" aria-hidden="true">' + imgTag('heroPizza', 900, 900, '', '', '&#127829;') + '</div>' +
         '<div class="container">' +
         '<p class="hero-kicker">' + siteTagline() + '</p>' +
-        '<h1 class="hero-title" data-i18n="hero_title1">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
+        '<h1 class="hero-title">' + heroTitle() + '</h1>' +
         '<p class="hero-sub" data-i18n="hero_sub">' + DICT.hero_sub.it + '</p>' +
         '<div class="hero-cta">' +
         '<a href="#menu" class="btn" data-i18n="cta_menu">' + DICT.cta_menu.it + '</a>' +
@@ -400,7 +398,7 @@
         '<div class="hero-bg" data-parallax style="--hero-img:url(&quot;' + imgUrl('interiorWarm', 1600, 1000).replace(/&/g, '&amp;') + '&quot;)"></div>' +
         '<div class="container hero-inner">' +
         '<p class="hero-kicker">' + siteTagline() + '</p>' +
-        '<h1 class="hero-title" data-i18n="hero_title1">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
+        '<h1 class="hero-title">' + heroTitle() + '</h1>' +
         '<p class="hero-sub" data-i18n="hero_sub">' + DICT.hero_sub.it + '</p>' +
         '<div class="hero-cta">' +
         '<a href="#menu" class="btn" data-i18n="cta_menu">' + DICT.cta_menu.it + '</a>' +
@@ -418,7 +416,7 @@
       '<section class="hero" id="top"><div class="container hero-grid">' +
       '<div class="hero-copy">' +
       '<p class="hero-kicker">' + siteTagline() + '</p>' +
-      '<h1 class="hero-title">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
+      '<h1 class="hero-title">' + heroTitle() + '</h1>' +
       '<p class="hero-sub" data-i18n="hero_sub">' + DICT.hero_sub.it + '</p>' +
       '<div class="hero-cta">' +
       '<a href="#menu" class="btn" data-i18n="cta_menu">' + DICT.cta_menu.it + '</a>' +
@@ -434,6 +432,15 @@
       '<span class="hero-stamp">Dal 1978</span>' +
       '</div></div></section>'
     );
+  }
+
+  /* Titolo hero: nome del locale (ultima parola in evidenza) */
+  function heroTitle() {
+    var n = String(site().name || '').trim();
+    var words = n.split(/\s+/).filter(Boolean);
+    if (words.length < 2) return esc(n || 'Forno Nero');
+    var last = words.pop();
+    return esc(words.join(' ')) + ' <span>' + esc(last) + '</span>';
   }
 
   /* ---------- 9. ABOUT ---------- */
@@ -673,7 +680,7 @@
       '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.socialFeed.badge + '</span></div>' +
       sectionHead('social_kicker', 'social_title', null, true) +
       '<div class="social-grid">' + items + '</div>' +
-      '<div class="social-cta"><a class="btn" href="#social" onclick="return false">' + icon('camera') + ' <span data-i18n="social_cta">' + DICT.social_cta.it + '</span></a></div>' +
+      '<div class="social-cta"><a class="btn" href="#social" onclick="return false">' + icon('camera') + ' <span data-i18n="social_cta">' + DICT.social_cta.it + ' ' + esc(site().instagram || '') + '</span></a></div>' +
       '</div></section>'
     );
   }
@@ -726,19 +733,19 @@
     );
   }
 
-  /* ---------- 19b. BUONI REGALO (funzione) ---------- */
+  /* ---------- 19b. BUONI CENA (funzione) ---------- */
   function giftCardHTML() {
     return (
       '<section class="section" id="regali"><div class="container">' +
       '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.giftCard.badge + '</span></div>' +
-      sectionHead('Idea regalo', 'Buoni regalo', 'Un pasto, una degustazione o un corso: il regalo perfetto per chi ama la buona tavola.', true) +
+      sectionHead('Idea regalo', 'Buoni cena', 'Un aperitivo, una cena o una degustazione da regalare: si acquistano in sala o su WhatsApp.', true) +
       '<div class="gift-grid">' +
-      '<div class="gift-card reveal"><span class="gift-ico">' + icon('gift') + '</span><b>Buono &euro;25</b>' +
-      '<p>Per un pranzo o una cena informale a due passi dal forno.</p><span class="gift-val">&euro;25</span></div>' +
-      '<div class="gift-card hot reveal reveal-d1"><span class="gift-ico">' + icon('gift') + '</span><b>Buono &euro;50</b>' +
-      '<p>Il pi&ugrave; regalato: cena completa per due con dolce incluso.</p><span class="gift-val">&euro;50</span></div>' +
-      '<div class="gift-card reveal reveal-d2"><span class="gift-ico">' + icon('gift') + '</span><b>Buono &euro;100</b>' +
-      '<p>Degustazione vini o corso di cucina: un\'esperienza da regalare.</p><span class="gift-val">&euro;100</span></div>' +
+      '<div class="gift-card reveal"><span class="gift-ico">' + icon('wine') + '</span><b>Aperitivo &amp; assaggi</b>' +
+      '<p>Calice di vino e assaggi della cucina, per due persone al banco.</p><span class="gift-val">&euro;25</span></div>' +
+      '<div class="gift-card hot reveal reveal-d1"><span class="gift-ico">' + icon('gift') + '</span><b>Cena per due</b>' +
+      '<p>Il pi&ugrave; regalato: antipasti, due pizze del forno a legna e dolce.</p><span class="gift-val">&euro;50</span></div>' +
+      '<div class="gift-card reveal reveal-d2"><span class="gift-ico">' + icon('star') + '</span><b>Cena &amp; degustazione</b>' +
+      '<p>Cena completa con abbinamento vini scelto dal sommelier della cantina.</p><span class="gift-val">&euro;100</span></div>' +
       '</div></div></section>'
     );
   }
@@ -925,8 +932,7 @@
       '<li><span class="c-ico">' + icon('phone') + '</span><div><b>Telefono</b><span>' + esc(site().phone || '') + '</span></div></li>' +
       '<li><span class="c-ico">' + icon('mail') + '</span><div><b>Email</b><span>' + esc(site().email || '') + '</span></div></li>' +
       '</ul>' +
-      '<div class="hours"><div><span>Lun</span><b>Chiuso</b></div><div><span>Mar&ndash;Gio</span><b>19&ndash;23</b></div>' +
-      '<div><span>Ven&ndash;Sab</span><b>19&ndash;23:30</b></div><div><span>Dom</span><b>19&ndash;23</b></div></div>' +
+      '<div class="hours"><div><span>Lun</span><b>Chiuso</b></div><div><span>Mar&ndash;Dom</span><b>' + esc(site().hours || '') + '</b></div></div>' +
       '</div>' +
       '<div class="reveal reveal-d1">' + form + '</div>' +
       '</div></div></section>'
@@ -970,13 +976,12 @@
       '<li><a href="#menu" data-i18n="nav_menu">' + DICT.nav_menu.it + '</a></li>' +
       (AppState.features.extraPage ? '<li><a href="#eventi" data-i18n="nav_events">' + DICT.nav_events.it + '</a></li>' : '') +
       '<li><a href="#contatti" data-i18n="nav_contact">' + DICT.nav_contact.it + '</a></li></ul></div>' +
-      '<div><h4>Orari</h4><ul><li>Lun &middot; chiuso</li><li>Mar&ndash;Gio &middot; 19&ndash;23</li>' +
-      '<li>Ven&ndash;Sab &middot; 19&ndash;23:30</li><li>Dom &middot; 19&ndash;23</li></ul></div>' +
+      '<div><h4>Orari</h4><ul><li>Lun &middot; chiuso</li><li>Mar&ndash;Dom &middot; ' + esc(site().hours || '') + '</li></ul></div>' +
       '<div><h4>Contatti</h4><ul><li>' + esc(site().address || '') + '</li><li>' + esc(site().phone || '') + '</li>' +
       '<li>' + esc(site().email || '') + '</li></ul>' +
       '<div class="foot-social">' +
-      '<a href="#" aria-label="Instagram">' + icon('ig') + '</a>' +
-      '<a href="#" aria-label="Facebook">' + icon('fb') + '</a>' +
+      '<a href="#" title="Instagram ' + esc(site().instagram || '') + '" aria-label="Instagram">' + icon('ig') + '</a>' +
+      '<a href="#" title="Facebook ' + esc(site().facebook || '') + '" aria-label="Facebook">' + icon('fb') + '</a>' +
       '<a href="#" aria-label="TikTok">' + icon('music') + '</a></div></div>' +
       '</div>' +
       '<div class="foot-bottom"><span data-i18n="footer_tag">' + DICT.footer_tag.it.replace('Forno Nero', siteName()) + '</span>' +
