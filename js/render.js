@@ -327,7 +327,8 @@
       var open = '<' + tagName + ' class="' + cls + '"' + (DICT[label] ? ' data-i18n="' + label + '"' : '') + '>';
       return open + (DICT[label] ? DICT[label].it : label) + '</' + tagName + '>';
     }
-    return '<div class="section-head' + (center ? ' center' : '') + '">' +
+    var isC = center !== false && AppState.layout !== 'modern';
+    return '<div class="section-head' + (isC ? ' center' : '') + '">' +
       tag(kicker, 'span', 'kicker') +
       tag(title, 'h2', 'sec-title') +
       (sub ? tag(sub, 'p', 'sec-sub') : '') +
@@ -368,7 +369,9 @@
     var brand = '<a class="nav-brand" href="#top"><span class="mark">' + logoEmblem() + '</span><span>' + siteName() + '</span></a>';
     var h = '<header class="site-header"><div class="container nav">' + brand +
       navLinks() +
-      '<div style="display:flex;align-items:center;gap:12px">' + langSwitch() +
+      '<div style="display:flex;align-items:center;gap:12px">' +
+      '<span class="open-badge" id="openBadge" hidden><span class="ob-dot"></span><span class="ob-text"></span></span>' +
+      langSwitch() +
       '<button class="nav-toggle" aria-label="Menu">' + icon('menu') + '</button></div>' +
       '</div></header>';
     return h;
@@ -404,6 +407,7 @@
         '<a href="#menu" class="btn" data-i18n="cta_menu">' + DICT.cta_menu.it + '</a>' +
         '<a href="#contatti" class="btn btn-ghost" style="border-color:#fff;color:#fff" data-i18n="cta_book">' + DICT.cta_book.it + '</a>' +
         '</div>' +
+        heroChipsHTML() +
         '<div class="hero-facts">' +
         '<div class="hero-fact"><b>47</b><span data-i18n="fact_years">' + DICT.fact_years.it + '</span></div>' +
         '<div class="hero-fact"><b>60</b><span data-i18n="fact_seats">' + DICT.fact_seats.it + '</span></div>' +
@@ -422,6 +426,7 @@
       '<a href="#menu" class="btn" data-i18n="cta_menu">' + DICT.cta_menu.it + '</a>' +
       '<a href="#contatti" class="btn btn-ghost" data-i18n="cta_book">' + DICT.cta_book.it + '</a>' +
       '</div>' +
+      heroChipsHTML() +
       '<div class="hero-stats">' +
       '<div><b>47</b><span data-i18n="fact_years">' + DICT.fact_years.it + '</span></div>' +
       '<div><b>60</b><span data-i18n="fact_seats">' + DICT.fact_seats.it + '</span></div>' +
@@ -523,8 +528,18 @@
   }
 
   /* ---------- 11. MENU DIGITALE (funzione) ---------- */
+  function dmCats() { return ['Tutti', 'Antipasti', 'Primi', 'Pizze', 'Dolci']; }
+
+  function heroChipsHTML() {
+    if (!AppState.features.digitalMenu) return '';
+    var chips = dmCats().slice(1).map(function (c) {
+      return '<button class="hero-chip" data-filter="' + c + '">' + c + '</button>';
+    }).join('');
+    return '<div class="hero-chips">' + chips + '</div>';
+  }
+
   function digitalMenuHTML() {
-    var cats = ['Tutti', 'Antipasti', 'Primi', 'Pizze', 'Dolci'];
+    var cats = dmCats();
     var chips = cats.map(function (c) {
       return '<button class="dm-chip' + (c === 'Tutti' ? ' is-active' : '') + '" data-filter="' + c + '"' + (c === 'Tutti' ? ' data-i18n="dm_all"' : '') + '>' + (c === 'Tutti' ? DICT.dm_all.it : c) + '</button>';
     }).join('');
@@ -659,18 +674,20 @@
       '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.gallery.badge + '</span></div>' +
       sectionHead('gallery_kicker', 'gallery_title', null, true) +
       '<div class="gal-grid">' + items + '</div>' +
-      '<div class="lightbox" id="lb" role="dialog">' +
-      '<button class="lb-btn lb-prev" aria-label="Precedente">' + icon('left') + '</button>' +
-      '<img id="lbImg" src="" alt="">' +
-      '<button class="lb-btn lb-next" aria-label="Successiva">' + icon('right') + '</button>' +
-      '<button class="lb-close" aria-label="Chiudi">' + icon('close') + '</button>' +
-      '<span class="lb-count" id="lbCount"></span>' +
-      '<span class="lb-cap" id="lbCap"></span></div>' +
       '</div></section>'
     );
   }
 
   /* ---------- 16. FEED SOCIAL (funzione) ---------- */
+  function storiesHTML() {
+    var stories = POSTS.map(function (p, i) {
+      return '<button class="story" data-i="' + i + '" aria-label="' + esc(p.title) + '">' +
+        '<span class="story-ring">' + imgTag(p.photo, 160, 160, p.title, '', p.emoji) + '</span>' +
+        '<span class="story-label">' + esc(p.title) + '</span></button>';
+    }).join('');
+    return '<div class="stories" role="list">' + stories + '</div>';
+  }
+
   function socialHTML() {
     var items = POSTS.map(function (p) {
       return '<div class="social-item">' + imgTag(p.photo, 300, 300, p.title, '', p.emoji) + '</div>';
@@ -679,6 +696,7 @@
       '<section class="section" id="social"><div class="container">' +
       '<div class="fx-tag-bar"><span class="fx-tag">' + icon('star') + ' ' + D.FEATURES.socialFeed.badge + '</span></div>' +
       sectionHead('social_kicker', 'social_title', null, true) +
+      storiesHTML() +
       '<div class="social-grid">' + items + '</div>' +
       '<div class="social-cta"><a class="btn" href="#social" onclick="return false">' + icon('camera') + ' <span data-i18n="social_cta">' + DICT.social_cta.it + ' ' + esc(site().instagram || '') + '</span></a></div>' +
       '</div></section>'
@@ -1006,7 +1024,8 @@
       'function applyLang(l){lang=l;root.setAttribute("lang",l);' +
       'var els=document.querySelectorAll("[data-i18n]");for(var i=0;i<els.length;i++){var k=els[i].getAttribute("data-i18n");if(DICT[k]&&DICT[k][l]){els[i].innerHTML=DICT[k][l];}}' +
       'var phs=document.querySelectorAll("[data-i18n-ph]");for(var j=0;j<phs.length;j++){var k2=phs[j].getAttribute("data-i18n-ph");if(DICT[k2]&&DICT[k2][l]){phs[j].setAttribute("placeholder",DICT[k2][l]);}}' +
-      'var btns=document.querySelectorAll(".lang-btn");for(var b=0;b<btns.length;b++){btns[b].classList.toggle("is-active",btns[b].getAttribute("data-lang")===l);}}' +
+      'var btns=document.querySelectorAll(".lang-btn");for(var b=0;b<btns.length;b++){btns[b].classList.toggle("is-active",btns[b].getAttribute("data-lang")===l);}' +
+      'if(typeof renderOpen==="function"){renderOpen();}}' +
       'var lbtns=document.querySelectorAll(".lang-btn");for(var lbi=0;lbi<lbtns.length;lbi++){(function(btn){btn.addEventListener("click",function(){var nl=btn.getAttribute("data-lang");applyLang(nl);if(window.parent&&window.parent.postMessage){try{window.parent.postMessage({type:"fn-lang",lang:nl},"*");}catch(e){}}});})(lbtns[lbi]);}' +
       'applyLang(lang);' +
 
@@ -1021,16 +1040,57 @@
       'var t=document.querySelector(a.getAttribute("href"));if(!t){e.preventDefault();return;}' +
       'e.preventDefault();t.scrollIntoView({behavior:"smooth",block:"start"});document.body.classList.remove("nav-open");});' +
 
+      /* --- badge orari aperto/chiuso --- */
+      'var ob=document.getElementById("openBadge");if(ob){' +
+      'var htxt=' + JSON.stringify(site().hours || '') + ';' +
+      'function dayIdx(n){var m={lun:1,mar:2,mer:3,gio:4,ven:5,sab:6,dom:0};return m[n];}' +
+      'function parseHours(s){var o=(s||"").toLowerCase().replace(/[\u2013\u2014]/g,"-").replace(/\\s+/g," ").trim();if(!o)return null;' +
+      'var out=[],last=null,ok=false,gs=o.split(",");' +
+      'for(var gi=0;gi<gs.length;gi++){var parts=gs[gi].trim().split(" ");' +
+      'var d0=dayIdx(parts[0].split("-")[0]);' +
+      'if(d0!==undefined){var dp=parts[0].split("-"),d1=dayIdx(dp[1]||dp[0]);' +
+      'last={d0:d0,d1:d1,ints:[]};out.push(last);parts=parts.slice(1);}' +
+      'if(!last)return null;' +
+      'var rest=parts.join(" ");if(rest.indexOf("chiuso")>-1)continue;if(!rest)return null;' +
+      'var tm=rest.split("-");if(tm.length!==2)return null;' +
+      'var t0=tm[0].split(":"),t1=tm[1].split(":");if(t0.length<2||t1.length<2)return null;' +
+      'var s0=(+t0[0])*60+(+t0[1]),s1=(+t1[0])*60+(+t1[1]);if(isNaN(s0)||isNaN(s1))return null;' +
+      'if(s1<=s0)s1+=24*60;last.ints.push({open:s0,close:s1});ok=true;}' +
+      'return ok?out:null;}' +
+      'function inRange(d0,d1,d){if(d0<=d1)return d>=d0&&d<=d1;return d>=d0||d<=d1;}' +
+      'function isOpenNow(par,now){var d=now.getDay(),m=now.getHours()*60+now.getMinutes();' +
+      'for(var i=0;i<par.length;i++){var p=par[i];if(!inRange(p.d0,p.d1,d))continue;' +
+      'for(var j=0;j<p.ints.length;j++){if(m>=p.ints[j].open&&m<p.ints[j].close)return true;}}return false;}' +
+      'function nextOpen(par,now){var dm=now.getHours()*60+now.getMinutes(),best=null;' +
+      'for(var i=0;i<par.length;i++){var p=par[i];for(var j=0;j<p.ints.length;j++){' +
+      'for(var dd=0;dd<7;dd++){var day=(p.d0+dd)%7;if(!inRange(p.d0,p.d1,day))continue;' +
+      'var off=((day-now.getDay()+7)%7)*1440+p.ints[j].open-dm;if(off<0)off+=7*1440;' +
+      'if(!best||off<best.off){best={off:off,mins:p.ints[j].open};}}}}return best;}' +
+      'function pad2(n){return (n<10?"0":"")+n;}' +
+      'function renderOpen(){var H=htxt||"";var compact=window.innerWidth<640;var par=parseHours(H);var t=ob.querySelector(".ob-text");' +
+      'if(!par){ob.hidden=H.trim()==="";ob.classList.remove("is-open","is-closed");' +
+      'if(H.trim()!=="")t.textContent=lang==="it"?"Orari":"Hours";return;}' +
+      'ob.hidden=false;' +
+      'if(isOpenNow(par,new Date())){ob.classList.add("is-open");ob.classList.remove("is-closed");' +
+      't.textContent=lang==="it"?(compact?"Aperto":"Aperto ora"):(compact?"Open":"Open now");}' +
+      'else{ob.classList.add("is-closed");ob.classList.remove("is-open");' +
+      'var nx=nextOpen(par,new Date());' +
+      't.textContent=nx&&!compact?(lang==="it"?"Chiuso \u00b7 riapre alle ":"Closed \u00b7 opens at ")+pad2(Math.floor(nx.mins/60))+":"+pad2(nx.mins%60):(lang==="it"?"Chiuso":"Closed");}}' +
+      'renderOpen();setInterval(renderOpen,60000);window.addEventListener("resize",renderOpen);}' +
+
       /* --- menu digitale: filtri + dettaglio --- */
       'var dishes=' + JSON.stringify(DISHES) + ';' +
       'var dishImgs=' + JSON.stringify(DISH_IMGS) + ';' +
-      'var chips=document.querySelectorAll(".dm-chip");for(var ci=0;ci<chips.length;ci++){(function(c){c.addEventListener("click",function(){' +
-      'var f=c.getAttribute("data-filter");for(var x=0;x<chips.length;x++){chips[x].classList.toggle("is-active",chips[x]===c);}' +
+      'function applyFilter(f){var chips=document.querySelectorAll(".dm-chip");for(var x=0;x<chips.length;x++){chips[x].classList.toggle("is-active",chips[x].getAttribute("data-filter")===f);}' +
       'var grid=document.querySelector(".dm-grid");if(!grid)return;var cards=grid.querySelectorAll(".dish");' +
       'for(var d=0;d<cards.length;d++){var show=(f==="Tutti"||cards[d].getAttribute("data-cat")===f);' +
       'cards[d].style.display=show?"":"none";' +
-      'if(show){cards[d].style.animation="none";void cards[d].offsetWidth;cards[d].style.animation="pop .4s var(--ease)";}' +
-      '}});})(chips[ci]);}' +
+      'if(show){cards[d].style.animation="none";void cards[d].offsetWidth;cards[d].style.animation="pop .4s var(--ease)";}}}' +
+      'var chips=document.querySelectorAll(".dm-chip");for(var ci=0;ci<chips.length;ci++){(function(c){c.addEventListener("click",function(){applyFilter(c.getAttribute("data-filter"));});})(chips[ci]);}' +
+      'var hchips=document.querySelectorAll(".hero-chip");for(var hc=0;hc<hchips.length;hc++){(function(c){c.addEventListener("click",function(){' +
+      'var f=c.getAttribute("data-filter");applyFilter(f);' +
+      'var t=document.getElementById("menu");if(t){t.scrollIntoView({behavior:"smooth",block:"start"});}' +
+      '});})(hchips[hc]);}' +
       'function openDish(idx){var d=dishes[idx];if(!d)return;var m=document.getElementById("dishModal");' +
       'var tags="";for(var t=0;t<d.tags.length;t++){tags+="<span>"+d.tags[t]+"</span>";}' +
       'm.innerHTML="<button class=\\"modal-close\\"><svg class=\\"ico\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1.8\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\" aria-hidden=\\"true\\"><line x1=\\"18\\" y1=\\"6\\" x2=\\"6\\" y2=\\"18\\"/><line x1=\\"6\\" y1=\\"6\\" x2=\\"18\\" y2=\\"18\\"/></svg></button>"+"<img src=\\""+dishImgs[idx].src+"\\" alt=\\"\\">"+"<div class=\\"modal-body\\"><h3 class=\\"modal-title\\">"+d.name+"</h3><p class=\\"modal-desc\\">"+d.desc+"</p><div class=\\"dish-tags\\">"+tags+"</div></div>";' +
@@ -1040,11 +1100,15 @@
       'document.addEventListener("click",function(e){if(e.target.classList&&(e.target.classList.contains("modal-close")||e.target.classList.contains("modal"))){var mm=document.querySelector(".modal");if(mm){mm.classList.remove("open");}}});' +
       'document.addEventListener("keydown",function(e){if(e.key==="Escape"){var mm2=document.querySelector(".modal");if(mm2){mm2.classList.remove("open");}}});' +
 
-      /* --- galleria lightbox --- */
-      'var gal=' + JSON.stringify(GALLERY.map(function (g) { return { src: imgUrl(g.photo, 900, 900), fb: phw(500, 500, g.emoji), cap: g.cap }; })) + ';var gi=0;' +
+      /* --- lightbox (galleria + storie) --- */
       'var lb=document.getElementById("lb");if(lb){' +
-      'function show(i){gi=(i+gal.length)%gal.length;var img=document.getElementById("lbImg");var g=gal[gi];img.onerror=function(){this.onerror=null;this.src=g.fb;};img.src=g.src;var cap=document.getElementById("lbCap");if(cap){cap.textContent=g.cap;}document.getElementById("lbCount").textContent=(gi+1)+" / "+gal.length;}' +
-      'var gitems=document.querySelectorAll(".gal-item");for(var g0=0;g0<gitems.length;g0++){(function(el){el.addEventListener("click",function(){show(+el.getAttribute("data-i"));lb.classList.add("open");});})(gitems[g0]);}' +
+      'var lbData=[],gi=0;' +
+      'function show(i){if(!lbData.length)return;gi=(i+lbData.length)%lbData.length;var img=document.getElementById("lbImg");var g=lbData[gi];img.onerror=function(){this.onerror=null;this.src=g.fb;};img.src=g.src;var cap=document.getElementById("lbCap");if(cap){cap.textContent=g.cap;}document.getElementById("lbCount").textContent=(gi+1)+" / "+lbData.length;}' +
+      'function openLB(data,i){if(!data.length)return;lbData=data;lb.classList.add("open");show(i);}' +
+      'var gal=' + JSON.stringify(GALLERY.map(function (g) { return { src: imgUrl(g.photo, 900, 900), fb: phw(500, 500, g.emoji), cap: g.cap }; })) + ';' +
+      'var stors=' + JSON.stringify(POSTS.map(function (p) { return { src: imgUrl(p.photo, 900, 900), fb: phw(500, 500, p.emoji), cap: p.title }; })) + ';' +
+      'var gitems=document.querySelectorAll(".gal-item");for(var g0=0;g0<gitems.length;g0++){(function(el){el.addEventListener("click",function(){openLB(gal,+el.getAttribute("data-i"));});})(gitems[g0]);}' +
+      'var sels=document.querySelectorAll(".story");for(var s0=0;s0<sels.length;s0++){(function(el){el.addEventListener("click",function(){openLB(stors,+el.getAttribute("data-i"));});})(sels[s0]);}' +
       'document.querySelector(".lb-prev").addEventListener("click",function(e){e.stopPropagation();show(gi-1);});' +
       'document.querySelector(".lb-next").addEventListener("click",function(e){e.stopPropagation();show(gi+1);});' +
       'lb.querySelector(".lb-close").addEventListener("click",function(){lb.classList.remove("open");});' +
@@ -1171,6 +1235,13 @@
       icon('calendar') + '<span>' + DICT.float_book.it + '</span></a>' +
       (AppState.features.whatsapp ? whatsappFloat() : '') +
       '<div class="modal" id="dishModal"></div>' +
+      '<div class="lightbox" id="lb" role="dialog" aria-hidden="true">' +
+      '<button class="lb-btn lb-prev" aria-label="Precedente">' + icon('left') + '</button>' +
+      '<img id="lbImg" src="" alt="">' +
+      '<button class="lb-btn lb-next" aria-label="Successiva">' + icon('right') + '</button>' +
+      '<button class="lb-close" aria-label="Chiudi">' + icon('close') + '</button>' +
+      '<span class="lb-count" id="lbCount"></span>' +
+      '<span class="lb-cap" id="lbCap"></span></div>' +
       previewScript() +
       '</body>'
     );

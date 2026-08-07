@@ -97,6 +97,7 @@ input,select,textarea{font-family:inherit}
 .fx-tag{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 6px 16px -8px var(--accent);white-space:nowrap}
 .fx-tag-bar{display:flex;justify-content:center;margin-bottom:34px}
 .section-head{max-width:760px;margin-bottom:clamp(30px,5vw,52px)}
+.section-head.center{margin-inline:auto}
 
 /* ---------- 3. HEADER & NAV ---------- */
 .site-header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px)}
@@ -124,6 +125,15 @@ input,select,textarea{font-family:inherit}
 .lang-btn.is-active{background:var(--accent);color:var(--on-accent)}
 .layout-modern .lang-btn:not(.is-active){color:var(--bg)}
 
+/* Badge orari Aperto/Chiuso */
+.open-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:color-mix(in srgb,var(--bg) 82%,transparent);font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;flex:none;line-height:1}
+.open-badge .ob-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+.open-badge.is-open{color:var(--text);border-color:color-mix(in srgb,#2ecc71 55%,var(--border))}
+.open-badge.is-open .ob-dot{background:#2ecc71;box-shadow:0 0 0 3px rgba(46,204,113,.25)}
+.open-badge.is-closed .ob-dot{background:#f5a623}
+.layout-modern .open-badge{border-color:color-mix(in srgb,var(--bg) 30%,transparent);background:transparent;color:var(--bg)}
+.layout-modern .open-badge.is-open{border-color:rgba(46,204,113,.6)}
+
 /* ---------- 4. HERO ---------- */
 .hero{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
 
@@ -150,6 +160,15 @@ input,select,textarea{font-family:inherit}
 .hero-facts{display:flex;gap:34px;margin-top:44px;flex-wrap:wrap}
 .hero-fact b{font-size:1.7rem;display:block;line-height:1}
 .hero-fact span{font-size:13px;opacity:.8}
+
+/* Chip categorie menu nell'hero (Classic/Modern con menu digitale) */
+.hero-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.hero-chip{font-size:13px;font-weight:600;padding:9px 18px;border-radius:999px;border:1.5px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer;transition:.25s}
+.hero-chip:hover{background:var(--accent);color:var(--on-accent);transform:translateY(-2px)}
+.layout-classic .hero-chips{justify-content:center}
+.layout-classic .hero-chip{border-color:rgba(255,255,255,.85);color:#fff}
+.layout-classic .hero-chip:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.layout-modern .hero-chips{margin-top:36px}
 
 /* C · Moderno: composizione asimmetrica, testo a sinistra, visuale a destra */
 .layout-modern .hero{min-height:100vh;padding:110px 0 70px}
@@ -295,6 +314,16 @@ input,select,textarea{font-family:inherit}
 .social-item:hover img{transform:scale(1.12);filter:brightness(.75)}
 .social-item::after{content:"\\2665";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:1.4rem;opacity:0;transition:opacity .25s}
 .social-item:hover::after{opacity:1}
+
+/* Barra storie */
+.stories{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 10px;margin-bottom:30px;scrollbar-width:thin}
+.stories::-webkit-scrollbar{height:4px}
+.stories::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+.story{flex:none;display:flex;flex-direction:column;align-items:center;gap:8px;width:76px;scroll-snap-align:start;cursor:pointer;background:none;border:0;padding:0}
+.story-ring{width:66px;height:66px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--accent),var(--accent-2));transition:transform .25s var(--ease)}
+.story:hover .story-ring{transform:scale(1.07)}
+.story-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--bg);display:block}
+.story-label{font-size:11px;font-weight:600;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:76px}
 .social-cta{text-align:center;margin-top:28px}
 
 /* ---------- 14. QR CODE (funzione) ---------- */
@@ -341,19 +370,6 @@ input,select,textarea{font-family:inherit}
 .cw-pro-tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:4px 12px;border-radius:999px}
 .cw-pro-tag .ico{width:11px;height:11px}
 
-/* ---------- 18. IDENTITÀ VISIVA / LOGO (funzione) ---------- */
-.logo-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:860px;margin-inline:auto}
-.logo-card{border-radius:var(--radius);padding:clamp(26px,5vw,44px);display:grid;place-items:center;min-height:230px;transition:transform .3s var(--ease)}
-.logo-card:hover{transform:translateY(-5px)}
-.logo-card.light{background:var(--surface);border:1px solid var(--border)}
-.logo-card.dark{background:var(--text);color:var(--bg)}
-.logo-mark{display:flex;align-items:center;gap:14px}
-.logo-square{width:64px;height:64px;border-radius:16px;display:grid;place-items:center;font-weight:800;font-size:24px;background:var(--accent);color:var(--on-accent);box-shadow:0 10px 22px -8px var(--accent)}
-.logo-card.dark .logo-square{background:var(--accent)}
-.logo-type{line-height:1}
-.logo-type b{font-size:22px;display:block;letter-spacing:-.02em}
-.logo-type span{font-size:11px;letter-spacing:.3em;text-transform:uppercase;opacity:.7}
-.logo-cap{text-align:center;margin-top:16px;font-size:12.5px;color:var(--muted)}
 .deg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .deg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px 24px;text-align:center;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
 .deg-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
@@ -590,5 +606,12 @@ input,select,textarea{font-family:inherit}
   .about-facts{grid-template-columns:1fr}
   .hero-cta{flex-direction:column;align-items:stretch}
   .hero-cta .btn{width:100%}
+}
+@media (max-width:640px){
+  .nav{gap:12px}
+  .open-badge{font-size:11px;padding:5px 9px;gap:5px}
+  .nav-brand span:last-child{max-width:38vw;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hero-chips{justify-content:center}
+  .layout-modern .hero-chips{justify-content:flex-start}
 }
 `;
