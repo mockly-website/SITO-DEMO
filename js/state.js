@@ -13,13 +13,14 @@
     modern:    { id: 'modern',    name: 'Moderno',    tag: 'Asimmetrico & bold', icon: '&#9670;' }
   };
 
-  /* --- Le 5 palette predefinite (swatch = accostamento colori) --- */
+  /* --- Le 5 palette predefinite (swatch = mini-anteprima realistica) ---
+       prev: sfondo pagina, colore testo, accento → mini barra "bottone" */
   var PALETTES = [
-    { id: 'trattoria',   name: 'Trattoria Calda',  swatches: ['#B23A2E', '#F4E9DA', '#2E2A26'] },
-    { id: 'notte',       name: 'Pizzeria Notte',   swatches: ['#121212', '#E63946', '#F5F5F5'] },
-    { id: 'mediterraneo',name: 'Mediterraneo',     swatches: ['#1B3A4B', '#FFFFFF', '#D4A73D'] },
-    { id: 'bio',         name: 'Naturale / Bio',   swatches: ['#5C7A5C', '#EDE6D6', '#7A5C3E'] },
-    { id: 'minimal',     name: 'Minimal Elegante', swatches: ['#FAFAFA', '#1A1A1A', '#C9A227'] }
+    { id: 'trattoria',    name: 'Trattoria Calda',  swatches: ['#B23A2E', '#F4E9DA', '#2E2A26'], prev: { bg: '#F4E9DA', text: '#2E2A26', accent: '#B23A2E' } },
+    { id: 'notte',        name: 'Pizzeria Notte',   swatches: ['#121212', '#E63946', '#F5F5F5'], prev: { bg: '#121212', text: '#F5F5F5', accent: '#E63946' } },
+    { id: 'mediterraneo', name: 'Mediterraneo',     swatches: ['#1B3A4B', '#FFFFFF', '#D4A73D'], prev: { bg: '#FFFFFF', text: '#1B3A4B', accent: '#1B3A4B' } },
+    { id: 'bio',          name: 'Naturale / Bio',   swatches: ['#5C7A5C', '#EDE6D6', '#7A5C3E'], prev: { bg: '#EDE6D6', text: '#33422F', accent: '#5C7A5C' } },
+    { id: 'minimal',      name: 'Minimal Elegante', swatches: ['#FAFAFA', '#1A1A1A', '#C9A227'], prev: { bg: '#FAFAFA', text: '#1A1A1A', accent: '#C9A227' } }
   ];
 
   /* --- Categorie del pannello (accordion) --- */

@@ -14,11 +14,60 @@
 
   var iframe = document.getElementById('preview');
   var frame = document.getElementById('deviceFrame');
+  var wrap = document.getElementById('stageWrap');
+  var stage = null;
+  var VIEW_W = 1440; /* larghezza virtuale del viewport Desktop (CSS px) */
+
+  function stageEl() {
+    if (!stage) stage = frame.parentElement.parentElement;
+    return stage;
+  }
 
   /* Helper piccolo per iterare NodeList */
   function each(list, fn) { Array.prototype.forEach.call(list, fn); }
 
   function el(html) { var d = document.createElement('div'); d.innerHTML = html; return d.firstChild; }
+
+  /* ---------- VISTA DESKTOP: viewport virtuale 1440px ----------
+     In Desktop l'iframe ha sempre 1440px CSS di larghezza: i breakpoint
+     mobile non si attivano mai. L'iframe mantiene l'altezza di una
+     finestra del browser (quindi resta scorrevole al suo interno) e il
+     wrapper viene scalato con transform: scale(fattore) per adattarsi
+     allo spazio disponibile. */
+  function applyScale() {
+    var f = 1;
+    if (S.view === 'desktop') {
+      var st = stageEl();
+      var avail = Math.max(120, st.clientWidth - 44);   /* padding dello stage */
+      var stageH = Math.max(240, st.clientHeight - 44);
+      f = Math.min(avail / VIEW_W, 1);
+      frame.style.width = '1440px';
+      frame.style.height = Math.round(stageH / f) + 'px';
+      wrap.style.width = Math.round(VIEW_W * f) + 'px';
+      wrap.style.height = Math.round(stageH) + 'px';
+      wrap.style.transform = f >= 1 ? 'none' : 'scale(' + f + ')';
+    } else {
+      frame.style.width = '';
+      frame.style.height = '';
+      wrap.style.width = '';
+      wrap.style.height = '';
+      wrap.style.transform = 'none';
+    }
+    var info = document.getElementById('scaleInfo');
+    if (S.view === 'desktop') {
+      info.hidden = false;
+      info.textContent = 'Anteprima ' + VIEW_W + 'px \u00b7 scala ' + Math.round(f * 100) + '%';
+    } else {
+      info.hidden = true;
+      info.textContent = '';
+    }
+  }
+
+  var scaleTimer = null;
+  function scheduleScale() {
+    clearTimeout(scaleTimer);
+    scaleTimer = setTimeout(applyScale, 100);
+  }
 
   /* ---------- RENDER ---------- */
   function renderPreview() {
@@ -29,6 +78,7 @@
   iframe.onload = function () {
     document.getElementById('app').classList.remove('rendering');
     applyPaletteToDoc();
+    applyScale();
   };
 
   /* Cambio palette senza ricostruire: aggiorna solo data-palette */
@@ -71,10 +121,15 @@
     var box = document.getElementById('swatches');
     box.innerHTML = '';
     D.PALETTES.forEach(function (p) {
-      var sw = p.swatches.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('');
+      var prev = p.prev || { bg: p.swatches[0], text: '#000', accent: p.swatches[1] };
       var btn = el(
-        '<button class="swatch' + (S.palette === p.id ? ' is-active' : '') + '" data-pal="' + p.id + '" title="' + p.name + '">' +
-        '<span class="sw-dots">' + sw + '</span>' +
+        '<button class="swatch' + (S.palette === p.id ? ' is-active' : '') + '" data-pal="' + p.id + '" title="' + p.name + '"' +
+        ' aria-pressed="' + (S.palette === p.id) + '">' +
+        '<span class="sw-prev" style="background:' + prev.bg + '">' +
+        '<b class="swp-line t" style="background:' + prev.text + '"></b>' +
+        '<b class="swp-line s" style="background:' + prev.text + '"></b>' +
+        '<span class="swp-btn" style="background:' + prev.accent + '"></span>' +
+        '</span>' +
         '<span class="sw-name">' + p.name + '</span></button>'
       );
       btn.addEventListener('click', function () { setPalette(p.id); });
@@ -94,8 +149,12 @@
   function buildFeatures() {
     var box = document.getElementById('accordion');
     box.innerHTML = '';
-    D.CATEGORIES.forEach(function (cat) {
+    D.CATEGORIES.forEach(function (cat, ci) {
       var feats = Object.keys(D.FEATURES).filter(function (k) { return D.FEATURES[k].cat === cat.id; });
+      var hasActive = feats.some(function (k) { return S.features[k]; });
+      /* Default: solo la prima categoria aperta; restano aperte quelle
+         con almeno una funzione attiva. */
+      var isOpen = ci === 0 || hasActive;
       var rows = feats.map(function (k) {
         var f = D.FEATURES[k];
         return '<label class="sw-row">' +
@@ -105,14 +164,18 @@
           '</label>';
       }).join('');
       var acc = el(
-        '<div class="acc open">' +
-        '<button class="acc-head" type="button"><span class="acc-ico">' + cat.icon + '</span>' +
+        '<div class="acc' + (isOpen ? ' open' : '') + '">' +
+        '<button class="acc-head" type="button" aria-expanded="' + isOpen + '" aria-controls="acc-body-' + ci + '">' +
+        '<span class="acc-ico">' + cat.icon + '</span>' +
         '<span class="acc-name">' + cat.name + '</span>' +
         '<span class="acc-count"></span><span class="acc-caret">&#9660;</span></button>' +
-        '<div class="acc-body"><div class="acc-inner">' + rows + '</div></div>' +
+        '<div class="acc-body" id="acc-body-' + ci + '"><div class="acc-inner">' + rows + '</div></div>' +
         '</div>'
       );
-      acc.querySelector('.acc-head').addEventListener('click', function () { acc.classList.toggle('open'); });
+      acc.querySelector('.acc-head').addEventListener('click', function () {
+        var open = acc.classList.toggle('open');
+        this.setAttribute('aria-expanded', open);
+      });
       box.appendChild(acc);
     });
 
@@ -153,7 +216,11 @@
       b.classList.toggle('is-active', b.getAttribute('data-view') === v);
     });
     frame.classList.toggle('is-mobile', v === 'mobile');
+    frame.classList.toggle('is-desktop', v === 'desktop');
+    wrap.classList.toggle('is-mobile', v === 'mobile');
+    wrap.classList.toggle('is-desktop', v === 'desktop');
     updateMeta();
+    applyScale();
   }
 
   /* ---------- META E RESET ---------- */
@@ -171,10 +238,7 @@
     buildLayouts();
     buildPalettes();
     buildFeatures();
-    each(document.querySelectorAll('#viewToggle .seg-btn'), function (b) {
-      b.classList.toggle('is-active', b.getAttribute('data-view') === 'desktop');
-    });
-    frame.classList.remove('is-mobile');
+    setView('desktop');
     updateMeta();
     renderPreview();
   }
@@ -185,11 +249,23 @@
   function setPanel(open) {
     document.body.classList.toggle('panel-open', open);
     toggle.hidden = open ? true : !isDesktop();
+    /* la larghezza disponibile cambia con la transizione del pannello */
+    clearTimeout(scaleTimer);
+    scaleTimer = setTimeout(applyScale, 400);
   }
 
   document.getElementById('panelClose').addEventListener('click', function () { setPanel(false); });
   toggle.addEventListener('click', function () { setPanel(true); });
   document.getElementById('resetBtn').addEventListener('click', reset);
+
+  /* Apre la configurazione corrente in una nuova scheda, a tutto schermo */
+  document.getElementById('fullscreenBtn').addEventListener('click', function () {
+    try {
+      var url = URL.createObjectURL(new Blob([window.Render.buildDoc()], { type: 'text/html;charset=utf-8' }));
+      var w = window.open(url, '_blank');
+      if (w) setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+    } catch (e) { /* es. blob non supportato: nessuna azione */ }
+  });
 
   /* ---------- INIT ---------- */
   applyHash();
@@ -201,9 +277,11 @@
   setPanel(isDesktop());
   updateMeta();
   renderPreview();
+  applyScale();
 
   window.addEventListener('resize', function () {
     if (!document.body.classList.contains('panel-open')) toggle.hidden = !isDesktop();
+    scheduleScale();
   });
 
   /* Deep-link via hash per preselezionare la demo, es.:

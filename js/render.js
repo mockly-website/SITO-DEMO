@@ -250,7 +250,9 @@
     var layout = AppState.layout;
     if (layout === 'essential') {
       return (
-        '<section class="hero" id="top"><div class="hero-orb"></div><div class="container">' +
+        '<section class="hero" id="top"><div class="hero-orb"></div>' +
+        '<div class="hero-pic" aria-hidden="true"><img src="' + phw(900, 900, '&#127829;') + '" alt=""></div>' +
+        '<div class="container">' +
         '<p class="hero-kicker" data-i18n="hero_tag">' + DICT.hero_tag.it + '</p>' +
         '<h1 class="hero-title" data-i18n="hero_title1">' + DICT.hero_title1.it + ' <span data-i18n="hero_title2">' + DICT.hero_title2.it + '</span></h1>' +
         '<p class="hero-sub" data-i18n="hero_sub">' + DICT.hero_sub.it + '</p>' +
@@ -258,7 +260,7 @@
         '<a href="#menu" class="btn" data-i18n="cta_menu">' + DICT.cta_menu.it + '</a>' +
         '<a href="#contatti" class="btn btn-ghost" data-i18n="cta_book">' + DICT.cta_book.it + '</a>' +
         '</div></div>' +
-        '<a class="scroll-hint" href="#chi-siamo">&#9660;</a></section>'
+        '<a class="scroll-hint" href="#chi-siamo" aria-label="Scorri per scoprire di pi\u00f9">&#9660;</a></section>'
       );
     }
     if (layout === 'classic') {
@@ -341,10 +343,15 @@
   /* ---------- 10. MENU (base) ---------- */
   function baseMenuHTML() {
     var layout = AppState.layout;
+    /* Menù base: solo vetrina, senza filtri né interattività (quelli
+       arrivano con il Menu Digitale). Sempre presente, 6 piatti. */
     var dishes = [
-      { emoji: '&#127829;', name: 'Margherita DOC', desc: 'Pomodoro San Marzano, fior di latte, basilico.', tag: 'Vegetariana' },
-      { emoji: '&#127829;', name: 'Forno Nero', desc: 'Impasto al carbone, bufala, nduja, miele piccante.', tag: 'Piccante' },
-      { emoji: '&#127837;', name: 'Paccheri al ragù di mare', desc: 'Pasta fresca, gamberi, pomodorini, bottarga.', tag: 'Pesce' }
+      { emoji: '&#127829;', name: 'Margherita DOC', desc: 'Pomodoro San Marzano, fior di latte e basilico fresco.', tag: 'Vegetariana' },
+      { emoji: '&#127829;', name: 'Forno Nero', desc: 'Impasto al carbone vegetale, bufala, nduja e miele piccante.', tag: 'Piccante' },
+      { emoji: '&#127829;', name: 'Diavola', desc: 'Salame piccante, fior di latte e olive nere.', tag: 'Piccante' },
+      { emoji: '&#127837;', name: 'Paccheri al ragù di mare', desc: 'Pasta fresca, gamberi rossi, pomodorini e bottarga.', tag: 'Pesce' },
+      { emoji: '&#129364;', name: 'Crocchè di patate', desc: 'Croccanti fuori, morbidi dentro, con salsa verde.', tag: 'Vegano' },
+      { emoji: '&#127854;', name: 'Tiramisù della casa', desc: 'Mascarpone, savoiardi al caffè e cacao amaro.', tag: 'Dolce' }
     ];
     if (layout === 'modern') {
       var rows = '';
@@ -707,13 +714,39 @@
     );
   }
 
-  /* ---------- 25. FOOTER ---------- */
+  /* ---------- 25. TRUST BAR (sempre visibile, in tutte le strutture) ---------- */
+  function mapSVG() {
+    return (
+      '<svg viewBox="0 0 120 76" aria-hidden="true">' +
+      '<rect width="120" height="76" rx="12" fill="color-mix(in srgb,var(--bg) 8%,transparent)"/>' +
+      '<path d="M0 20H120M0 40H120M0 60H120M28 0V76M58 0V76M88 0V76" stroke="color-mix(in srgb,var(--bg) 24%,transparent)" stroke-width="2"/>' +
+      '<path d="M60 16c-15 0-26 10-26 23 0 17 24 38 26 40 2-2 26-23 26-40 0-13-11-23-26-23z" fill="color-mix(in srgb,var(--accent) 28%,transparent)" stroke="var(--accent)" stroke-width="2.5"/>' +
+      '<circle cx="60" cy="39" r="5.5" fill="var(--accent)"/>' +
+      '</svg>'
+    );
+  }
+
+  function trustBarHTML() {
+    return (
+      '<div class="trust-bar"><div class="container trust-row">' +
+      '<div class="trust-item"><span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
+      '<span><b>4,7</b> &middot; 312 recensioni</span></div>' +
+      '<span class="trust-div" aria-hidden="true"></span>' +
+      '<div class="trust-item"><b>Dal 1978</b><span>tre generazioni</span></div>' +
+      '<span class="trust-div" aria-hidden="true"></span>' +
+      '<div class="trust-item trust-badges"><span class="badge">&#129505; Farine bio</span>' +
+      '<span class="badge">&#128293; Forno a legna</span></div>' +
+      '</div></div>'
+    );
+  }
+
+  /* ---------- 26. FOOTER ---------- */
   function footerHTML() {
     return (
       '<footer class="footer"><div class="container">' +
       '<div class="foot-grid">' +
       '<div class="foot-brand"><div><b><span class="mark">FN</span>Forno Nero</b>' +
-      '<p data-i18n="footer_text">' + DICT.footer_text.it + '</p></div></div>' +
+      '<p data-i18n="footer_text">' + DICT.footer_text.it + '</p>' + mapSVG() + '</div></div>' +
       '<div><h4>Esplora</h4><ul>' +
       '<li><a href="#chi-siamo" data-i18n="nav_about">' + DICT.nav_about.it + '</a></li>' +
       '<li><a href="#menu" data-i18n="nav_menu">' + DICT.nav_menu.it + '</a></li>' +
@@ -722,7 +755,11 @@
       '<div><h4>Orari</h4><ul><li>Lun &middot; chiuso</li><li>Mar&ndash;Gio &middot; 19&ndash;23</li>' +
       '<li>Ven&ndash;Sab &middot; 19&ndash;23:30</li><li>Dom &middot; 19&ndash;23</li></ul></div>' +
       '<div><h4>Contatti</h4><ul><li>Via dei Fornai 12, Roma</li><li>+39 06 1234 5678</li>' +
-      '<li>ciao@fornonero.it</li></ul></div>' +
+      '<li>ciao@fornonero.it</li></ul>' +
+      '<div class="foot-social">' +
+      '<a href="#" aria-label="Instagram">&#128247;</a>' +
+      '<a href="#" aria-label="Facebook">&#128101;</a>' +
+      '<a href="#" aria-label="TikTok">&#127916;</a></div></div>' +
       '</div>' +
       '<div class="foot-bottom"><span data-i18n="footer_tag">' + DICT.footer_tag.it + '</span>' +
       '<span>Demo interattiva &middot; contenuti fittizi &middot; senza prezzi</span></div>' +
@@ -730,7 +767,7 @@
     );
   }
 
-  /* ---------- 26. SCRIPT INTERNO DELL'ANTEPRIMA ---------- */
+  /* ---------- 27. SCRIPT INTERNO DELL'ANTEPRIMA ---------- */
   function previewScript() {
     var DISH_IMGS = DISHES.map(function (d) { return phw(800, 450, d.emoji); });
     return (
@@ -769,6 +806,7 @@
       'm.className="modal open";}' +
       'var dishEls=document.querySelectorAll(".dish[data-idx]");for(var di=0;di<dishEls.length;di++){(function(el){el.addEventListener("click",function(){openDish(+el.getAttribute("data-idx"));});})(dishEls[di]);}' +
       'document.addEventListener("click",function(e){if(e.target.classList&&(e.target.classList.contains("modal-close")||e.target.classList.contains("modal"))){var mm=document.querySelector(".modal");if(mm){mm.classList.remove("open");}}});' +
+      'document.addEventListener("keydown",function(e){if(e.key==="Escape"){var mm2=document.querySelector(".modal");if(mm2){mm2.classList.remove("open");}}});' +
 
       /* --- galleria lightbox --- */
       'var gal=' + JSON.stringify(GALLERY.map(function (e) { return phw(500, 500, e); })) + ';var gi=0;' +
@@ -874,7 +912,7 @@
     var body = (
       '<body class="' + layoutCls + featureClass + '">' +
       headerHTML() +
-      '<main>' + heroHTML() + section + '</main>' +
+      '<main>' + heroHTML() + trustBarHTML() + section + '</main>' +
       footerHTML() +
       (AppState.features.seo ? seoChip() : '') +
       '<div class="modal" id="dishModal"></div>' +

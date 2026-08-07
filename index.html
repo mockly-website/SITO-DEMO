@@ -15,16 +15,19 @@
       <div class="preview-head">
         <span class="live-dot"></span>
         <span>Demo dal vivo &middot; tutto interattivo, nessun reload</span>
+        <span class="scale-info" id="scaleInfo" hidden></span>
         <span class="preview-meta" id="previewMeta"></span>
       </div>
       <div class="stage">
-        <div class="device-frame" id="deviceFrame">
-          <div class="phone-bar">
-            <span class="pb-notch"></span>
-            <span>21:30</span>
-            <span class="pb-ico">&#128246;&#128268;</span>
+        <div class="stage-wrap is-desktop" id="stageWrap">
+          <div class="device-frame is-desktop" id="deviceFrame">
+            <div class="phone-bar">
+              <span class="pb-notch"></span>
+              <span>21:30</span>
+              <span class="pb-ico">&#128246;&#128268;</span>
+            </div>
+            <iframe id="preview" class="preview-iframe" title="Anteprima sito demo"></iframe>
           </div>
-          <iframe id="preview" class="preview-iframe" title="Anteprima sito demo"></iframe>
         </div>
       </div>
     </main>
@@ -44,9 +47,10 @@
         <div class="panel-group">
           <label class="group-label">Anteprima</label>
           <div class="seg" id="viewToggle">
-            <button class="seg-btn is-active" data-view="desktop">&#128187; Desktop</button>
-            <button class="seg-btn" data-view="mobile">&#128241; Mobile</button>
+            <button class="seg-btn is-active" data-view="desktop" aria-label="Anteprima desktop">&#128187; Desktop</button>
+            <button class="seg-btn" data-view="mobile" aria-label="Anteprima mobile">&#128241; Mobile</button>
           </div>
+          <button class="fullscreen-btn" id="fullscreenBtn" type="button" title="Apre la demo in una nuova scheda a tutto schermo">&#8599; Apri a schermo intero</button>
         </div>
 
         <div class="panel-group">
@@ -64,7 +68,7 @@
           <div class="accordion" id="accordion"></div>
         </div>
 
-        <button class="reset-btn" id="resetBtn" type="button">&#8635; Ripristina demo</button>
+        <button class="reset-btn" id="resetBtn" type="button" aria-label="Ripristina la demo alle impostazioni iniziali">&#8635; Ripristina demo</button>
         <p class="panel-foot">Demo interattiva per presentazione &mdash; contenuti fittizi, nessun prezzo mostrato.</p>
       </div>
     </aside>
